@@ -10,20 +10,15 @@ interface Props {
 export default function LayoutWrapper({ children }: Props) {
   return (
     <Box>
-      <Box sx={{ position: 'sticky' }}>
-        <Container
-          sx={{
-            height: 65,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
+      <Box sx={{ position: 'sticky', backgroundColor: '#021C39' }}>
+        <Container sx={{ height: 65, display: 'flex', alignItems: 'center' }}>
           <NetworkButton props={{ sx: { marginRight: '0.5rem' } }} />
           <ConnectionButton />
         </Container>
       </Box>
-      {children}
+      <Container sx={{ paddingTop: '1rem', background: '#061526', height: 'calc(100vh - 65px)' }}>
+        {children}
+      </Container>
     </Box>
   );
 }

@@ -104,15 +104,15 @@ export default function ThemeWrapper({ children }: Props) {
       values: { xs: 0, xsm: 600, sm: 760, md: 960, lg: 1280, xl: 1440, xxl: 1800 },
     },
     palette: {
-      mode: 'light',
+      mode: 'dark',
       button: {
-        main: '#EFF2F8',
-        connect_wallet: 'rgba(234, 243, 255, 1)',
+        main: '#192E46',
+        connect_wallet: '#A8D4F9',
       },
       background: {
-        paper: '#FFFFFF',
+        paper: '#091C34',
         secondary: '#021C39',
-        primary: '#021C39',
+        primary: '#07111C',
       },
       gradient: {
         main: 'linear-gradient(180deg, #B2CEEB 0%, #e5e9ed00 100%)',
@@ -120,10 +120,10 @@ export default function ThemeWrapper({ children }: Props) {
       primary: {
         light: '#ffffff',
         main: '#1C8CF3',
-        dark: '#131C23',
+        dark: '#D7DFEC',
       },
       secondary: {
-        main: '#FFFFFF',
+        main: '#001229',
       },
       info: {
         main: '#EAF3FF',
@@ -138,11 +138,11 @@ export default function ThemeWrapper({ children }: Props) {
         main: '#EA6363',
       },
       text: {
-        primary: '#021C39',
-        secondary: '#585F5A',
-        disabled: '#021C39',
-        header: '#5B6B7D',
-        header1: '#41556B',
+        primary: '#FFFFFF',
+        secondary: '#7994C1',
+        disabled: '#7994C1',
+        header: '#CCCFD2',
+        header1: '#FFFFFF',
       },
     },
     typography: {

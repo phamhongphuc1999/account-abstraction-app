@@ -15,7 +15,7 @@ function RemainApp() {
         <LayoutWrapper>
           <ToastContainer
             autoClose={4000}
-            theme="light"
+            theme="dark"
             hideProgressBar={false}
             position="top-center"
           />

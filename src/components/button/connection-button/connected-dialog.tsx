@@ -34,7 +34,7 @@ export default function ConnectedDialog({ open, onClose }: Props) {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
-      <DialogTitle sx={{ background: '#F2F5FA', p: '1rem', pt: '1.5rem', alignItems: 'center' }}>
+      <DialogTitle sx={{ background: '#002753', p: '1rem', pt: '1.5rem', alignItems: 'center' }}>
         <Box
           sx={{
             display: 'flex',

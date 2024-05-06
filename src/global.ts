@@ -10,6 +10,11 @@ export type FStatus =
   | 'UPDATING'
   | 'WAIT_CONFIRM';
 
+export type AddressesType = {
+  ENTRY_POINT_ADDRESS: string;
+};
+export type AddressesListType = { [chainId: number]: AddressesType };
+
 export interface Connector {
   image: string;
   type: ConnectorType;

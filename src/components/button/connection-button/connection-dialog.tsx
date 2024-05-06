@@ -14,6 +14,7 @@ export default function ConnectionDialog({ open, onClose }: Props) {
 
   function onConnectClick(connector: ConnectorType) {
     connect(connector);
+    onClose();
   }
 
   return (
@@ -30,7 +31,7 @@ export default function ConnectionDialog({ open, onClose }: Props) {
                   key={connector.type}
                   onClick={() => onConnectClick(connector.type)}
                   sx={{
-                    background: 'rgba(234, 243, 255, 0.7)',
+                    background: 'rgba(142, 184, 218, 1)',
                     borderRadius: '8px',
                     p: '1.2rem',
                     pl: 2.5,
@@ -44,7 +45,7 @@ export default function ConnectionDialog({ open, onClose }: Props) {
                     '&:hover': {
                       backgroundColor: 'button.connect_wallet',
                       border: '1px solid #CDDCF4',
-                      color: 'rgba(121, 148, 193, 1)',
+                      color: 'rgba(28, 140, 243, 1)',
                       boxShadow: '0px 3px 6px 0px #48628D1F',
                     },
                   }}

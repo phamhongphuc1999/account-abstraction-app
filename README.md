@@ -8,6 +8,12 @@
 bun install
 ```
 
+- Build typechain
+
+```shell
+bun run typechain:build
+```
+
 - Run app
 
 ```shell
