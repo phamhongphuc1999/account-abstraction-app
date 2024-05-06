@@ -20,7 +20,7 @@ export default function ConnectionDialog({ open, onClose }: Props) {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
       <DialogContent>
-        <Box sx={{ maxWidth: '400px', padding: '2rem', borderRadius: '12px' }}>
+        <Box sx={{ maxWidth: '400px', padding: '1rem', borderRadius: '12px' }}>
           <Box>
             <Typography sx={{ fontSize: '20px', fontWeight: 700, mb: 1.5 }}>Sign In</Typography>
           </Box>

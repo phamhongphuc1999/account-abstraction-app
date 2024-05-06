@@ -2,12 +2,16 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { FStatus } from 'src/global';
 
 export interface UserSliceType {
-  eoaAddress: string;
+  ownerAddress: string;
+  accountAddress: string;
+  deployType: 'initial' | 'deployed' | 'notDeploy';
   connectionStatus: FStatus;
 }
 
 const initialState: UserSliceType = {
-  eoaAddress: '',
+  ownerAddress: '',
+  accountAddress: '',
+  deployType: 'initial',
   connectionStatus: 'INITIAL',
 };
 
@@ -16,12 +20,16 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     updateAccountConfig: (state: UserSliceType, actions: PayloadAction<Partial<UserSliceType>>) => {
-      const { eoaAddress, connectionStatus } = actions.payload;
-      if (eoaAddress != undefined) state.eoaAddress = eoaAddress.toLowerCase();
+      const { ownerAddress, accountAddress, deployType, connectionStatus } = actions.payload;
+      if (ownerAddress != undefined) state.ownerAddress = ownerAddress.toLowerCase();
+      if (accountAddress != undefined) state.accountAddress = accountAddress.toLowerCase();
+      if (deployType != undefined) state.deployType = deployType;
       if (connectionStatus != undefined) state.connectionStatus = connectionStatus;
     },
     resetUser: (state: UserSliceType) => {
-      state.eoaAddress = '';
+      state.ownerAddress = '';
+      state.accountAddress = '';
+      state.deployType = 'initial';
       state.connectionStatus = 'INITIAL';
     },
   },

@@ -1,5 +1,8 @@
+import { JsonRpcProvider, JsonRpcSigner } from 'ethers';
+
 export type StringListType<T = unknown> = { [key: string]: T };
 
+export type ContractType = 'reader' | 'signer';
 export type ConnectorType = 'metamask' | 'coinbase';
 export type FStatus =
   | 'INITIAL'
@@ -12,6 +15,7 @@ export type FStatus =
 
 export type AddressesType = {
   ENTRY_POINT_ADDRESS: string;
+  ACCOUNT_FACTORY_ADDRESS: string;
 };
 export type AddressesListType = { [chainId: number]: AddressesType };
 
@@ -45,3 +49,4 @@ export type Chain = {
 };
 
 export type ChainList = StringListType<Chain>;
+export type GlobalProviderType = JsonRpcProvider | JsonRpcSigner;

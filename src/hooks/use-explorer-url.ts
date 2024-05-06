@@ -38,7 +38,7 @@ export function getExplorerUrl(hash: string, config: ExploreConfigProps) {
   } else return { link: undefined, text: '' };
 }
 
-export function useExplorerUrl(hash: string | undefined, config: ExploreConfigProps) {
+export default function useExplorerUrl(hash: string | undefined, config: ExploreConfigProps) {
   return useMemo<{ link: string | undefined; text: string }>(() => {
     if (hash) return getExplorerUrl(hash, config);
     else return { link: undefined, text: '' };

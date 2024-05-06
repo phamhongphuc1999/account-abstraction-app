@@ -16,9 +16,9 @@ export default function LayoutWrapper({ children }: Props) {
           <ConnectionButton />
         </Container>
       </Box>
-      <Container sx={{ paddingTop: '1rem', background: '#061526', height: 'calc(100vh - 65px)' }}>
-        {children}
-      </Container>
+      <Box sx={{ background: '#061526', height: 'calc(100vh - 65px)' }}>
+        <Container sx={{ paddingTop: '1rem' }}>{children}</Container>
+      </Box>
     </Box>
   );
 }

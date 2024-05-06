@@ -382,7 +382,7 @@ export default function ThemeWrapper({ children }: Props) {
           },
           MuiContainer: {
             defaultProps: {
-              maxWidth: 'xl',
+              maxWidth: 'lg',
             },
           },
           MuiDialogTitle: {

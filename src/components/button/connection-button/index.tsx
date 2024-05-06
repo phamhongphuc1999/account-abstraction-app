@@ -14,10 +14,10 @@ interface Props {
 export default function ConnectionButton({ props }: Props) {
   const [connectionOpen, setConnectionOpen] = useState(false);
   const [connectedOpen, setConnectedOpen] = useState(false);
-  const { eoaAddress } = useAppSelector((state) => state.user);
+  const { ownerAddress } = useAppSelector((state) => state.user);
 
   function onClick() {
-    if (isAddress(eoaAddress)) setConnectedOpen(true);
+    if (isAddress(ownerAddress)) setConnectedOpen(true);
     else setConnectionOpen(true);
   }
 
@@ -28,9 +28,9 @@ export default function ConnectionButton({ props }: Props) {
         variant="contained"
         color="primary"
         onClick={onClick}
-        startIcon={eoaAddress ? <ConnectedWalletIcon /> : <DisconnectedWalletIcon />}
+        startIcon={ownerAddress ? <ConnectedWalletIcon /> : <DisconnectedWalletIcon />}
       >
-        {eoaAddress.length > 0 ? formatAddress(eoaAddress, 4) : 'Connect Wallet'}
+        {ownerAddress.length > 0 ? formatAddress(ownerAddress, 4) : 'Connect Wallet'}
       </Button>
       <ConnectionDialog open={connectionOpen} onClose={() => setConnectionOpen(false)} />
       <ConnectedDialog open={connectedOpen} onClose={() => setConnectedOpen(false)} />

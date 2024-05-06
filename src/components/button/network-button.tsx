@@ -59,10 +59,10 @@ export default function NetworkButton({ props }: Props) {
   const [loading, setLoading] = useState(false);
   const { switchNetwork } = useWalletAction();
   const { chainId } = useAppSelector((state) => state.config);
-  const { eoaAddress } = useAppSelector((state) => state.user);
+  const { ownerAddress } = useAppSelector((state) => state.user);
 
   function onNetworkClick() {
-    if (isAddress(eoaAddress)) setOpen(true);
+    if (isAddress(ownerAddress)) setOpen(true);
     else toast.warn('Please connect to your wallet first!');
   }
 
@@ -88,7 +88,7 @@ export default function NetworkButton({ props }: Props) {
         startIcon={loading ? <CircularProgress size="14px" /> : <></>}
         disabled={loading}
       >
-        {isAddress(eoaAddress) ? CHAINS?.[chainId]?.name : 'Network'}
+        {isAddress(ownerAddress) ? CHAINS?.[chainId]?.name : 'Network'}
       </Button>
       <Dialog
         fullWidth

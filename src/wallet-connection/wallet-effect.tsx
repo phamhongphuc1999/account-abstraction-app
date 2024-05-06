@@ -1,9 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BrowserProvider } from 'ethers';
 import { useCallback, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { SIMPLE_SALT } from 'src/configs/constances';
 import { CHAINS } from 'src/configs/network-config';
+import { useAccountFactoryContract } from 'src/contracts/account-factory-contract';
 import { resetConfig, setNetworkConfig } from 'src/redux-slices/config-slice';
 import { useAppDispatch } from 'src/redux-slices/hook';
 import { resetUser, updateAccountConfig } from 'src/redux-slices/user-slice';
@@ -14,7 +16,8 @@ export default function WalletEffect() {
   const dispatch = useAppDispatch();
   const account = useAccount();
   const { error } = useConnect();
-  const { setReader, setSigner } = usRpcProviderContext();
+  const { reader, setReader, setSigner } = usRpcProviderContext();
+  const factoryContract = useAccountFactoryContract();
 
   const _setReader = useCallback(
     async (chainId: number) => {
@@ -34,7 +37,7 @@ export default function WalletEffect() {
         }
       }
     },
-    [account.isConnected, account.connector?.getProvider]
+    [account.isConnected, account.connector]
   );
 
   // switch chain event
@@ -46,11 +49,22 @@ export default function WalletEffect() {
   }, [account.chainId, account.isConnected, _updateAccount]);
 
   // switch account event
-  useEffect(() => {
+  const _switch = useCallback(async () => {
     if (account.address) {
-      dispatch(updateAccountConfig({ eoaAddress: account.address }));
+      let accountAddress: string | undefined = undefined;
+      let deployType: 'deployed' | 'notDeploy' | undefined = undefined;
+      if (factoryContract && reader) {
+        accountAddress = await factoryContract.getAddress(account.address, SIMPLE_SALT);
+        const _code = await reader.getCode(accountAddress);
+        if (_code != '0x') deployType = 'deployed';
+        else deployType = 'notDeploy';
+      }
+      dispatch(updateAccountConfig({ ownerAddress: account.address, accountAddress, deployType }));
     }
-  }, [account.address]);
+  }, [account.address, factoryContract, reader]);
+  useEffect(() => {
+    _switch();
+  }, [_switch]);
 
   // disconnect
   useEffect(() => {
