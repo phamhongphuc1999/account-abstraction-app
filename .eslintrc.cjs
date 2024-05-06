@@ -24,9 +24,9 @@ module.exports = {
   },
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh', 'import', 'prettier', 'react', 'react-hooks', '@typescript-eslint'],
+  plugins: ['import', 'prettier', 'react', 'react-hooks', '@typescript-eslint'],
   rules: {
-    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    // 'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     quotes: ['error', 'single'],
     semi: ['warn', 'always'],
