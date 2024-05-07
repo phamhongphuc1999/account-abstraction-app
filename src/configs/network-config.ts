@@ -1,3 +1,4 @@
+import BnbImg from 'src/assets/images/tokens/bnb.svg';
 import CoinbaseImage from 'src/assets/images/wallets/coinbase.png';
 import MetamaskImage from 'src/assets/images/wallets/metamask.png';
 import { ChainList, ConnectorListType, NativeToken } from 'src/global';
@@ -14,6 +15,7 @@ export const AllowedNetwork = [CHAIN_ALIASES.BSC_MAINNET, CHAIN_ALIASES.BSC_TEST
 
 export const CHAINS: ChainList = {
   [CHAIN_ALIASES.BSC_MAINNET]: {
+    image: BnbImg,
     chainId: CHAIN_ALIASES.BSC_MAINNET,
     explorers: ['https://bscscan.com'],
     name: 'BSC Mainnet',
@@ -27,6 +29,7 @@ export const CHAINS: ChainList = {
     ],
   },
   [CHAIN_ALIASES.BSC_TESTNET]: {
+    image: BnbImg,
     chainId: CHAIN_ALIASES.BSC_TESTNET,
     explorers: ['https://testnet.bscscan.com'],
     name: 'BSC Testnet',

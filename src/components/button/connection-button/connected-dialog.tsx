@@ -8,6 +8,7 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
+import { useMemo } from 'react';
 import CopyIcon from 'src/components/icons/copy-icon';
 import ExploreIcon from 'src/components/icons/explore-icon';
 import { CONNECTORS } from 'src/configs/network-config';
@@ -22,8 +23,15 @@ interface Props {
 
 export default function ConnectedDialog({ open, onClose }: Props) {
   const { disconnect } = useWalletAction();
-  const { connector, chainId } = useAppSelector((state) => state.config);
-  const { ownerAddress, accountAddress } = useAppSelector((state) => state.user);
+  const { connector } = useAppSelector((state) => state.config);
+  const { ownerAddress, accountAddress, deployType } = useAppSelector((state) => state.user);
+
+  const deployText = useMemo(() => {
+    // eslint-disable-next-line quotes
+    if (deployType == 'notDeploy') return "haven't deployed";
+    else if (deployType == 'deployed') return 'deployed';
+    else return '';
+  }, [deployType]);
 
   function onDisconnect() {
     disconnect();
@@ -52,9 +60,9 @@ export default function ConnectedDialog({ open, onClose }: Props) {
             iconProps={{ sx: { fontSize: '16px', color: 'primary.main' } }}
           />
         </Box>
-        <ExploreIcon hash={ownerAddress} config={{ chainId, type: 'address' }} />
+        <ExploreIcon hash={ownerAddress} />
         <Typography sx={{ mt: 2 }} variant="subtitle1">
-          Account
+          {`Account(${deployText})`}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Typography>{formatAddress(accountAddress, 6)}</Typography>
@@ -63,7 +71,7 @@ export default function ConnectedDialog({ open, onClose }: Props) {
             iconProps={{ sx: { fontSize: '16px', color: 'primary.main' } }}
           />
         </Box>
-        <ExploreIcon hash={accountAddress} config={{ chainId, type: 'address' }} />
+        <ExploreIcon hash={accountAddress} />
         <Button variant="outlined" sx={{ width: '100%', mt: 3 }} onClick={onDisconnect}>
           Disconnect
         </Button>

@@ -4,7 +4,7 @@ import useExplorerUrl, { ExploreConfigProps } from 'src/hooks/use-explorer-url';
 
 interface Props {
   hash: string | undefined;
-  config: ExploreConfigProps;
+  config?: Partial<ExploreConfigProps>;
 }
 
 export default function ExploreIcon({ hash, config }: Props) {

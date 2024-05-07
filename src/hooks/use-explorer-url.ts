@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useAppSelector } from 'src/redux-slices/hook';
 
 export type EXPLORER_TYPE = 'address' | 'transaction';
 
@@ -9,11 +10,6 @@ const exploreConfig: {
     address: 'https://bscscan.com/address',
     transaction: 'https://bscscan.com/tx',
     label: 'bscscan',
-  },
-  1: {
-    address: 'https://etherscan.io/address',
-    transaction: 'https://etherscan.io/tx',
-    label: 'ethscan',
   },
   97: {
     address: 'https://testnet.bscscan.com/address',
@@ -30,7 +26,8 @@ export interface ExploreConfigProps {
 
 export function getExplorerUrl(hash: string, config: ExploreConfigProps) {
   const { chainId, type: configType, baseLink } = config;
-  const type = configType ?? 'transaction';
+
+  const type = configType ?? 'address';
   if (exploreConfig[chainId]) {
     const _config = exploreConfig[chainId];
     if (baseLink) return { link: `${_config[type]}`, text: _config['label'] };
@@ -38,9 +35,16 @@ export function getExplorerUrl(hash: string, config: ExploreConfigProps) {
   } else return { link: undefined, text: '' };
 }
 
-export default function useExplorerUrl(hash: string | undefined, config: ExploreConfigProps) {
+export default function useExplorerUrl(
+  hash: string | undefined,
+  config?: Partial<ExploreConfigProps>
+) {
+  const chainId = config?.chainId;
+  const { chainId: appChainId } = useAppSelector((state) => state.config);
+  const realChainId = appChainId > 0 ? appChainId : chainId ? chainId : 56;
+
   return useMemo<{ link: string | undefined; text: string }>(() => {
-    if (hash) return getExplorerUrl(hash, config);
+    if (hash) return getExplorerUrl(hash, { ...config, chainId: realChainId });
     else return { link: undefined, text: '' };
-  }, [hash, config]);
+  }, [hash, config, realChainId]);
 }

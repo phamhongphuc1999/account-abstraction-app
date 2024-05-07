@@ -2,6 +2,7 @@ import { Box, Container } from '@mui/material';
 import { ReactNode } from 'react';
 import ConnectionButton from 'src/components/button/connection-button';
 import NetworkButton from 'src/components/button/network-button';
+import AppEffect from './app-effect';
 
 interface Props {
   children: ReactNode;
@@ -10,6 +11,7 @@ interface Props {
 export default function LayoutWrapper({ children }: Props) {
   return (
     <Box>
+      <AppEffect />
       <Box sx={{ position: 'sticky', backgroundColor: '#021C39' }}>
         <Container sx={{ height: 65, display: 'flex', alignItems: 'center' }}>
           <NetworkButton props={{ sx: { marginRight: '0.5rem' } }} />

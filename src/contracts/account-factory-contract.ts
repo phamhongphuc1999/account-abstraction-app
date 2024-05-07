@@ -17,7 +17,7 @@ export default class AccountFactoryContract extends RootContract<AccountFactoryA
   }
 
   async getAddress(owner: string, salt: string) {
-    return await this.fn.getAddress(owner, salt);
+    return await this.fn.getFunction('getAddress')(owner, salt);
   }
 }
 
