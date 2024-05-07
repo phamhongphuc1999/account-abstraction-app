@@ -27,6 +27,7 @@ export const CHAINS: ChainList = {
       'https://bsc-dataseed2.ninicoin.io/',
       'https://bsc-dataseed.binance.org/',
     ],
+    bundlers: ['http://localhost:3000'],
   },
   [CHAIN_ALIASES.BSC_TESTNET]: {
     image: BnbImg,
@@ -42,6 +43,7 @@ export const CHAINS: ChainList = {
       'https://data-seed-prebsc-1-s2.binance.org:8545/',
       'https://data-seed-prebsc-2-s3.binance.org:8545/',
     ],
+    bundlers: ['http://localhost:3000'],
   },
 };
 

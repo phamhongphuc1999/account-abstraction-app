@@ -16,22 +16,22 @@ export default function WalletEffect() {
   const dispatch = useAppDispatch();
   const account = useAccount();
   const { error } = useConnect();
-  const { reader, setReader, setSigner } = usRpcProviderContext();
+  const { reader, setReaderAndBundler, setSigner } = usRpcProviderContext();
   const factoryContract = useAccountFactoryContract();
 
-  const _setReader = useCallback(
+  const _setReaderAndBundler = useCallback(
     async (chainId: number) => {
       const _config = CHAINS[chainId];
-      await setReader(_config.urls);
+      await setReaderAndBundler(_config.urls, _config.bundlers[0]);
     },
-    [setReader]
+    [setReaderAndBundler]
   );
 
   const _updateAccount = useCallback(
     async (chainId: number) => {
       if (account.isConnected && account.connector?.getProvider) {
         if (typeof account.connector.getProvider == 'function') {
-          await _setReader(chainId);
+          await _setReaderAndBundler(chainId);
           const provider = new BrowserProvider((await account.connector.getProvider()) as any);
           setSigner(await provider.getSigner());
         }

@@ -2,12 +2,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { JsonRpcProvider, JsonRpcSigner } from 'ethers';
 import { ReactNode, createContext, useContext, useMemo, useState } from 'react';
+import JsonRpcBundler from 'src/user-operation-service/JsonRpcBundler';
 
 export interface RpcProviderContextProps {
   rpc: string;
   reader: JsonRpcProvider | null;
   signer: JsonRpcSigner | null;
-  setReader: (rpcUrls: Array<string>) => Promise<void>;
+  bundler: JsonRpcBundler | null;
+  setReaderAndBundler: (rpcUrls: Array<string>, _bundlerUrl: string) => Promise<void>;
   setSigner: (web3: JsonRpcSigner | null) => void;
 }
 
@@ -15,7 +17,8 @@ const RpcProviderContext = createContext<RpcProviderContextProps>({
   rpc: '',
   reader: null,
   signer: null,
-  setReader: async () => {},
+  bundler: null,
+  setReaderAndBundler: async () => {},
   setSigner: () => {},
 });
 
@@ -37,8 +40,10 @@ export default function RpcProviderProvider({ children }: Props) {
   const [rpc, setRpc] = useState<string>('');
   const [reader, setReader] = useState<JsonRpcProvider | null>(null);
   const [signer, setSigner] = useState<JsonRpcSigner | null>(null);
+  const [bundler, setBundler] = useState<JsonRpcBundler | null>(null);
 
-  async function _setReader(rpcUrls: Array<string>) {
+  async function setReaderAndBundler(rpcUrls: Array<string>, _bundlerUrl: string) {
+    setBundler(new JsonRpcBundler(_bundlerUrl));
     const result = await selectReader(rpcUrls);
     if (result) {
       setReader(result.web3);
@@ -47,9 +52,9 @@ export default function RpcProviderProvider({ children }: Props) {
   }
 
   const contextData = useMemo<RpcProviderContextProps>(() => {
-    return { rpc, reader, signer, setReader: _setReader, setSigner };
+    return { rpc, reader, signer, bundler, setReaderAndBundler, setSigner };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rpc, reader, signer]);
+  }, [rpc, reader, signer, bundler]);
 
   return <RpcProviderContext.Provider value={contextData}>{children}</RpcProviderContext.Provider>;
 }

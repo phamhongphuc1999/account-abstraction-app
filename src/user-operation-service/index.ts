@@ -11,7 +11,11 @@ import {
   keccak256,
   zeroPadValue,
 } from 'ethers';
-import { PackedUserOperation, UserOperation } from 'src/global';
+import { PackedUserOperation, UserOpMethodId, UserOpRequestType, UserOperation } from './type';
+
+export function buildRequest(method: UserOpMethodId, params: Array<any>): UserOpRequestType {
+  return { id: 'my-app', jsonrpc: 'v1', method, params };
+}
 
 export default class UserOperationService {
   static packAccountGasLimits(verificationGasLimit: BytesLike, callGasLimit: BytesLike): string {

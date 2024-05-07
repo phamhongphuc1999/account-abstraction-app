@@ -7,7 +7,7 @@ export default function App() {
     {
       path: '/',
       element: <ProviderApp />,
-      children: [{ path: '', element: <Home /> }],
+      children: [{ path: '/', element: <Home /> }],
     },
   ]);
 }
