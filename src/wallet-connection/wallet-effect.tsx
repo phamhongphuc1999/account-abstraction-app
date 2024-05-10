@@ -3,7 +3,7 @@
 import { BrowserProvider } from 'ethers';
 import { useCallback, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { SIMPLE_SALT } from 'src/configs/constances';
+import { SIMPLE_SALT } from 'src/configs/constance';
 import { CHAINS } from 'src/configs/network-config';
 import { useAccountFactoryContract } from 'src/contracts/account-factory-contract';
 import { resetConfig, setNetworkConfig } from 'src/redux-slices/config-slice';

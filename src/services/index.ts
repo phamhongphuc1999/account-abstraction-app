@@ -1,6 +1,6 @@
 import { SxProps, Theme } from '@mui/material';
 import { SystemStyleObject } from '@mui/system';
-import { BytesLike, Interface, concat } from 'ethers';
+import { BytesLike, Interface, JsonRpcProvider, concat, hexlify, toBeHex } from 'ethers';
 import { AccountFactoryAbi__factory } from 'src/contracts/typechain';
 
 export function formatAddress(address: string, fractionDigits = 3) {
@@ -10,7 +10,7 @@ export function formatAddress(address: string, fractionDigits = 3) {
 export function getAccountInitCode(
   accountFactoryAddress: string,
   owner: string,
-  salt = 0
+  salt: BytesLike
 ): BytesLike {
   const _interface = new Interface(AccountFactoryAbi__factory.abi);
   return concat([
@@ -19,9 +19,21 @@ export function getAccountInitCode(
   ]);
 }
 
+export async function isDeploy(accountAddress: string, reader: JsonRpcProvider) {
+  const _code = await reader.getCode(accountAddress);
+  if (_code == '0x') return false;
+  else return true;
+}
+
 export function capitalizeFirstLetter(text: string, mode: 'normal' | 'retain' = 'normal') {
   if (mode == 'normal') return text.charAt(0).toUpperCase() + text.toLowerCase().slice(1);
   else return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+export function toBeHexlify(value: string | number | Uint8Array | bigint) {
+  if (typeof value == 'string' || typeof value == 'number') return hexlify(toBeHex(value));
+  else if (typeof value == 'bigint') return hexlify(value.toString());
+  else return hexlify(value);
 }
 
 export function mergeSx(sxs: Array<boolean | SxProps<Theme> | undefined>): SxProps<Theme> {

@@ -1,3 +1,4 @@
+import { isAddress } from 'ethers';
 import { useCallback, useEffect } from 'react';
 import { CHAINS } from 'src/configs/network-config';
 import { useAppDispatch, useAppSelector } from 'src/redux-slices/hook';
@@ -12,7 +13,7 @@ export default function AppEffect() {
   const { accountAddress } = useAppSelector((state) => state.user);
 
   const _fetchNativeBalance = useCallback(async () => {
-    if (reader && chainId > 0) {
+    if (reader && chainId > 0 && isAddress(accountAddress)) {
       const chainConfig = CHAINS[chainId];
       const nativeToken = chainConfig.nativeCurrency.decimals;
       const _balance = await BalanceService.native(reader, accountAddress, nativeToken);

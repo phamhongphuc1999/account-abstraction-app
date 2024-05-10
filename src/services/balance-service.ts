@@ -13,7 +13,7 @@ export default class BalanceService {
 
   static async normal(reader: JsonRpcProvider, accountAddress: string, token: StandardToken) {
     const _bep20 = new Bep20Contract(reader, token.address);
-    const raw = await _bep20.balanceOf(accountAddress);
+    const raw = await _bep20.fn.balanceOf(accountAddress);
     const bigBalance = BigNumber(raw.toString());
     const _balance = bigBalance.dividedBy(BigNumber('10').pow(token.decimal)).toFixed();
     return _balance;

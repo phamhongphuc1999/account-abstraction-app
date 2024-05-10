@@ -9,11 +9,8 @@ export type uint128 = BigNumberish;
 export type bytes = BytesLike;
 export type bytes32 = BytesLike;
 
-export interface UserOperation {
-  sender: address;
-  nonce: uint256;
+type ExtendUserOperation = {
   initCode: bytes;
-  callData: bytes;
   callGasLimit: BytesLike;
   verificationGasLimit: BytesLike;
   preVerificationGas: uint256;
@@ -23,19 +20,24 @@ export interface UserOperation {
   paymasterVerificationGasLimit: BytesLike;
   paymasterPostOpGasLimit: BytesLike;
   paymasterData: bytes;
-  signature: bytes;
-}
+};
 
-export interface PackedUserOperation {
+type CoreUserOperation = {
   sender: address;
   nonce: uint256;
-  initCode: bytes;
   callData: bytes;
+  signature: bytes;
+};
+
+export type RawUserOperation = CoreUserOperation & Partial<ExtendUserOperation>;
+export type UserOperation = CoreUserOperation & ExtendUserOperation;
+
+export interface PackedUserOperation extends CoreUserOperation {
+  initCode: bytes;
   accountGasLimits: bytes32;
   preVerificationGas: uint256;
   gasFees: bytes32;
   paymasterAndData: bytes;
-  signature: bytes;
 }
 
 export type UserOpMethodId =
@@ -63,3 +65,26 @@ export type UserOpRequestType = {
   method: UserOpMethodId;
   params: Array<any>;
 };
+
+export enum ReputationStatus {
+  OK,
+  THROTTLED,
+  BANNED,
+}
+
+export type ReputationEntry = {
+  address: string;
+  opsSeen: number;
+  opsIncluded: number;
+  status?: ReputationStatus;
+};
+
+export interface GasOverheads {
+  fixed: number;
+  perUserOp: number;
+  perUserOpWord: number;
+  zeroByte: number;
+  nonZeroByte: number;
+  bundleSize: number;
+  sigSize: number;
+}
