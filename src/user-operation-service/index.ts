@@ -122,12 +122,11 @@ export default class UserOperationService {
       .reduce((sum, x) => sum + x);
   }
 
-  static userOpHexlify(op: UserOperation): UserOperation {
+  static userOpHexlify(op: UnSignUserOperation): UnSignUserOperation {
     return {
       sender: op.sender,
       nonce: op.nonce,
       callData: op.callData,
-      signature: op.signature,
       initCode: op.initCode,
       callGasLimit: toBeHexlify(op.callGasLimit),
       verificationGasLimit: toBeHexlify(op.verificationGasLimit),
@@ -204,9 +203,13 @@ export default class UserOperationService {
     entryPointAddress: string,
     chainId: number
   ): Promise<UserOperation> {
-    const filledOp = await this.fill(op, reader, entryPointAddress);
+    let filledOp = await this.fill(op, reader, entryPointAddress);
+    filledOp = this.userOpHexlify(filledOp);
+    filledOp = {
+      ...filledOp,
+      preVerificationGas: toBeHexlify(this.calcPreVerificationGas(filledOp)),
+    };
     const signedOp = await this.sign(filledOp, signer, entryPointAddress, chainId);
-    const result = this.userOpHexlify(signedOp);
-    return { ...result, preVerificationGas: toBeHexlify(this.calcPreVerificationGas(result)) };
+    return signedOp;
   }
 }

@@ -11,6 +11,7 @@ import { useAppDispatch } from 'src/redux-slices/hook';
 import { resetUser, updateAccountConfig } from 'src/redux-slices/user-slice';
 import { useAccount, useConnect } from 'wagmi';
 import { usRpcProviderContext } from './rpc-provider-context';
+import { isDeploy } from 'src/services';
 
 export default function WalletEffect() {
   const dispatch = useAppDispatch();
@@ -55,8 +56,8 @@ export default function WalletEffect() {
       let deployType: 'deployed' | 'notDeploy' | undefined = undefined;
       if (factoryContract && reader) {
         accountAddress = await factoryContract.getAddress(account.address, SIMPLE_SALT);
-        const _code = await reader.getCode(accountAddress);
-        if (_code != '0x') deployType = 'deployed';
+        const _deploy = await isDeploy(accountAddress, reader);
+        if (_deploy) deployType = 'deployed';
         else deployType = 'notDeploy';
       }
       dispatch(updateAccountConfig({ ownerAddress: account.address, accountAddress, deployType }));

@@ -1,10 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { FStatus } from 'src/global';
+import { DeployStatus, FStatus } from 'src/global';
 
 export interface UserSliceType {
   ownerAddress: string;
   accountAddress: string;
-  deployType: 'initial' | 'deployed' | 'notDeploy';
+  deployType: DeployStatus;
   connectionStatus: FStatus;
 }
 
