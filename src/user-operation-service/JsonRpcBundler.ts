@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ApiQuery from 'src/services/api-query';
-import { buildRequest } from '.';
-import { ReputationEntry, UserOpMethodId, UserOperation } from './type';
+import { ReputationEntry, UserOpMethodId, UserOpRequestType, UserOperation } from './type';
+
+export function buildRequest(method: UserOpMethodId, params: Array<any>): UserOpRequestType {
+  return { id: 'my-app', jsonrpc: 'v1', method, params };
+}
 
 export default class JsonRpcBundler {
   public bundlerUrl: string;

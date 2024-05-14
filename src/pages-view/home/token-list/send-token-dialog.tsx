@@ -7,6 +7,7 @@ import TitleItem from 'src/components/title-item';
 import { SIMPLE_SALT } from 'src/configs/constance';
 import { AccountAbi__factory } from 'src/contracts/typechain';
 import { ActionToken } from 'src/global';
+import useNonce from 'src/hooks/use-nonce';
 import { useAppSelector } from 'src/redux-slices/hook';
 import { formatAddress, getAccountInitCode, isDeploy, toBeHexlify } from 'src/services';
 import StaticQuery from 'src/services/static-query';
@@ -26,6 +27,7 @@ export default function SendTokenDialog({ open, token, onClose }: Props) {
   const { ownerAddress, accountAddress } = useAppSelector((state) => state.user);
   const { ENTRY_POINT_ADDRESS, ACCOUNT_FACTORY_ADDRESS } = StaticQuery.getAddresses(chainId);
   const { reader, signer, bundler } = usRpcProviderContext();
+  const { getNonce } = useNonce();
 
   function onAmountChange(value: string) {
     setAmount(value);
@@ -53,17 +55,19 @@ export default function SendTokenDialog({ open, token, onClose }: Props) {
       const _isDeploy = await isDeploy(accountAddress, reader);
       const _code = _isDeploy
         ? undefined
-        : await getAccountInitCode(ACCOUNT_FACTORY_ADDRESS, ownerAddress, SIMPLE_SALT);
-      const nonce = await signer.getNonce();
-      const op = await UserOperationService.fillSign(
-        chainId,
-        ENTRY_POINT_ADDRESS,
-        reader,
-        { sender: ownerAddress, nonce: toBeHexlify(nonce), callData, initCode: _code },
-        signer
-      );
-      console.error('🚀 ~ nativeSubmit ~ op:', op);
-      await bundler.sendUserOperation(op, ENTRY_POINT_ADDRESS);
+        : await getAccountInitCode(ownerAddress, SIMPLE_SALT, ACCOUNT_FACTORY_ADDRESS);
+      const nonce = await getNonce();
+      if (nonce != undefined) {
+        const op = await UserOperationService.fillSign(
+          { sender: accountAddress, nonce: toBeHexlify(nonce), callData, initCode: _code },
+          reader,
+          signer,
+          ENTRY_POINT_ADDRESS,
+          chainId
+        );
+        console.error('🚀 ~ nativeSubmit ~ op:', op);
+        await bundler.sendUserOperation(op, ENTRY_POINT_ADDRESS);
+      }
     }
   }
 

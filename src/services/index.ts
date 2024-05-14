@@ -7,16 +7,9 @@ export function formatAddress(address: string, fractionDigits = 3) {
   return address.slice(0, fractionDigits) + '...' + address.slice(-fractionDigits);
 }
 
-export function getAccountInitCode(
-  accountFactoryAddress: string,
-  owner: string,
-  salt: BytesLike
-): BytesLike {
+export function getAccountInitCode(owner: string, salt: string, factoryAddress: string): BytesLike {
   const _interface = new Interface(AccountFactoryAbi__factory.abi);
-  return concat([
-    accountFactoryAddress,
-    _interface.encodeFunctionData('createAccount', [owner, salt]),
-  ]);
+  return concat([factoryAddress, _interface.encodeFunctionData('createAccount', [owner, salt])]);
 }
 
 export async function isDeploy(accountAddress: string, reader: JsonRpcProvider) {
@@ -32,7 +25,7 @@ export function capitalizeFirstLetter(text: string, mode: 'normal' | 'retain' = 
 
 export function toBeHexlify(value: string | number | Uint8Array | bigint) {
   if (typeof value == 'string' || typeof value == 'number') return hexlify(toBeHex(value));
-  else if (typeof value == 'bigint') return hexlify(value.toString());
+  else if (typeof value == 'bigint') return hexlify(toBeHex(value.toString()));
   else return hexlify(value);
 }
 

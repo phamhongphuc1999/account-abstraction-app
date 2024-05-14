@@ -1,6 +1,5 @@
 import { ZeroAddress } from 'ethers';
 import BSC from 'src/assets/images/tokens/bnb.svg';
-import { toBeHexlify } from 'src/services';
 import { GasOverheads, UserOperation } from 'src/user-operation-service/type';
 
 export const ChainConfig = [
@@ -15,15 +14,12 @@ export const DefaultsForUserOp: UserOperation = {
   nonce: 0,
   initCode: '0x',
   callData: '0x',
-  callGasLimit: toBeHexlify('0'),
-  verificationGasLimit: toBeHexlify('150000'), // default verification gas. will add create2 cost (3200+200*length) if initCode exists
-  preVerificationGas: toBeHexlify('21000'), // should also cover calldata cost.
-  maxFeePerGas: toBeHexlify('0'),
-  maxPriorityFeePerGas: toBeHexlify('1000000000'),
-  paymaster: ZeroAddress,
-  paymasterData: '0x',
-  paymasterVerificationGasLimit: toBeHexlify('300000'),
-  paymasterPostOpGasLimit: toBeHexlify('0'),
+  callGasLimit: 0,
+  verificationGasLimit: 150000, // default verification gas. will add create2 cost (3200+200*length) if initCode exists
+  preVerificationGas: 21000, // should also cover calldata cost.
+  maxFeePerGas: 0,
+  maxPriorityFeePerGas: 1e9,
+  paymasterAndData: '0x',
   signature: '0x',
 };
 

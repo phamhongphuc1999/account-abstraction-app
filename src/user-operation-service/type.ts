@@ -5,22 +5,8 @@ export type address = string;
 export type uint256 = BigNumberish;
 export type uint = BigNumberish;
 export type uint48 = BigNumberish;
-export type uint128 = BigNumberish;
 export type bytes = BytesLike;
 export type bytes32 = BytesLike;
-
-type ExtendUserOperation = {
-  initCode: bytes;
-  callGasLimit: BytesLike;
-  verificationGasLimit: BytesLike;
-  preVerificationGas: uint256;
-  maxFeePerGas: BytesLike;
-  maxPriorityFeePerGas: BytesLike;
-  paymaster: address;
-  paymasterVerificationGasLimit: BytesLike;
-  paymasterPostOpGasLimit: BytesLike;
-  paymasterData: bytes;
-};
 
 type CoreUserOperation = {
   sender: address;
@@ -29,15 +15,48 @@ type CoreUserOperation = {
   signature: bytes;
 };
 
+type ExtendUserOperation = {
+  initCode: bytes;
+  callGasLimit: uint256;
+  verificationGasLimit: uint256;
+  preVerificationGas: uint256;
+  maxFeePerGas: uint256;
+  maxPriorityFeePerGas: uint256;
+  paymasterAndData: bytes;
+};
+
 export type RawUserOperation = CoreUserOperation & Partial<ExtendUserOperation>;
+export type UnSignUserOperation = Omit<CoreUserOperation, 'signature'> & ExtendUserOperation;
 export type UserOperation = CoreUserOperation & ExtendUserOperation;
 
-export interface PackedUserOperation extends CoreUserOperation {
-  initCode: bytes;
-  accountGasLimits: bytes32;
-  preVerificationGas: uint256;
-  gasFees: bytes32;
-  paymasterAndData: bytes;
+export enum ReputationStatus {
+  OK,
+  THROTTLED,
+  BANNED,
+}
+
+export interface ReputationEntry {
+  address: string;
+  opsSeen: number;
+  opsIncluded: number;
+  status?: ReputationStatus;
+}
+
+export type UserOpRequestType = {
+  id: string;
+  jsonrpc: string;
+  method: UserOpMethodId;
+  params: Array<any>;
+};
+
+export interface GasOverheads {
+  fixed: number;
+  perUserOp: number;
+  perUserOpWord: number;
+  zeroByte: number;
+  nonZeroByte: number;
+  bundleSize: number;
+  sigSize: number;
 }
 
 export type UserOpMethodId =
@@ -58,33 +77,3 @@ export type UserOpMethodId =
   | 'debug_bundler_setBundleInterval'
   | 'debug_bundler_sendBundleNow'
   | 'debug_bundler_getStakeStatus';
-
-export type UserOpRequestType = {
-  id: string;
-  jsonrpc: string;
-  method: UserOpMethodId;
-  params: Array<any>;
-};
-
-export enum ReputationStatus {
-  OK,
-  THROTTLED,
-  BANNED,
-}
-
-export type ReputationEntry = {
-  address: string;
-  opsSeen: number;
-  opsIncluded: number;
-  status?: ReputationStatus;
-};
-
-export interface GasOverheads {
-  fixed: number;
-  perUserOp: number;
-  perUserOpWord: number;
-  zeroByte: number;
-  nonZeroByte: number;
-  bundleSize: number;
-  sigSize: number;
-}
