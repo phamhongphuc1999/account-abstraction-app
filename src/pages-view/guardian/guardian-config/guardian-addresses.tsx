@@ -3,15 +3,11 @@ import { useState } from 'react';
 import CopyIcon from 'src/components/icons/copy-icon';
 import ExploreIcon from 'src/components/icons/explore-icon';
 import TitleItem from 'src/components/title-item';
+import { GuardianHashListType } from 'src/global';
 import { formatAddress } from 'src/services';
 
-export type GuardianHashType = {
-  address: string;
-  hash: string;
-};
-
 interface Props {
-  value: { [address: string]: GuardianHashType };
+  value: GuardianHashListType;
   events?: {
     onAdd?: (address: string) => Promise<void>;
     onRemove?: (address: string) => void;
@@ -36,10 +32,10 @@ export default function GuardianAddresses({ value, events, props }: Props) {
 
   return (
     <Box {...props}>
-      <Box sx={{ mb: 1, mt: 2, pt: 1, borderTop: '1px solid #ffffff' }}>
+      <Box sx={{ mb: 1, mt: 2, pt: 1 }}>
         {Object.values(value).map((item, index) => {
           return (
-            <Box key={item.hash} sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box key={item.hash} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
               <TitleItem
                 titleWidth="80px"
                 title={`address ${index + 1}`}
@@ -57,7 +53,15 @@ export default function GuardianAddresses({ value, events, props }: Props) {
               <TitleItem
                 titleWidth="60px"
                 title={`hash ${index + 1}`}
-                component={<Typography>{formatAddress(item.hash, 5)}</Typography>}
+                component={
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Typography>{formatAddress(item.hash, 5)}</Typography>
+                    <CopyIcon
+                      copyText={item.hash}
+                      iconProps={{ sx: { fontSize: '16px', color: 'primary.main' } }}
+                    />
+                  </Box>
+                }
                 props={{ sx: { mx: 3 } }}
               />
               <Button variant="outlined" onClick={() => onRemove(item.address)}>

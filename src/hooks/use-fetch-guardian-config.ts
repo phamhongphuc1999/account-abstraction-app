@@ -8,40 +8,49 @@ import { useAppDispatch, useAppSelector } from 'src/redux-slices/hook';
 export default function useFetchGuardianConfig() {
   const accountContract = useAccountContract();
   const dispatch = useAppDispatch();
-  const { guardianAddress } = useAppSelector((state) => state.guardian);
+  const { guardianAddress, deployType, configType } = useAppSelector((state) => state.guardian);
   const guardianContract = useGuardianContract(guardianAddress);
 
   const _fetchGuardianAddress = useCallback(async () => {
-    if (accountContract) {
+    if (accountContract && deployType == 'initial') {
       const guardianAddress = await accountContract.fn.accountGuardian();
       if (guardianAddress != ZeroAddress)
-        dispatch(setGuardianAddress({ guardianAddress, deployType: 'notConfig' }));
+        dispatch(setGuardianAddress({ guardianAddress, deployType: 'deployed' }));
       else dispatch(setGuardianAddress({ guardianAddress: '', deployType: 'notDeploy' }));
     }
-  }, [accountContract, dispatch]);
+  }, [accountContract, dispatch, deployType]);
 
   const _fetchGuardianConfig = useCallback(async () => {
-    if (isAddress(guardianAddress) && guardianContract) {
+    if (isAddress(guardianAddress) && guardianContract && configType == 'initial') {
       const threshold = await guardianContract.fn.threshold();
       const _threshold = parseInt(threshold.toString());
       if (_threshold == 0)
-        dispatch(updateGuardianConfig({ threshold: _threshold, deployType: 'notConfig' }));
+        dispatch(updateGuardianConfig({ threshold: _threshold, configType: 'notConfig' }));
       else {
         const guardianCount = await guardianContract.fn.guardianCount();
+        const _guardianCount = parseInt(guardianCount.toString());
         const delay = await guardianContract.fn.getDelay();
         const ownerTransactionCount = await guardianContract.fn.getOwnerTransactionCount();
+        const hashList: Array<string> = [];
+        let counter = 0;
+        while (counter < _guardianCount) {
+          const _hash = await guardianContract.fn.guardians(counter);
+          hashList.push(_hash.toString());
+          counter++;
+        }
         dispatch(
           updateGuardianConfig({
             threshold: _threshold,
-            guardianCount: parseInt(guardianCount.toString()),
+            guardianCount: _guardianCount,
             delay: parseInt(delay.toString()),
             ownerTransactionCount: parseInt(ownerTransactionCount.toString()),
-            deployType: 'deployed',
+            hashList,
+            configType: 'alreadyConfig',
           })
         );
       }
     }
-  }, [guardianAddress, guardianContract, dispatch]);
+  }, [guardianAddress, guardianContract, dispatch, configType]);
 
   return { fetchGuardianAddress: _fetchGuardianAddress, fetchGuardianConfig: _fetchGuardianConfig };
 }

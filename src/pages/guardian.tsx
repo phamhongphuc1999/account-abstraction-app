@@ -8,7 +8,7 @@ import { useAppSelector } from 'src/redux-slices/hook';
 
 export default function Guardian() {
   const { fetchGuardianAddress, fetchGuardianConfig } = useFetchGuardianConfig();
-  const { deployType } = useAppSelector((state) => state.guardian);
+  const { deployType, configType } = useAppSelector((state) => state.guardian);
 
   useEffect(() => {
     fetchGuardianAddress();
@@ -22,8 +22,12 @@ export default function Guardian() {
     <Box>
       <Typography variant="subtitle1">Guardians</Typography>
       {deployType == 'notDeploy' && <GuardianDeployment props={{ sx: { mt: 2 } }} />}
-      {deployType == 'notConfig' && <GuardianConfig props={{ sx: { mt: 2 } }} />}
-      {deployType == 'deployed' && <GuardianDashboard props={{ sx: { mt: 2 } }} />}
+      {deployType == 'deployed' && configType == 'notConfig' && (
+        <GuardianConfig props={{ sx: { mt: 2 } }} />
+      )}
+      {deployType == 'deployed' && configType == 'alreadyConfig' && (
+        <GuardianDashboard props={{ sx: { mt: 2 } }} />
+      )}
     </Box>
   );
 }

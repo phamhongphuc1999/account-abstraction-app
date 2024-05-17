@@ -20,6 +20,12 @@ export type AddressesType = {
 };
 export type AddressesListType = { [chainId: number]: AddressesType };
 
+export type GuardianHashType = {
+  address: string;
+  hash: string;
+};
+export type GuardianHashListType = { [address: string]: GuardianHashType };
+
 export interface Connector {
   image: string;
   type: ConnectorType;

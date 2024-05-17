@@ -4,10 +4,11 @@ import { useState } from 'react';
 import BaseForm from 'src/components/base-form';
 import TitleItem from 'src/components/title-item';
 import { AccountAbi__factory, HashGuardianAbi__factory } from 'src/contracts/typechain';
+import { GuardianHashListType } from 'src/global';
 import useSendUserOp from 'src/hooks/use-send-user-op';
 import { useAppSelector } from 'src/redux-slices/hook';
 import { generatePoseidonHash } from 'src/services/circom-utils';
-import GuardianAddresses, { GuardianHashType } from './guardian-addresses';
+import GuardianAddresses from './guardian-addresses';
 
 interface Props {
   props?: BoxProps;
@@ -18,7 +19,7 @@ export default function GuardianConfig({ props }: Props) {
   const [threshold, setThreshold] = useState('0');
   const [expirePeriod, setExpirePeriod] = useState('0');
   const [delay, setDelay] = useState('0');
-  const [addresses, setAddresses] = useState<{ [address: string]: GuardianHashType }>({});
+  const [addresses, setAddresses] = useState<GuardianHashListType>({});
   const { guardianAddress } = useAppSelector((state) => state.guardian);
 
   async function onAdd(address: string) {
@@ -89,6 +90,7 @@ export default function GuardianConfig({ props }: Props) {
             }
             props={{ sx: { mt: 2 } }}
           />
+          <Box sx={{ borderTop: '1px solid #ffffff' }} />
           <GuardianAddresses value={addresses} events={{ onAdd, onRemove }} />
         </BaseForm>
       </Box>

@@ -18,6 +18,12 @@ export async function isDeploy(accountAddress: string, reader: JsonRpcProvider) 
   else return true;
 }
 
+export async function getEta(reader: JsonRpcProvider) {
+  const blockNumber = await reader.getBlockNumber();
+  const block = await reader.getBlock(blockNumber);
+  if (block) return block.timestamp + 1;
+}
+
 export function capitalizeFirstLetter(text: string, mode: 'normal' | 'retain' = 'normal') {
   if (mode == 'normal') return text.charAt(0).toUpperCase() + text.toLowerCase().slice(1);
   else return text.charAt(0).toUpperCase() + text.slice(1);

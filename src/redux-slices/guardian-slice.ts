@@ -1,27 +1,32 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { cloneDeep, merge } from 'lodash';
 import { DeployStatus } from 'src/global';
 
 export interface GuardianSliceType {
   guardianAddress: string;
-  deployType: DeployStatus | 'notConfig';
+  deployType: DeployStatus;
+  configType: 'initial' | 'notConfig' | 'alreadyConfig';
   config: {
     threshold: number;
     guardianCount: number;
     delay: number;
     expirePeriod: number;
     ownerTransactionCount: number;
+    hashList: Array<string>;
   };
 }
 
 const initialState: GuardianSliceType = {
   guardianAddress: '',
   deployType: 'initial',
+  configType: 'initial',
   config: {
     threshold: 0,
     guardianCount: 0,
     delay: 0,
     expirePeriod: 0,
     ownerTransactionCount: 0,
+    hashList: [],
   },
 };
 
@@ -31,26 +36,25 @@ const guardianSlice = createSlice({
   reducers: {
     setGuardianAddress: (
       state: GuardianSliceType,
-      actions: PayloadAction<{ guardianAddress: string; deployType: DeployStatus | 'notConfig' }>
+      actions: PayloadAction<{ guardianAddress: string; deployType: DeployStatus }>
     ) => {
       const { guardianAddress, deployType } = actions.payload;
-      state.guardianAddress = guardianAddress;
+      state.guardianAddress = guardianAddress.toLowerCase();
       state.deployType = deployType;
     },
     updateGuardianConfig: (
       state: GuardianSliceType,
       actions: PayloadAction<
-        Partial<GuardianSliceType['config'] & { deployType: DeployStatus | 'notConfig' }>
+        Partial<
+          GuardianSliceType['config'] & { configType: 'initial' | 'notConfig' | 'alreadyConfig' }
+        >
       >
     ) => {
-      const { threshold, guardianCount, delay, expirePeriod, ownerTransactionCount, deployType } =
-        actions.payload;
-      if (threshold) state.config.threshold = threshold;
-      if (guardianCount) state.config.guardianCount = guardianCount;
-      if (delay) state.config.delay = delay;
-      if (expirePeriod) state.config.expirePeriod = expirePeriod;
-      if (ownerTransactionCount) state.config.ownerTransactionCount = ownerTransactionCount;
-      if (deployType) state.deployType = deployType;
+      const { configType } = actions.payload;
+      if (configType) state.configType = configType;
+      const _config = cloneDeep(actions.payload);
+      delete _config['configType'];
+      state.config = merge(state.config, _config);
     },
   },
 });
