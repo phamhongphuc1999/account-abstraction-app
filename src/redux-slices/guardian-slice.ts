@@ -2,8 +2,8 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { DeployStatus } from 'src/global';
 
 export interface GuardianSliceType {
-  address: string;
-  deployType: DeployStatus;
+  guardianAddress: string;
+  deployType: DeployStatus | 'notConfig';
   config: {
     threshold: number;
     guardianCount: number;
@@ -14,7 +14,7 @@ export interface GuardianSliceType {
 }
 
 const initialState: GuardianSliceType = {
-  address: '',
+  guardianAddress: '',
   deployType: 'initial',
   config: {
     threshold: 0,
@@ -31,23 +31,26 @@ const guardianSlice = createSlice({
   reducers: {
     setGuardianAddress: (
       state: GuardianSliceType,
-      actions: PayloadAction<{ address: string; deployType: DeployStatus }>
+      actions: PayloadAction<{ guardianAddress: string; deployType: DeployStatus | 'notConfig' }>
     ) => {
-      const { address, deployType } = actions.payload;
-      state.address = address;
+      const { guardianAddress, deployType } = actions.payload;
+      state.guardianAddress = guardianAddress;
       state.deployType = deployType;
     },
     updateGuardianConfig: (
       state: GuardianSliceType,
-      actions: PayloadAction<Partial<GuardianSliceType['config']>>
+      actions: PayloadAction<
+        Partial<GuardianSliceType['config'] & { deployType: DeployStatus | 'notConfig' }>
+      >
     ) => {
-      const { threshold, guardianCount, delay, expirePeriod, ownerTransactionCount } =
+      const { threshold, guardianCount, delay, expirePeriod, ownerTransactionCount, deployType } =
         actions.payload;
       if (threshold) state.config.threshold = threshold;
       if (guardianCount) state.config.guardianCount = guardianCount;
       if (delay) state.config.delay = delay;
       if (expirePeriod) state.config.expirePeriod = expirePeriod;
       if (ownerTransactionCount) state.config.ownerTransactionCount = ownerTransactionCount;
+      if (deployType) state.deployType = deployType;
     },
   },
 });

@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 import { Interface, ethers, isAddress } from 'ethers';
 import { useState } from 'react';
 import BaseAccountDialog from 'src/components/BaseAccountDialog';
@@ -6,7 +6,9 @@ import BaseForm from 'src/components/base-form';
 import TitleItem from 'src/components/title-item';
 import { AccountAbi__factory } from 'src/contracts/typechain';
 import { ActionToken } from 'src/global';
+import useFetchBalance from 'src/hooks/use-fetch-balance';
 import useSendUserOp from 'src/hooks/use-send-user-op';
+import { useAppSelector } from 'src/redux-slices/hook';
 import { formatAddress } from 'src/services';
 
 interface Props {
@@ -19,6 +21,8 @@ export default function SendTokenDialog({ open, token, onClose }: Props) {
   const [amount, setAmount] = useState('0');
   const [to, setTo] = useState('');
   const { sendEntryPoint } = useSendUserOp();
+  const { balance } = useAppSelector((state) => state.token);
+  const { fetchNativeBalance } = useFetchBalance();
 
   function onAmountChange(value: string) {
     setAmount(value);
@@ -28,6 +32,10 @@ export default function SendTokenDialog({ open, token, onClose }: Props) {
     setTo(value);
   }
 
+  function onMax() {
+    if (!isAddress(token.address)) setAmount(balance);
+  }
+
   async function nativeSubmit() {
     const accountInter = new Interface(AccountAbi__factory.abi);
     const callData = accountInter.encodeFunctionData('execute', [
@@ -35,7 +43,8 @@ export default function SendTokenDialog({ open, token, onClose }: Props) {
       ethers.parseEther(amount),
       '0x00',
     ]);
-    await sendEntryPoint(callData);
+    const isCheck = await sendEntryPoint(callData);
+    if (isCheck) await fetchNativeBalance();
   }
 
   async function onSubmit() {
@@ -65,6 +74,13 @@ export default function SendTokenDialog({ open, token, onClose }: Props) {
               type="float"
               value={amount}
               onChange={(event) => onAmountChange(event.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <Typography color="primary.main" sx={{ cursor: 'pointer' }} onClick={onMax}>
+                    Max
+                  </Typography>
+                ),
+              }}
             />
           }
           props={{ sx: { mt: 1.5 } }}

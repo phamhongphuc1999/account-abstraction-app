@@ -4,7 +4,7 @@ import useExplorerUrl, { ExploreConfigProps } from 'src/hooks/use-explorer-url';
 
 interface Props {
   hash: string | undefined;
-  config?: Partial<ExploreConfigProps>;
+  config?: Partial<ExploreConfigProps & { isShowText: boolean }>;
 }
 
 export default function ExploreIcon({ hash, config }: Props) {
@@ -25,7 +25,7 @@ export default function ExploreIcon({ hash, config }: Props) {
         },
       }}
     >
-      <Typography>View on Explorer</Typography>
+      {config?.isShowText != false && <Typography>View on Explorer</Typography>}
       <Launch sx={{ fontSize: '16px', color: 'primary.main', ml: 0.5 }} />
     </Link>
   );

@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 .eslintcache
 typechain
+
+src/services/circom/**/*
+src/services/circom/*_js/

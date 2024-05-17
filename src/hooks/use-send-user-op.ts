@@ -45,7 +45,8 @@ export default function useSendUserOp() {
           }
         }
         return false;
-      } catch {
+      } catch (error) {
+        console.error(error);
         return false;
       }
     },

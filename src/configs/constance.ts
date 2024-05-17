@@ -8,6 +8,7 @@ export const ChainConfig = [
 ];
 
 export const SIMPLE_SALT = '0x'.padEnd(66, '0');
+export const TX_FEE = '0.0002';
 
 export const DefaultsForUserOp: UserOperation = {
   sender: ZeroAddress,

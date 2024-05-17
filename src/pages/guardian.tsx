@@ -1,33 +1,29 @@
 import { Box, Typography } from '@mui/material';
-import { ZeroAddress } from 'ethers';
-import { useCallback, useEffect } from 'react';
-import { useAccountContract } from 'src/contracts/account-contract';
+import { useEffect } from 'react';
+import useFetchGuardianConfig from 'src/hooks/use-fetch-guardian-config';
+import GuardianConfig from 'src/pages-view/guardian/guardian-config';
+import GuardianDashboard from 'src/pages-view/guardian/guardian-dashboard';
 import GuardianDeployment from 'src/pages-view/guardian/guardian-deployment';
-import { setGuardianAddress } from 'src/redux-slices/guardian-slice';
-import { useAppDispatch, useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/hook';
 
 export default function Guardian() {
-  const accountContract = useAccountContract();
-  const dispatch = useAppDispatch();
+  const { fetchGuardianAddress, fetchGuardianConfig } = useFetchGuardianConfig();
   const { deployType } = useAppSelector((state) => state.guardian);
 
-  const _fetch = useCallback(async () => {
-    if (accountContract) {
-      const guardianAddress = await accountContract.fn.accountGuardian();
-      if (guardianAddress != ZeroAddress)
-        dispatch(setGuardianAddress({ address: guardianAddress, deployType: 'deployed' }));
-      else dispatch(setGuardianAddress({ address: '', deployType: 'notDeploy' }));
-    }
-  }, [accountContract, dispatch]);
+  useEffect(() => {
+    fetchGuardianAddress();
+  }, [fetchGuardianAddress]);
 
   useEffect(() => {
-    _fetch();
-  }, [_fetch]);
+    fetchGuardianConfig();
+  }, [fetchGuardianConfig]);
 
   return (
     <Box>
       <Typography variant="subtitle1">Guardians</Typography>
-      {deployType && <GuardianDeployment props={{ sx: { mt: 2 } }} />}
+      {deployType == 'notDeploy' && <GuardianDeployment props={{ sx: { mt: 2 } }} />}
+      {deployType == 'notConfig' && <GuardianConfig props={{ sx: { mt: 2 } }} />}
+      {deployType == 'deployed' && <GuardianDashboard props={{ sx: { mt: 2 } }} />}
     </Box>
   );
 }

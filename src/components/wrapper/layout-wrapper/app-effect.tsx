@@ -1,29 +1,12 @@
-import { isAddress } from 'ethers';
-import { useCallback, useEffect } from 'react';
-import { CHAINS } from 'src/configs/network-config';
-import { useAppDispatch, useAppSelector } from 'src/redux-slices/hook';
-import { updateBalance } from 'src/redux-slices/token-slice';
-import BalanceService from 'src/services/balance-service';
-import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context';
+import { useEffect } from 'react';
+import useFetchBalance from 'src/hooks/use-fetch-balance';
 
 export default function AppEffect() {
-  const { reader } = usRpcProviderContext();
-  const dispatch = useAppDispatch();
-  const { chainId } = useAppSelector((state) => state.config);
-  const { accountAddress } = useAppSelector((state) => state.user);
-
-  const _fetchNativeBalance = useCallback(async () => {
-    if (reader && chainId > 0 && isAddress(accountAddress)) {
-      const chainConfig = CHAINS[chainId];
-      const nativeToken = chainConfig.nativeCurrency.decimals;
-      const _balance = await BalanceService.native(reader, accountAddress, nativeToken);
-      dispatch(updateBalance(_balance));
-    }
-  }, [accountAddress, chainId, reader, dispatch]);
+  const { fetchNativeBalance } = useFetchBalance();
 
   useEffect(() => {
-    _fetchNativeBalance();
-  }, [_fetchNativeBalance]);
+    fetchNativeBalance();
+  }, [fetchNativeBalance]);
 
   return <></>;
 }
