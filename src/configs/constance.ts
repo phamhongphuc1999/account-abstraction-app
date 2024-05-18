@@ -6,7 +6,12 @@ export const ChainConfig = [
   { chainId: 56, image: BSC, name: 'BSC Mainnet' },
   { chainId: 97, image: BSC, name: 'BSC Testnet' },
 ];
-
+export const OwnerExecutedType = {
+  Queue: 0,
+  Success: 1,
+  Fail: 2,
+  Cancel: 3,
+};
 export const OwnerTransactionType = {
   AddGuardian: 0,
   RemoveGuardian: 1,
@@ -15,6 +20,7 @@ export const OwnerTransactionType = {
 
 export const SIMPLE_SALT = '0x'.padEnd(66, '0');
 export const TX_FEE = '0.0002';
+export const SIMPLE_EXTEND = 100;
 
 export const DefaultsForUserOp: UserOperation = {
   sender: ZeroAddress,

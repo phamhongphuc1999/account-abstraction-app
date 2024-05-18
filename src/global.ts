@@ -1,4 +1,5 @@
-import { JsonRpcProvider, JsonRpcSigner } from 'ethers';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { InterfaceAbi, JsonRpcProvider, JsonRpcSigner } from 'ethers';
 
 export type StringListType<T = unknown> = { [key: string]: T };
 
@@ -17,6 +18,7 @@ export type DeployStatus = 'initial' | 'deployed' | 'notDeploy';
 export type AddressesType = {
   ENTRY_POINT_ADDRESS: string;
   ACCOUNT_FACTORY_ADDRESS: string;
+  MULTI_CALL_ADDRESS: string;
 };
 export type AddressesListType = { [chainId: number]: AddressesType };
 
@@ -25,6 +27,13 @@ export type GuardianHashType = {
   hash: string;
 };
 export type GuardianHashListType = { [address: string]: GuardianHashType };
+export type GuardianOwnTransactionType = {
+  value: number;
+  data: string;
+  eta: number;
+  executedType: number;
+  type: number;
+};
 
 export interface Connector {
   image: string;
@@ -63,3 +72,15 @@ export type Chain = {
 
 export type ChainList = StringListType<Chain>;
 export type GlobalProviderType = JsonRpcProvider | JsonRpcSigner;
+
+export type MultiCallType = {
+  address: string;
+  name: string;
+  params: Array<any>;
+};
+
+export interface MultiCallParams {
+  abi: InterfaceAbi;
+  calls: Array<MultiCallType>;
+  reader: JsonRpcProvider;
+}

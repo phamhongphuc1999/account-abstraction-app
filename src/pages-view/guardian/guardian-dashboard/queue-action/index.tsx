@@ -3,10 +3,10 @@ import AddGuardian from './add-guardian';
 import ChangeThreshold from './change-threshold';
 import RemoveGuardian from './remove-guardian';
 
-export default function Action() {
+export default function QueueAction() {
   return (
     <Box sx={{ mt: 1 }}>
-      <Typography>Action</Typography>
+      <Typography>Create Queue Action</Typography>
       <Box sx={{ mt: 1, display: 'flex', gap: 1 }}>
         <ChangeThreshold />
         <AddGuardian />

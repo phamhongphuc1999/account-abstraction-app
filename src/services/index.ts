@@ -1,6 +1,7 @@
 import { SxProps, Theme } from '@mui/material';
 import { SystemStyleObject } from '@mui/system';
 import { BytesLike, Interface, JsonRpcProvider, concat, hexlify, toBeHex } from 'ethers';
+import { SIMPLE_EXTEND } from 'src/configs/constance';
 import { AccountFactoryAbi__factory } from 'src/contracts/typechain';
 
 export function formatAddress(address: string, fractionDigits = 3) {
@@ -18,10 +19,10 @@ export async function isDeploy(accountAddress: string, reader: JsonRpcProvider) 
   else return true;
 }
 
-export async function getEta(reader: JsonRpcProvider) {
+export async function getEta(reader: JsonRpcProvider, extend = SIMPLE_EXTEND) {
   const blockNumber = await reader.getBlockNumber();
   const block = await reader.getBlock(blockNumber);
-  if (block) return block.timestamp + 1;
+  if (block) return block.timestamp + extend;
 }
 
 export function capitalizeFirstLetter(text: string, mode: 'normal' | 'retain' = 'normal') {

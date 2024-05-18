@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import BaseAccountDialog from 'src/components/BaseAccountDialog';
 import BaseForm from 'src/components/base-form';
 import TitleItem from 'src/components/title-item';
-import { OwnerTransactionType } from 'src/configs/constance';
+import { OwnerTransactionType, SIMPLE_EXTEND } from 'src/configs/constance';
 import { AccountAbi__factory, HashGuardianAbi__factory } from 'src/contracts/typechain';
 import useSendUserOp from 'src/hooks/use-send-user-op';
 import { useAppSelector } from 'src/redux-slices/hook';
@@ -18,6 +18,7 @@ export default function ChangeThreshold() {
   const { threshold: configThreshold } = config;
   const [open, setOpen] = useState(false);
   const [threshold, setThreshold] = useState(configThreshold.toString());
+  const [extend, setExtend] = useState(SIMPLE_EXTEND);
   const { reader } = usRpcProviderContext();
   const { sendEntryPoint } = useSendUserOp();
 
@@ -25,13 +26,13 @@ export default function ChangeThreshold() {
     if (configThreshold != parseInt(threshold) && reader) {
       const guardianInter = new Interface(HashGuardianAbi__factory.abi);
       const accountInter = new Interface(AccountAbi__factory.abi);
-      const eta = await getEta(reader);
-      if (eta) {
+      const _eta = await getEta(reader, extend);
+      if (_eta) {
         let callData = guardianInter.encodeFunctionData('setThreshold', [threshold]);
         callData = guardianInter.encodeFunctionData('queue', [
           0,
           callData,
-          eta,
+          _eta,
           OwnerTransactionType.SetThreshold,
         ]);
         callData = accountInter.encodeFunctionData('execute', [guardianAddress, 0, callData]);
@@ -57,6 +58,18 @@ export default function ChangeThreshold() {
                 onChange={(event) => setThreshold(event.target.value)}
               />
             }
+          />
+          <TitleItem
+            titleWidth="110px"
+            title="Extend"
+            component={
+              <TextField
+                fullWidth
+                value={extend}
+                onChange={(event) => setExtend(parseInt(event.target.value))}
+              />
+            }
+            props={{ sx: { mt: 1 } }}
           />
         </BaseForm>
       </BaseAccountDialog>

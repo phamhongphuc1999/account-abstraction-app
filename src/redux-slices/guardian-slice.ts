@@ -1,11 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { cloneDeep, merge } from 'lodash';
-import { DeployStatus } from 'src/global';
+import { DeployStatus, GuardianOwnTransactionType } from 'src/global';
 
 export interface GuardianSliceType {
   guardianAddress: string;
-  deployType: DeployStatus;
-  configType: 'initial' | 'notConfig' | 'alreadyConfig';
+  ownTransactions: { [data: string]: GuardianOwnTransactionType };
   config: {
     threshold: number;
     guardianCount: number;
@@ -14,12 +13,13 @@ export interface GuardianSliceType {
     ownerTransactionCount: number;
     hashList: Array<string>;
   };
+  deployType: DeployStatus;
+  configType: 'initial' | 'notConfig' | 'alreadyConfig';
 }
 
 const initialState: GuardianSliceType = {
   guardianAddress: '',
-  deployType: 'initial',
-  configType: 'initial',
+  ownTransactions: {},
   config: {
     threshold: 0,
     guardianCount: 0,
@@ -28,12 +28,27 @@ const initialState: GuardianSliceType = {
     ownerTransactionCount: 0,
     hashList: [],
   },
+  deployType: 'initial',
+  configType: 'initial',
 };
 
 const guardianSlice = createSlice({
   name: 'config',
   initialState,
   reducers: {
+    updateGuardianOwnTransactions: (
+      state: GuardianSliceType,
+      actions: PayloadAction<{ [data: string]: GuardianOwnTransactionType }>
+    ) => {
+      state.ownTransactions = actions.payload;
+    },
+    updateGuardianOwnTransaction: (
+      state: GuardianSliceType,
+      actions: PayloadAction<GuardianOwnTransactionType>
+    ) => {
+      const _data = actions.payload;
+      state.ownTransactions[_data.data] = _data;
+    },
     setGuardianAddress: (
       state: GuardianSliceType,
       actions: PayloadAction<{ guardianAddress: string; deployType: DeployStatus }>
@@ -60,4 +75,9 @@ const guardianSlice = createSlice({
 });
 
 export default guardianSlice.reducer;
-export const { setGuardianAddress, updateGuardianConfig } = guardianSlice.actions;
+export const {
+  updateGuardianOwnTransactions,
+  updateGuardianOwnTransaction,
+  setGuardianAddress,
+  updateGuardianConfig,
+} = guardianSlice.actions;
