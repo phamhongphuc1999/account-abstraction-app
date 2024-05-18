@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { Groth16Proof, PublicSignals, groth16 } from 'snarkjs';
-import VerificationKey from './circom/verification_key.json';
 import { buildPoseidon } from 'circomlibjs';
+import { Groth16Proof, PublicSignals, groth16 } from 'snarkjs';
+import VerificationKey from 'src/services/circom/verification_key.json';
+import { ProofCallDataType } from 'src/global';
 
 export async function generatePoseidonHash(
   _address: string,
@@ -32,4 +33,18 @@ export async function verifyProof(
 ): Promise<boolean> {
   const res = await groth16.verify(VerificationKey, publicSignals, proof);
   return res;
+}
+
+export async function generateCalldata(
+  proof: Groth16Proof,
+  publicSignals: PublicSignals
+): Promise<ProofCallDataType> {
+  const _call = await groth16.exportSolidityCallData(proof, publicSignals);
+  const realCall = JSON.parse(`[${_call}]`) as [
+    ProofCallDataType['pA'],
+    ProofCallDataType['pB'],
+    ProofCallDataType['pC'],
+    ProofCallDataType['pubSignals']
+  ];
+  return { pA: realCall[0], pB: realCall[1], pC: realCall[2], pubSignals: realCall[3] };
 }

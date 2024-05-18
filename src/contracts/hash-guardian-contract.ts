@@ -1,6 +1,7 @@
 import { isAddress } from 'ethers';
 import { useMemo } from 'react';
 import { ContractType, GlobalProviderType } from 'src/global';
+import { useAppSelector } from 'src/redux-slices/hook';
 import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context';
 import RootContract from './root-contract';
 import { HashGuardianAbi, HashGuardianAbi__factory } from './typechain';
@@ -15,14 +16,15 @@ export class HashGuardianContract extends RootContract<HashGuardianAbi> {
   }
 }
 
-export function useGuardianContract(address: string, type: ContractType = 'reader') {
+export function useHashGuardianContract(type: ContractType = 'reader') {
+  const { guardianAddress } = useAppSelector((state) => state.guardian);
   const { reader, signer } = usRpcProviderContext();
 
   return useMemo(() => {
-    if (isAddress(address)) {
-      if (type == 'reader' && reader) return new HashGuardianContract(reader, address);
-      else if (type == 'signer' && signer) return new HashGuardianContract(signer, address);
+    if (isAddress(guardianAddress)) {
+      if (type == 'reader' && reader) return new HashGuardianContract(reader, guardianAddress);
+      else if (type == 'signer' && signer) return new HashGuardianContract(signer, guardianAddress);
     }
     return undefined;
-  }, [type, reader, signer, address]);
+  }, [type, reader, signer, guardianAddress]);
 }

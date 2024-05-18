@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useGuardianContract } from 'src/contracts/hash-guardian-contract';
+import { useHashGuardianContract } from 'src/contracts/hash-guardian-contract';
 import { HashGuardianAbi__factory } from 'src/contracts/typechain';
 import { GuardianOwnTransactionType, MultiCallType } from 'src/global';
 import { updateGuardianOwnTransactions } from 'src/redux-slices/guardian-slice';
@@ -8,11 +8,11 @@ import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context
 import useMultiCall from './use-multi-call';
 
 export default function useGuardianOwnTransactions() {
-  const { guardianAddress, config } = useAppSelector((state) => state.guardian);
-  const dispatch = useAppDispatch();
+  const { config } = useAppSelector((state) => state.guardian);
   const { ownerTransactionCount } = config;
+  const dispatch = useAppDispatch();
   const { reader } = usRpcProviderContext();
-  const guardianContract = useGuardianContract(guardianAddress);
+  const guardianContract = useHashGuardianContract();
   const { multiCallFn } = useMultiCall();
 
   const _fetchOwnTransaction = useCallback(async () => {
