@@ -1,33 +1,48 @@
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
+import { Interface } from 'ethers';
 import { useState } from 'react';
 import BaseAccountDialog from 'src/components/BaseAccountDialog';
 import BaseForm from 'src/components/base-form';
-import { GuardianHashListType } from 'src/global';
-import { generatePoseidonHash } from 'src/services/circom-utils';
-import GuardianAddresses from '../../guardian-config/guardian-addresses';
+import HashSelect from 'src/components/selector/hash-selector';
+import TitleItem from 'src/components/title-item';
+import { OwnerTransactionType, SIMPLE_EXTEND } from 'src/configs/constance';
+import { AccountAbi__factory, HashGuardianAbi__factory } from 'src/contracts/typechain';
+import useSendUserOp from 'src/hooks/use-send-user-op';
+import { useAppSelector } from 'src/redux-slices/hook';
+import { getEta } from 'src/services';
+import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context';
 
 export default function RemoveGuardian() {
+  const [extend, setExtend] = useState(SIMPLE_EXTEND);
+  const { reader } = usRpcProviderContext();
+  const { sendEntryPoint } = useSendUserOp();
   const [open, setOpen] = useState(false);
-  const [addresses, setAddresses] = useState<GuardianHashListType>({});
+  const [removeGuardian, setRemoveGuardian] = useState('');
+  const { guardianAddress, config } = useAppSelector((state) => state.guardian);
+  const { hashList } = config;
 
-  async function onAdd(address: string) {
-    const _hash = await generatePoseidonHash(address, 'hex');
-    setAddresses((preValue) => {
-      return { ...preValue, [address]: { address, hash: _hash } };
-    });
-  }
-
-  function onRemove(address: string) {
-    setAddresses((preValue) => {
-      const newValue = { ...preValue };
-      delete newValue[address];
-      return newValue;
-    });
+  async function onRemoveGuardianChange(addressHash: string) {
+    setRemoveGuardian(addressHash);
   }
 
   async function onRemoveGuardian() {
-    //
+    if (reader) {
+      const guardianInter = new Interface(HashGuardianAbi__factory.abi);
+      const accountInter = new Interface(AccountAbi__factory.abi);
+      const _eta = await getEta(reader, extend);
+      if (_eta) {
+        let _callData = guardianInter.encodeFunctionData('removeGuardian', [removeGuardian]);
+        _callData = guardianInter.encodeFunctionData('queue', [
+          0,
+          _callData,
+          _eta,
+          OwnerTransactionType.RemoveGuardian,
+        ]);
+        _callData = accountInter.encodeFunctionData('execute', [guardianAddress, 0, _callData]);
+        await sendEntryPoint(_callData);
+      }
+    }
   }
 
   return (
@@ -41,7 +56,24 @@ export default function RemoveGuardian() {
       </Button>
       <BaseAccountDialog title="Remove Guardian" open={open} onClose={() => setOpen(false)}>
         <BaseForm events={{ onExecute: onRemoveGuardian }}>
-          <GuardianAddresses value={addresses} events={{ onAdd, onRemove }} />
+          <HashSelect
+            id="hash-select"
+            hash={removeGuardian}
+            hashes={hashList}
+            events={{ onSelectItem: onRemoveGuardianChange }}
+          />
+          <TitleItem
+            titleWidth="110px"
+            title="Extend"
+            component={
+              <TextField
+                fullWidth
+                value={extend}
+                onChange={(event) => setExtend(parseInt(event.target.value))}
+              />
+            }
+            props={{ sx: { mt: 1 } }}
+          />
         </BaseForm>
       </BaseAccountDialog>
     </>

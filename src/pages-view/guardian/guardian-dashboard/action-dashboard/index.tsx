@@ -9,13 +9,9 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect } from 'react';
-import CopyIcon from 'src/components/icons/copy-icon';
-import GuardianTransactionTypeIcon, {
-  GuardianTransactionExecutedType,
-} from 'src/components/icons/guardian-transaction-type-icon';
 import useGuardianOwnTransactions from 'src/hooks/use-guardian-own-transactions';
 import { useAppSelector } from 'src/redux-slices/hook';
-import { formatAddress } from 'src/services';
+import DashboardTableRow from './dashboard-table-row';
 
 export default function ActionDashboard() {
   const { fetchOwnTransaction } = useGuardianOwnTransactions();
@@ -38,28 +34,13 @@ export default function ActionDashboard() {
               <TableCell>Eta</TableCell>
               <TableCell>Executed Type</TableCell>
               <TableCell>Type</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {Object.values(ownTransactions).map((transaction, index) => {
               return (
-                <TableRow key={transaction.data}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{transaction.value}</TableCell>
-                  <TableCell>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Typography>{formatAddress(transaction.data, 5)}</Typography>
-                      <CopyIcon copyText={transaction.data} />
-                    </Box>
-                  </TableCell>
-                  <TableCell>{transaction.eta}</TableCell>
-                  <TableCell>
-                    <GuardianTransactionExecutedType type={transaction.executedType} />
-                  </TableCell>
-                  <TableCell>
-                    <GuardianTransactionTypeIcon type={transaction.type} />
-                  </TableCell>
-                </TableRow>
+                <DashboardTableRow key={transaction.data} transaction={transaction} index={index} />
               );
             })}
           </TableBody>

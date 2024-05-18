@@ -30,15 +30,18 @@ export default function useGuardianOwnTransactions() {
       const result = await multiCallFn({ abi: HashGuardianAbi__factory.abi, calls, reader });
       if (result) {
         const _data: { [data: string]: GuardianOwnTransactionType } = {};
+        counter = 0;
         for (const item of result) {
           const _calldata = item[1];
           _data[String(_calldata)] = {
+            index: counter,
             value: parseInt(item[0]),
             data: _calldata,
             eta: parseInt(item[2]),
             executedType: parseInt(item[3]),
             type: parseInt(item[4]),
           };
+          counter++;
         }
         dispatch(updateGuardianOwnTransactions(_data));
       }

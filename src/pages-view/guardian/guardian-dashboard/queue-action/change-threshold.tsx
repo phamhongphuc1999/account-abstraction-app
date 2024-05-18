@@ -44,7 +44,7 @@ export default function ChangeThreshold() {
   return (
     <>
       <Button variant="outlined" onClick={() => setOpen(true)} startIcon={<AdjustOutlinedIcon />}>
-        Setup Threshold
+        Change Threshold
       </Button>
       <BaseAccountDialog title="Change Threshold" open={open} onClose={() => setOpen(false)}>
         <BaseForm events={{ onExecute: onChangeThreshold }}>

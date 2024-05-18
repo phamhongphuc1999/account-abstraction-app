@@ -33,7 +33,7 @@ export default function useFetchGuardianConfig() {
         const ownerTransactionCount = await guardianContract.fn.getOwnerTransactionCount();
         const hashList: Array<string> = [];
         let counter = 0;
-        while (counter < _guardianCount) {
+        while (counter <= _guardianCount) {
           const _hash = await guardianContract.fn.guardians(counter);
           hashList.push(_hash.toString());
           counter++;

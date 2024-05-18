@@ -1,11 +1,13 @@
 /* eslint-disable react/prop-types */
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import AdjustOutlinedIcon from '@mui/icons-material/AdjustOutlined';
-import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
-import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-import LayersOutlinedIcon from '@mui/icons-material/LayersOutlined';
-import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
-import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
+import {
+  AddCircleOutlineOutlined,
+  AdjustOutlined,
+  BackspaceOutlined,
+  ErrorOutlineOutlined,
+  LayersOutlined,
+  RemoveCircleOutlineOutlined,
+  ThumbUpAltOutlined,
+} from '@mui/icons-material';
 import { Box, SvgIconProps, Typography } from '@mui/material';
 import { useMemo } from 'react';
 import { OwnerExecutedType, OwnerTransactionType } from 'src/configs/constance';
@@ -19,10 +21,10 @@ interface Props {
 export default function GuardianTransactionTypeIcon({ type, props }: Props) {
   const { Icon, text } = useMemo(() => {
     if (type == OwnerTransactionType.SetThreshold)
-      return { Icon: AdjustOutlinedIcon, text: 'Set Threshold' };
+      return { Icon: AdjustOutlined, text: 'Set Threshold' };
     else if (type == OwnerTransactionType.AddGuardian)
-      return { Icon: AddCircleOutlineOutlinedIcon, text: 'Add Guardians' };
-    else return { Icon: RemoveCircleOutlineOutlinedIcon, text: 'Remove Guardians' };
+      return { Icon: AddCircleOutlineOutlined, text: 'Add Guardian' };
+    else return { Icon: RemoveCircleOutlineOutlined, text: 'Remove Guardian' };
   }, [type]);
 
   return (
@@ -35,12 +37,11 @@ export default function GuardianTransactionTypeIcon({ type, props }: Props) {
 
 export function GuardianTransactionExecutedType({ type, props }: Props) {
   const { Icon, text } = useMemo(() => {
-    if (type == OwnerExecutedType.Queue) return { Icon: LayersOutlinedIcon, text: 'Queue' };
+    if (type == OwnerExecutedType.Queue) return { Icon: LayersOutlined, text: 'Queue' };
     else if (type == OwnerExecutedType.Success)
-      return { Icon: ThumbUpAltOutlinedIcon, text: 'Success' };
-    else if (type == OwnerExecutedType.Fail)
-      return { Icon: ErrorOutlineOutlinedIcon, text: 'Error' };
-    else return { Icon: BackspaceOutlinedIcon, text: 'Cancel' };
+      return { Icon: ThumbUpAltOutlined, text: 'Success' };
+    else if (type == OwnerExecutedType.Fail) return { Icon: ErrorOutlineOutlined, text: 'Error' };
+    else return { Icon: BackspaceOutlined, text: 'Cancel' };
   }, [type]);
 
   return (

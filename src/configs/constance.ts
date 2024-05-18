@@ -18,6 +18,7 @@ export const OwnerTransactionType = {
   SetThreshold: 2,
 };
 
+export const DAY_SECOND = 86400;
 export const SIMPLE_SALT = '0x'.padEnd(66, '0');
 export const TX_FEE = '0.0002';
 export const SIMPLE_EXTEND = 100;

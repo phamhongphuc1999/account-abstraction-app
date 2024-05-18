@@ -28,6 +28,7 @@ export type GuardianHashType = {
 };
 export type GuardianHashListType = { [address: string]: GuardianHashType };
 export type GuardianOwnTransactionType = {
+  index: number;
   value: number;
   data: string;
   eta: number;

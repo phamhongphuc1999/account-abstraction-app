@@ -15,7 +15,10 @@ export default function App() {
     {
       path: '/recovery',
       element: <ProviderApp />,
-      children: [{ path: '', element: <Recovery /> }],
+      children: [
+        { path: ':position', element: <Recovery /> },
+        { path: '', element: <Recovery /> },
+      ],
     },
   ]);
 }

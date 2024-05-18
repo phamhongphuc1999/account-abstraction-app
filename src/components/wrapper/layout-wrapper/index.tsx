@@ -1,4 +1,4 @@
-import { Box, Container } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import ConnectionButton from 'src/components/button/connection-button';
 import NetworkButton from 'src/components/button/network-button';
@@ -21,8 +21,13 @@ export default function LayoutWrapper({ children }: Props) {
             <ConnectionButton />
           </Container>
         </Box>
-        <Box sx={{ background: '#061526', height: 'calc(100vh - 65px)' }}>
-          <Container sx={{ paddingTop: '1rem' }}>{children}</Container>
+        <Box sx={{ background: '#061526' }}>
+          <Box sx={{ height: 'calc(100vh - 65px)' }}>
+            <Container sx={{ paddingTop: '1rem' }}>{children}</Container>
+          </Box>
+          <Container sx={{ height: '50px', display: 'flex', alignItems: 'center' }}>
+            <Typography>My Account Abstraction App</Typography>
+          </Container>
         </Box>
       </Box>
     </Box>
