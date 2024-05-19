@@ -22,7 +22,7 @@ bun install
 bun typechain:build
 ```
 
-- Run app
+- <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Deer.png" alt="Deer" width="25" height="25" /> Run app
 
 ```shell
 bun dev

@@ -23,7 +23,7 @@ export default function Recovery() {
 
   const _fetchEnoughConfirm = useCallback(async () => {
     if (guardianContract) {
-      const _isEnoughConfirm = await guardianContract.fn.isEnoughComfirm();
+      const _isEnoughConfirm = await guardianContract.fn.isEnoughConfirm();
       setEnoughConfirm(_isEnoughConfirm);
       const _tempNewOwner = await guardianContract.fn._tempNewOwner();
       setTempNewOwner(_tempNewOwner);

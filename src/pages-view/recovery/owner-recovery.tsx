@@ -1,6 +1,6 @@
 /* eslint-disable quotes */
 import { Box, TextField, Typography } from '@mui/material';
-import { Interface, isAddress } from 'ethers';
+import { Interface, ZeroAddress, isAddress } from 'ethers';
 import { useState } from 'react';
 import BaseForm from 'src/components/base-form';
 import TitleItem from 'src/components/title-item';
@@ -33,7 +33,7 @@ export default function OwnerRecovery({ enoughConfirm, tempNewOwner }: Props) {
 
   return (
     <>
-      {isAddress(tempNewOwner) ? (
+      {isAddress(tempNewOwner) && tempNewOwner != ZeroAddress ? (
         <Box sx={{ width: '70%', mt: 2 }}>
           <Typography sx={{ mt: 1 }}>
             {enoughConfirm
@@ -57,7 +57,7 @@ export default function OwnerRecovery({ enoughConfirm, tempNewOwner }: Props) {
                 <TextField
                   fullWidth
                   value={newOwner}
-                  onChange={(event) => setNewOwner(event.target.value)}
+                  onChange={(event) => setNewOwner(event.target.value.toLowerCase())}
                 />
               }
             />

@@ -8,6 +8,7 @@ export interface GuardianSliceType {
   config: {
     threshold: number;
     guardianCount: number;
+    maxGuardians: number;
     delay: number;
     expirePeriod: number;
     ownerTransactionCount: number;
@@ -23,6 +24,7 @@ const initialState: GuardianSliceType = {
   config: {
     threshold: 0,
     guardianCount: 0,
+    maxGuardians: 0,
     delay: 0,
     expirePeriod: 0,
     ownerTransactionCount: 0,

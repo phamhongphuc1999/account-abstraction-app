@@ -90,7 +90,7 @@ export default function GuardianConfig({ props }: Props) {
             }
             props={{ sx: { mt: 2 } }}
           />
-          <Box sx={{ borderTop: '1px solid #ffffff' }} />
+          <Box sx={{ borderTop: '1px solid #ffffff', mt: 1 }} />
           <GuardianAddresses value={addresses} events={{ onAdd, onRemove }} />
         </BaseForm>
       </Box>

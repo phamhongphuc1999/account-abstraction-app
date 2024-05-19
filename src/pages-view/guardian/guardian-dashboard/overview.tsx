@@ -5,7 +5,7 @@ import { useAppSelector } from 'src/redux-slices/hook';
 import { formatAddress } from 'src/services';
 
 export default function Overview() {
-  const { threshold, expirePeriod, delay, guardianCount, hashList } = useAppSelector(
+  const { threshold, expirePeriod, delay, guardianCount, maxGuardians, hashList } = useAppSelector(
     (state) => state.guardian.config
   );
 
@@ -36,6 +36,12 @@ export default function Overview() {
             titleWidth="110px"
             title="Number of Guardians"
             component={<TextField value={guardianCount} InputProps={{ readOnly: true }} />}
+            props={{ sx: { mt: 1 } }}
+          />
+          <TitleItem
+            titleWidth="110px"
+            title="Max Guardians"
+            component={<TextField value={maxGuardians} InputProps={{ readOnly: true }} />}
             props={{ sx: { mt: 1 } }}
           />
         </Grid>

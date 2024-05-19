@@ -22,7 +22,7 @@ export default function LayoutWrapper({ children }: Props) {
           </Container>
         </Box>
         <Box sx={{ background: '#061526' }}>
-          <Box sx={{ height: 'calc(100vh - 65px)' }}>
+          <Box sx={{ minHeight: 'calc(100vh - 65px)' }}>
             <Container sx={{ paddingTop: '1rem' }}>{children}</Container>
           </Box>
           <Container sx={{ height: '50px', display: 'flex', alignItems: 'center' }}>

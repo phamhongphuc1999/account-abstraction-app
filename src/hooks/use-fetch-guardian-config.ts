@@ -28,12 +28,14 @@ export default function useFetchGuardianConfig() {
         dispatch(updateGuardianConfig({ threshold: _threshold, configType: 'notConfig' }));
       else {
         const guardianCount = await guardianContract.fn.guardianCount();
+        const maxGuardians = await guardianContract.fn.maxGuardians();
         const _guardianCount = parseInt(guardianCount.toString());
-        const delay = await guardianContract.fn.getDelay();
+        const expirePeriod = await guardianContract.fn.expirePeriod();
+        const delay = await guardianContract.fn.delay();
         const ownerTransactionCount = await guardianContract.fn.getOwnerTransactionCount();
         const hashList: Array<string> = [];
         let counter = 0;
-        while (counter <= _guardianCount) {
+        while (counter < _guardianCount) {
           const _hash = await guardianContract.fn.guardians(counter);
           hashList.push(_hash.toString());
           counter++;
@@ -42,6 +44,8 @@ export default function useFetchGuardianConfig() {
           updateGuardianConfig({
             threshold: _threshold,
             guardianCount: _guardianCount,
+            maxGuardians: parseInt(maxGuardians.toString()),
+            expirePeriod: parseInt(expirePeriod.toString()),
             delay: parseInt(delay.toString()),
             ownerTransactionCount: parseInt(ownerTransactionCount.toString()),
             hashList,

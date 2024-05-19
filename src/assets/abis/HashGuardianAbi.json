@@ -277,7 +277,7 @@
         "type": "uint256[2]"
       }
     ],
-    "name": "comfirmChangeOwner",
+    "name": "confirmChangeOwner",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
@@ -290,12 +290,25 @@
         "type": "uint256"
       }
     ],
-    "name": "comfirms",
+    "name": "confirms",
     "outputs": [
       {
         "internalType": "bool",
         "name": "",
         "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "delay",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -316,7 +329,7 @@
   },
   {
     "inputs": [],
-    "name": "getDelay",
+    "name": "expirePeriod",
     "outputs": [
       {
         "internalType": "uint256",
@@ -411,12 +424,25 @@
   },
   {
     "inputs": [],
-    "name": "isEnoughComfirm",
+    "name": "isEnoughConfirm",
     "outputs": [
       {
         "internalType": "bool",
         "name": "",
         "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxGuardians",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",

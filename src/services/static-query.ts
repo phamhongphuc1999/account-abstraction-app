@@ -4,6 +4,7 @@ import { AddressesType } from 'src/global';
 const ZERO_ADDRESSES: AddressesType = {
   ENTRY_POINT_ADDRESS: '',
   ACCOUNT_FACTORY_ADDRESS: '',
+  MULTI_CALL_ADDRESS: '',
 };
 
 export default class StaticQuery {
