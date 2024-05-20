@@ -25,5 +25,5 @@ dist-ssr
 .eslintcache
 typechain
 
-src/services/circom/**/*
-src/services/circom/*_js/
+public/circom
+src/services/verification_key.json

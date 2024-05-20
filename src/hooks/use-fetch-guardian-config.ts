@@ -37,7 +37,7 @@ export default function useFetchGuardianConfig() {
         let counter = 0;
         while (counter < _guardianCount) {
           const _hash = await guardianContract.fn.guardians(counter);
-          hashList.push(_hash.toString());
+          hashList.push(`0x${_hash.toString(16)}`);
           counter++;
         }
         dispatch(

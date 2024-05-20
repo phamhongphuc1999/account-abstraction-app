@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BigNumberish, InterfaceAbi, JsonRpcProvider, JsonRpcSigner } from 'ethers';
 
-export type PromiseOrValue<T> = T | Promise<T>;
 export type StringListType<T = unknown> = { [key: string]: T };
 
 export type ContractType = 'reader' | 'signer';
@@ -88,11 +87,8 @@ export interface MultiCallParams {
 }
 
 export interface ProofCallDataType {
-  pA: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>];
-  pB: [
-    [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-    [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ];
-  pC: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>];
-  pubSignals: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>];
+  pA: [BigNumberish, BigNumberish];
+  pB: [[BigNumberish, BigNumberish], [BigNumberish, BigNumberish]];
+  pC: [BigNumberish, BigNumberish];
+  pubSignals: [BigNumberish, BigNumberish];
 }

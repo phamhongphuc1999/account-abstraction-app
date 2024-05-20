@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { buildPoseidon } from 'circomlibjs';
 import { Groth16Proof, PublicSignals, groth16 } from 'snarkjs';
-import VerificationKey from 'src/services/circom/verification_key.json';
 import { ProofCallDataType } from 'src/global';
+import VerificationKey from './verification_key.json';
 
 export async function generatePoseidonHash(
   _address: string,
@@ -21,8 +21,8 @@ export async function generateProof(_address: string): Promise<{
   const _hash = await generatePoseidonHash(_address);
   const { proof, publicSignals } = await groth16.fullProve(
     { address: _address, hash: _hash },
-    './circom/sha_js/sha.wasm',
-    './circom/sha1.zkey'
+    '/public/circom/sha_js/sha.wasm',
+    '/public/circom/sha1.zkey'
   );
   return { proof, publicSignals };
 }
