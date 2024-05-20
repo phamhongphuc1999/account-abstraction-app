@@ -3,7 +3,7 @@ import { Button, TextField } from '@mui/material';
 import { Interface } from 'ethers';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import BaseAccountDialog from 'src/components/BaseAccountDialog';
+import BaseDialog from 'src/components/BaseDialog';
 import BaseForm from 'src/components/base-form';
 import TitleItem from 'src/components/title-item';
 import { OwnerTransactionType, SIMPLE_EXTEND } from 'src/configs/constance';
@@ -46,7 +46,7 @@ export default function ChangeThreshold() {
       <Button variant="outlined" onClick={() => setOpen(true)} startIcon={<AdjustOutlinedIcon />}>
         Change Threshold
       </Button>
-      <BaseAccountDialog title="Change Threshold" open={open} onClose={() => setOpen(false)}>
+      <BaseDialog title="Change Threshold" open={open} onClose={() => setOpen(false)}>
         <BaseForm events={{ onExecute: onChangeThreshold }}>
           <TitleItem
             titleWidth="110px"
@@ -72,7 +72,7 @@ export default function ChangeThreshold() {
             props={{ sx: { mt: 1 } }}
           />
         </BaseForm>
-      </BaseAccountDialog>
+      </BaseDialog>
     </>
   );
 }

@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SxProps, Theme } from '@mui/material';
 import { SystemStyleObject } from '@mui/system';
+import BigNumber from 'bignumber.js';
 import { BytesLike, Interface, JsonRpcProvider, concat, hexlify, toBeHex } from 'ethers';
 import { SIMPLE_EXTEND } from 'src/configs/constance';
 import { AccountFactoryAbi__factory } from 'src/contracts/typechain';
@@ -34,6 +36,22 @@ export function toBeHexlify(value: string | number | Uint8Array | bigint) {
   if (typeof value == 'string' || typeof value == 'number') return hexlify(toBeHex(value));
   else if (typeof value == 'bigint') return hexlify(toBeHex(value.toString()));
   else return hexlify(value);
+}
+
+export function analyticError(rawError: any) {
+  let message: undefined | string = rawError?.info?.error?.message;
+  if (!message) message = String(rawError);
+  return message;
+}
+
+export function getDecimalAmount(
+  rawAmount: string,
+  decimal: number,
+  mode: 'multiple' | 'div' = 'div'
+) {
+  const _decimal = BigNumber('10').pow(decimal);
+  if (mode == 'div') return BigNumber(rawAmount).div(_decimal);
+  else return BigNumber(rawAmount).multipliedBy(_decimal);
 }
 
 export function mergeSx(sxs: Array<boolean | SxProps<Theme> | undefined>): SxProps<Theme> {

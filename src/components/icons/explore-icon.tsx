@@ -1,13 +1,15 @@
 import { Launch } from '@mui/icons-material';
-import { Link, Typography } from '@mui/material';
+import { Link, SvgIconProps, Typography } from '@mui/material';
 import useExplorerUrl, { ExploreConfigProps } from 'src/hooks/use-explorer-url';
+import { mergeSx } from 'src/services';
 
 interface Props {
   hash: string | undefined;
   config?: Partial<ExploreConfigProps & { isShowText: boolean }>;
+  iconProps?: SvgIconProps;
 }
 
-export default function ExploreIcon({ hash, config }: Props) {
+export default function ExploreIcon({ hash, config, iconProps }: Props) {
   const { link } = useExplorerUrl(hash, config);
 
   return (
@@ -26,7 +28,10 @@ export default function ExploreIcon({ hash, config }: Props) {
       }}
     >
       {config?.isShowText != false && <Typography>View on Explorer</Typography>}
-      <Launch sx={{ fontSize: '16px', color: 'primary.main', ml: 0.5 }} />
+      <Launch
+        {...iconProps}
+        sx={mergeSx([{ fontSize: '16px', color: 'primary.main', ml: 0.5 }, iconProps?.sx])}
+      />
     </Link>
   );
 }

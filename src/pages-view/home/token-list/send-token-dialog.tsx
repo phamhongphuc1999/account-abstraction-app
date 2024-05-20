@@ -1,7 +1,7 @@
 import { TextField, Typography } from '@mui/material';
 import { Interface, ethers, isAddress } from 'ethers';
 import { useState } from 'react';
-import BaseAccountDialog from 'src/components/BaseAccountDialog';
+import BaseDialog from 'src/components/BaseDialog';
 import BaseForm from 'src/components/base-form';
 import TitleItem from 'src/components/title-item';
 import { AccountAbi__factory } from 'src/contracts/typechain';
@@ -52,7 +52,7 @@ export default function SendTokenDialog({ open, token, onClose }: Props) {
   }
 
   return (
-    <BaseAccountDialog open={open} onClose={onClose} title="Send Token">
+    <BaseDialog open={open} onClose={onClose} title="Send Token">
       <BaseForm events={{ onExecute: onSubmit }}>
         <TitleItem
           titleWidth="65px"
@@ -99,6 +99,6 @@ export default function SendTokenDialog({ open, token, onClose }: Props) {
           props={{ sx: { mt: 1.5 } }}
         />
       </BaseForm>
-    </BaseAccountDialog>
+    </BaseDialog>
   );
 }

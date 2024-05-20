@@ -2,7 +2,7 @@ import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOut
 import { Button, TextField } from '@mui/material';
 import { Interface } from 'ethers';
 import { useState } from 'react';
-import BaseAccountDialog from 'src/components/BaseAccountDialog';
+import BaseDialog from 'src/components/BaseDialog';
 import BaseForm from 'src/components/base-form';
 import HashSelect from 'src/components/selector/hash-selector';
 import TitleItem from 'src/components/title-item';
@@ -54,7 +54,7 @@ export default function RemoveGuardian() {
       >
         Remove Guardian
       </Button>
-      <BaseAccountDialog title="Remove Guardian" open={open} onClose={() => setOpen(false)}>
+      <BaseDialog title="Remove Guardian" open={open} onClose={() => setOpen(false)}>
         <BaseForm events={{ onExecute: onRemoveGuardian }}>
           <HashSelect
             id="hash-select"
@@ -75,7 +75,7 @@ export default function RemoveGuardian() {
             props={{ sx: { mt: 1 } }}
           />
         </BaseForm>
-      </BaseAccountDialog>
+      </BaseDialog>
     </>
   );
 }

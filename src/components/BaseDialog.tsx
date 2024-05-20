@@ -9,7 +9,7 @@ interface Props {
   children?: ReactNode;
 }
 
-export default function BaseAccountDialog({ title, open, onClose, children }: Props) {
+export default function BaseDialog({ title, open, onClose, children }: Props) {
   return (
     <Dialog
       fullWidth

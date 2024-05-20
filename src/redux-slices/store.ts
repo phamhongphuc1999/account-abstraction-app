@@ -2,10 +2,17 @@ import { configureStore } from '@reduxjs/toolkit';
 import configSlice from './config-slice';
 import guardianSlice from './guardian-slice';
 import tokenSlice from './token-slice';
+import txStatusSlice from './tx-status-slice';
 import userSlice from './user-slice';
 
 const store = configureStore({
-  reducer: { user: userSlice, config: configSlice, token: tokenSlice, guardian: guardianSlice },
+  reducer: {
+    user: userSlice,
+    config: configSlice,
+    token: tokenSlice,
+    guardian: guardianSlice,
+    txStatus: txStatusSlice,
+  },
 });
 
 export type AppDispatch = typeof store.dispatch;

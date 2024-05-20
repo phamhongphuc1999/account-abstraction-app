@@ -22,11 +22,13 @@ export default function BaseForm({ events, metadata, children }: Props) {
   return (
     <form onSubmit={(event) => onExecute(event)}>
       {children}
-      <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
-        <Button variant="contained" type="submit">
-          {title}
-        </Button>
-      </Box>
+      {events?.onExecute && (
+        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
+          <Button variant="contained" type="submit">
+            {title}
+          </Button>
+        </Box>
+      )}
     </form>
   );
 }

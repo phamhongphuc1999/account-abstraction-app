@@ -4,6 +4,7 @@ import ConnectionButton from 'src/components/button/connection-button';
 import NetworkButton from 'src/components/button/network-button';
 import AppEffect from './app-effect';
 import Sidebar from './sidebar';
+import TransactionStatus from './transaction-status';
 
 interface Props {
   children: ReactNode;
@@ -30,6 +31,7 @@ export default function LayoutWrapper({ children }: Props) {
           </Container>
         </Box>
       </Box>
+      <TransactionStatus />
     </Box>
   );
 }

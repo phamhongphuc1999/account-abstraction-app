@@ -3,6 +3,7 @@ import { BigNumberish, InterfaceAbi, JsonRpcProvider, JsonRpcSigner } from 'ethe
 
 export type StringListType<T = unknown> = { [key: string]: T };
 
+export type StoreName = 'tokens';
 export type ContractType = 'reader' | 'signer';
 export type ConnectorType = 'metamask' | 'coinbase';
 export type FStatus =

@@ -2,7 +2,7 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { Interface } from 'ethers';
 import { useState } from 'react';
-import BaseAccountDialog from 'src/components/BaseAccountDialog';
+import BaseDialog from 'src/components/BaseDialog';
 import BaseForm from 'src/components/base-form';
 import CopyIcon from 'src/components/icons/copy-icon';
 import TitleItem from 'src/components/title-item';
@@ -57,7 +57,7 @@ export default function AddGuardian() {
       >
         Add Guardian
       </Button>
-      <BaseAccountDialog title="Add Guardian" open={open} onClose={() => setOpen(false)}>
+      <BaseDialog title="Add Guardian" open={open} onClose={() => setOpen(false)}>
         <BaseForm events={{ onExecute: onAddGuardian }}>
           {newGuardian.hash.length > 0 && (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -89,7 +89,7 @@ export default function AddGuardian() {
             props={{ sx: { mt: 1 } }}
           />
         </BaseForm>
-      </BaseAccountDialog>
+      </BaseDialog>
     </>
   );
 }

@@ -1,11 +1,14 @@
 import { Button, TextField } from '@mui/material';
 import { isAddress } from 'ethers';
 import { useState } from 'react';
-import BaseAccountDialog from 'src/components/BaseAccountDialog';
+import { toast } from 'react-toastify';
+import BaseDialog from 'src/components/BaseDialog';
 import BaseForm from 'src/components/base-form';
 import TitleItem from 'src/components/title-item';
 import { HashGuardianContract } from 'src/contracts/hash-guardian-contract';
 import { ProofCallDataType } from 'src/global';
+import useHandleEmit from 'src/hooks/use-handle-emit';
+import { analyticError } from 'src/services';
 import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context';
 
 interface Props {
@@ -16,6 +19,7 @@ export default function SubmitProof({ calldata }: Props) {
   const [open, setOpen] = useState(false);
   const [guardianAddress, setGuardianAddress] = useState('');
   const { signer } = usRpcProviderContext();
+  const { createEmit, handleEmit, detectEmitError } = useHandleEmit();
 
   function onOpen() {
     setOpen(true);
@@ -23,10 +27,17 @@ export default function SubmitProof({ calldata }: Props) {
 
   async function onSubmitProof() {
     if (signer && isAddress(guardianAddress)) {
-      const { pA, pB, pC, pubSignals } = calldata;
-      const guardianContract = new HashGuardianContract(signer, guardianAddress);
-      const tx = await guardianContract.fn.confirmChangeOwner(pA, pB, pC, pubSignals);
-      await tx.wait();
+      const id = createEmit('submit proof');
+      try {
+        const { pA, pB, pC, pubSignals } = calldata;
+        const guardianContract = new HashGuardianContract(signer, guardianAddress);
+        const tx = await guardianContract.fn.confirmChangeOwner(pA, pB, pC, pubSignals);
+        await handleEmit(tx, id);
+      } catch (error) {
+        const sError = analyticError(error);
+        toast.error(sError);
+        detectEmitError(id, sError);
+      }
     }
   }
 
@@ -35,7 +46,7 @@ export default function SubmitProof({ calldata }: Props) {
       <Button variant="outlined" onClick={onOpen} sx={{ ml: 1 }}>
         Submit proof
       </Button>
-      <BaseAccountDialog title="Submit Proof" open={open} onClose={() => setOpen(false)}>
+      <BaseDialog title="Submit Proof" open={open} onClose={() => setOpen(false)}>
         <BaseForm events={{ onExecute: onSubmitProof }}>
           <TitleItem
             title="Guardian Address"
@@ -49,7 +60,7 @@ export default function SubmitProof({ calldata }: Props) {
             }
           />
         </BaseForm>
-      </BaseAccountDialog>
+      </BaseDialog>
     </>
   );
 }
