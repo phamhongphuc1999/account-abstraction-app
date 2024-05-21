@@ -41,12 +41,12 @@ export default class IndexedStorage {
   public readonly databaseName: string;
   public readonly db: IDBPDatabase<unknown>;
 
-  public readonly token: ObjectStorage<Array<StandardToken>>;
+  public readonly token: ObjectStorage<StandardToken>;
 
   constructor(db: IDBPDatabase<unknown>, databaseName: string) {
     this.db = db;
     this.databaseName = databaseName;
 
-    this.token = new ObjectStorage<Array<StandardToken>>(db, 'tokens');
+    this.token = new ObjectStorage<StandardToken>(db, 'tokens');
   }
 }

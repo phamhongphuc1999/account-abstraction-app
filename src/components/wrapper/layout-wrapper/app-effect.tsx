@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import useFetchBalance from 'src/hooks/use-fetch-balance';
 import useFetchGuardianConfig from 'src/hooks/use-fetch-guardian-config';
+import useRecoverTokens from 'src/hooks/use-recover-tokens';
 
 export default function AppEffect() {
-  const { fetchNativeBalance } = useFetchBalance();
   const { fetchGuardianAddress, fetchGuardianConfig } = useFetchGuardianConfig();
+  const { recoverTokens, fetchNativeBalance } = useRecoverTokens();
 
   useEffect(() => {
     fetchNativeBalance();
@@ -17,6 +17,10 @@ export default function AppEffect() {
   useEffect(() => {
     fetchGuardianConfig();
   }, [fetchGuardianConfig]);
+
+  useEffect(() => {
+    recoverTokens();
+  }, [recoverTokens]);
 
   return <></>;
 }

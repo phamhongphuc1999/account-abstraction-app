@@ -4,14 +4,13 @@ import { isAddress } from 'ethers';
 import { useMemo, useState } from 'react';
 import CopyIcon from 'src/components/icons/copy-icon';
 import ExploreIcon from 'src/components/icons/explore-icon';
-import { TokenImage } from 'src/components/token-image';
 import { CHAINS } from 'src/configs/network-config';
-import { ActionToken } from 'src/global';
+import { StandardToken } from 'src/global';
 import { useAppSelector } from 'src/redux-slices/hook';
 import SendTokenDialog from './send-token-dialog';
 
 interface Props {
-  token: ActionToken & { balance: string };
+  token: StandardToken & { balance: string };
   props?: BoxProps;
 }
 
@@ -22,15 +21,15 @@ export default function TokenRow({ token, props }: Props) {
     <Box {...props}>
       <Grid container spacing={2}>
         <Grid item xs={2}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <TokenImage image={token.image} symbol={token.symbol} />
-            {isAddress(token.address) && (
-              <>
-                <CopyIcon copyText={token.address} />
-                <ExploreIcon hash={token.address} />
-              </>
-            )}
-          </Box>
+          {isAddress(token.address) ? (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography>{token.symbol}</Typography>
+              <CopyIcon copyText={token.address} iconProps={{ sx: { fontSize: '14px' } }} />
+              <ExploreIcon hash={token.address} config={{ isShowText: false }} />
+            </Box>
+          ) : (
+            <Typography>{token.symbol}</Typography>
+          )}
         </Grid>
         <Grid item xs={2}>
           <Typography>{token.balance}</Typography>
@@ -50,7 +49,7 @@ export function NativeTokenRow({ props }: { props?: BoxProps }) {
   const { chainId } = useAppSelector((state) => state.config);
   const { balance } = useAppSelector((state) => state.token);
 
-  const token = useMemo<(ActionToken & { balance: string }) | undefined>(() => {
+  const token = useMemo<(StandardToken & { balance: string }) | undefined>(() => {
     if (chainId > 0) {
       const chainConfig = CHAINS[chainId];
       const nativeToken = chainConfig.nativeCurrency;

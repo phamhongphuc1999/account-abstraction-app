@@ -6,7 +6,9 @@ import BaseDialog from 'src/components/BaseDialog';
 import BaseForm from 'src/components/base-form';
 import TitleItem from 'src/components/title-item';
 import { Bep20Contract } from 'src/contracts/bep20-contract';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useLocalStorageContext } from 'src/local-storage-connection/local-storage-context';
+import { useAppDispatch, useAppSelector } from 'src/redux-slices/hook';
+import { upsertToken } from 'src/redux-slices/token-slice';
 import { getDecimalAmount } from 'src/services';
 import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context';
 
@@ -22,6 +24,8 @@ export default function ImportToken({ props }: Props) {
   const [balance, setBalance] = useState('0');
   const { accountAddress } = useAppSelector((state) => state.user);
   const { reader } = usRpcProviderContext();
+  const dispatch = useAppDispatch();
+  const { indexedStorage } = useLocalStorageContext();
 
   const _fetch = useCallback(async () => {
     if (isAddress(tokenAddress) && reader) {
@@ -43,7 +47,19 @@ export default function ImportToken({ props }: Props) {
   }, [_fetch]);
 
   async function onImportToken() {
-    //
+    dispatch(upsertToken({ address: tokenAddress, decimal, symbol, balance }));
+    if (indexedStorage) {
+      await indexedStorage.token.upsert(tokenAddress.toLowerCase(), {
+        address: tokenAddress.toLowerCase(),
+        decimal,
+        symbol,
+      });
+    }
+    setOpen(false);
+    setTokenAddress('');
+    setDecimal(0);
+    setSymbol('');
+    setBalance('0');
   }
 
   return (
