@@ -1,4 +1,4 @@
-import CallMadeOutlinedIcon from '@mui/icons-material/CallMadeOutlined';
+import { CallMadeOutlined, DeleteOutlined } from '@mui/icons-material';
 import { Box, BoxProps, Grid, IconButton, Typography } from '@mui/material';
 import { isAddress } from 'ethers';
 import { useMemo, useState } from 'react';
@@ -7,6 +7,7 @@ import ExploreIcon from 'src/components/icons/explore-icon';
 import { CHAINS } from 'src/configs/network-config';
 import { StandardToken } from 'src/global';
 import { useAppSelector } from 'src/redux-slices/hook';
+import HideTokenDialog from './hide-token-dialog';
 import SendTokenDialog from './send-token-dialog';
 
 interface Props {
@@ -15,7 +16,8 @@ interface Props {
 }
 
 export default function TokenRow({ token, props }: Props) {
-  const [open, setOpen] = useState(false);
+  const [openSend, setOpenSend] = useState(false);
+  const [openHide, setOpenHide] = useState(false);
 
   return (
     <Box {...props}>
@@ -35,12 +37,16 @@ export default function TokenRow({ token, props }: Props) {
           <Typography>{token.balance}</Typography>
         </Grid>
         <Grid item xs={2}>
-          <IconButton onClick={() => setOpen(true)}>
-            <CallMadeOutlinedIcon sx={{ fontSize: '16px' }} />
+          <IconButton onClick={() => setOpenSend(true)}>
+            <CallMadeOutlined sx={{ fontSize: '16px' }} />
+          </IconButton>
+          <IconButton onClick={() => setOpenHide(true)}>
+            <DeleteOutlined sx={{ fontSize: '16px' }} />
           </IconButton>
         </Grid>
       </Grid>
-      <SendTokenDialog open={open} token={token} onClose={() => setOpen(false)} />
+      <SendTokenDialog open={openSend} token={token} onClose={() => setOpenSend(false)} />
+      <HideTokenDialog open={openHide} token={token} onClose={() => setOpenHide(false)} />
     </Box>
   );
 }

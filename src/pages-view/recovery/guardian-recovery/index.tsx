@@ -1,11 +1,13 @@
 import { Box, BoxProps, Button, Typography } from '@mui/material';
 import { isAddress } from 'ethers';
 import { useCallback, useState } from 'react';
-import ReactJson from 'react-json-view';
 import { Groth16Proof } from 'snarkjs';
+import CssReactJson from 'src/components/css-react-json';
+import CopyIcon from 'src/components/icons/copy-icon';
 import TitleItem from 'src/components/title-item';
 import { ProofCallDataType } from 'src/global';
 import { useAppSelector } from 'src/redux-slices/hook';
+import { formatAddress } from 'src/services';
 import {
   generateCalldata,
   generatePoseidonHash,
@@ -13,8 +15,6 @@ import {
   verifyProof,
 } from 'src/services/circom-utils';
 import SubmitProof from './submit-proof';
-import { formatAddress } from 'src/services';
-import CopyIcon from 'src/components/icons/copy-icon';
 
 interface Props {
   props?: BoxProps;
@@ -53,7 +53,7 @@ export default function GuardianRecovery({ props }: Props) {
         {callDataProof && <SubmitProof calldata={callDataProof} />}
       </Box>
       {proof && (
-        <Box sx={{ mt: 1 }}>
+        <>
           <TitleItem
             titleWidth="80px"
             title="Your hash"
@@ -66,24 +66,19 @@ export default function GuardianRecovery({ props }: Props) {
           />
           <TitleItem
             titleWidth="80px"
-            title="Protocol"
-            component={<Typography>{proof.protocol}</Typography>}
+            title="Proof"
+            component={<CssReactJson jsonProps={{ src: proof, collapsed: true }} />}
+            props={{ sx: { mt: 1, alignItems: 'flex-start' } }}
           />
-          <TitleItem
-            titleWidth="80px"
-            title="Curve"
-            component={<Typography>{proof.curve}</Typography>}
-            props={{ sx: { mt: 1 } }}
-          />
-        </Box>
+        </>
       )}
       {callDataProof && (
         <Box sx={{ mt: 1 }}>
           <TitleItem
             titleWidth="80px"
             title="Calldata"
-            component={<ReactJson src={callDataProof} />}
-            props={{ sx: { mt: 1 } }}
+            component={<CssReactJson jsonProps={{ src: callDataProof, collapsed: true }} />}
+            props={{ sx: { mt: 1, alignItems: 'flex-start' } }}
           />
         </Box>
       )}

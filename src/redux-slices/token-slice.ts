@@ -42,8 +42,14 @@ const tokenSlice = createSlice({
       const lowAddress = token.address.toLowerCase();
       state.tokens[lowAddress] = { ...token, address: lowAddress };
     },
+    deleteToken: (state: TokenSliceType, actions: PayloadAction<StandardToken>) => {
+      const token = actions.payload;
+      const lowAddress = token.address.toLowerCase();
+      delete state.tokens[lowAddress];
+    },
   },
 });
 
 export default tokenSlice.reducer;
-export const { updateBalance, updateNormalBalance, setTokens, upsertToken } = tokenSlice.actions;
+export const { updateBalance, updateNormalBalance, setTokens, upsertToken, deleteToken } =
+  tokenSlice.actions;

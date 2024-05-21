@@ -28,13 +28,27 @@ export default function ActionDashboard() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell>Value</TableCell>
-              <TableCell>Data</TableCell>
-              <TableCell>Eta</TableCell>
-              <TableCell>Executed Type</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell>
+                <Typography>Id</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>Value</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>Data</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>Eta</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>Executed Type</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>Type</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>Actions</Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

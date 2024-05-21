@@ -51,8 +51,12 @@ export default function DashboardTableRow({ transaction }: Props) {
 
   return (
     <TableRow>
-      <TableCell>{transaction.index}</TableCell>
-      <TableCell>{transaction.value}</TableCell>
+      <TableCell>
+        <Typography>{transaction.index}</Typography>
+      </TableCell>
+      <TableCell>
+        <Typography>{transaction.value}</Typography>
+      </TableCell>
       <TableCell>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Typography>{formatAddress(transaction.data, 5)}</Typography>

@@ -64,7 +64,7 @@ export default function SendTokenDialog({ open, token, onClose }: Props) {
 
   return (
     <BaseDialog open={open} onClose={onClose} title={`Send ${token.symbol.toUpperCase()}`}>
-      <BaseForm events={{ onExecute: onSubmit }}>
+      <BaseForm events={{ onExecute: onSubmit }} metadata={{ executeTitle: 'Send' }}>
         <TitleItem
           titleWidth="65px"
           title="Token"
