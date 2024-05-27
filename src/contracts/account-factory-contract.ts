@@ -1,7 +1,7 @@
 import { isAddress } from 'ethers';
 import { useMemo } from 'react';
 import { ContractType, GlobalProviderType } from 'src/global';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import StaticQuery from 'src/services/static-query';
 import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context';
 import RootContract from './root-contract';

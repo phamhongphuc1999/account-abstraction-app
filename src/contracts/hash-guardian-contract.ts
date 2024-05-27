@@ -1,12 +1,12 @@
 import { isAddress } from 'ethers';
 import { useMemo } from 'react';
 import { ContractType, GlobalProviderType } from 'src/global';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context';
 import RootContract from './root-contract';
 import { HashGuardianAbi, HashGuardianAbi__factory } from './typechain';
 
-export class HashGuardianContract extends RootContract<HashGuardianAbi> {
+export default class HashGuardianContract extends RootContract<HashGuardianAbi> {
   constructor(provider: GlobalProviderType, address: string) {
     super(
       HashGuardianAbi__factory.connect(address, provider),

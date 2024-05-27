@@ -5,7 +5,7 @@ import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context
 import RootContract from './root-contract';
 import { BEP20Abi, BEP20Abi__factory } from './typechain';
 
-export class Bep20Contract extends RootContract<BEP20Abi> {
+export default class Bep20Contract extends RootContract<BEP20Abi> {
   constructor(provider: GlobalProviderType, address: string) {
     super(BEP20Abi__factory.connect(address, provider), BEP20Abi__factory.abi, address);
   }

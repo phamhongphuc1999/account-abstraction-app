@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { useEffect } from 'react';
 import useGuardianOwnTransactions from 'src/hooks/use-guardian-own-transactions';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import DashboardTableRow from './dashboard-table-row';
 
 export default function ActionDashboard() {
@@ -41,10 +41,10 @@ export default function ActionDashboard() {
                 <Typography>Eta</Typography>
               </TableCell>
               <TableCell>
-                <Typography>Executed Type</Typography>
+                <Typography sx={{ minWidth: '120px' }}>Executed Type</Typography>
               </TableCell>
               <TableCell>
-                <Typography>Type</Typography>
+                <Typography sx={{ minWidth: '140px' }}>Type</Typography>
               </TableCell>
               <TableCell>
                 <Typography>Actions</Typography>

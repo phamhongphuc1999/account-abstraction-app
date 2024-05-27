@@ -1,6 +1,6 @@
 import { Box, Grid, Typography } from '@mui/material';
 import TokenRow, { NativeTokenRow } from './token-row';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 
 export default function TokenList() {
   const { tokens } = useAppSelector((state) => state.token);

@@ -3,7 +3,7 @@ import BaseDialog from 'src/components/BaseDialog';
 import BaseForm from 'src/components/base-form';
 import { StandardToken } from 'src/global';
 import { useLocalStorageContext } from 'src/local-storage-connection/local-storage-context';
-import { useAppDispatch } from 'src/redux-slices/hook';
+import { useAppDispatch } from 'src/redux-slices/store';
 import { deleteToken } from 'src/redux-slices/token-slice';
 
 interface Props {

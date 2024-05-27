@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { CHAINS } from 'src/configs/network-config';
 import { StandardToken, StringListType } from 'src/global';
 import { useLocalStorageContext } from 'src/local-storage-connection/local-storage-context';
-import { useAppDispatch, useAppSelector } from 'src/redux-slices/hook';
+import { useAppDispatch, useAppSelector } from 'src/redux-slices/store';
 import { setTokens, updateBalance, updateNormalBalance } from 'src/redux-slices/token-slice';
 import BalanceService from 'src/services/balance-service';
 import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context';

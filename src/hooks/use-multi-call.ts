@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Interface, isAddress } from 'ethers';
 import { useCallback } from 'react';
-import { MultiCallContract } from 'src/contracts/multi-call-contract';
+import MultiCallContract from 'src/contracts/multi-call-contract';
 import { MultiCallParams } from 'src/global';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import StaticQuery from '../services/static-query';
 
 export function multiCallFactory(chainId: number) {

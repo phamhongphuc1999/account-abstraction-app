@@ -12,7 +12,7 @@ import { useMemo } from 'react';
 import CopyIcon from 'src/components/icons/copy-icon';
 import ExploreIcon from 'src/components/icons/explore-icon';
 import { CONNECTORS } from 'src/configs/network-config';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import { formatAddress } from 'src/services';
 import { useWalletAction } from 'src/wallet-connection/wallet-action';
 

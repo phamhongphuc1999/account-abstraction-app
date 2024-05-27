@@ -1,7 +1,7 @@
 import { isAddress } from 'ethers';
 import { useCallback } from 'react';
 import { SIMPLE_SALT } from 'src/configs/constance';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import { getAccountInitCode, toBeHexlify } from 'src/services';
 import StaticQuery from 'src/services/static-query';
 import UserOperationService from 'src/user-operation-service';

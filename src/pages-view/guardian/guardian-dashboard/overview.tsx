@@ -1,7 +1,7 @@
 import { Box, Grid, TextField, Typography } from '@mui/material';
 import CopyIcon from 'src/components/icons/copy-icon';
 import TitleItem from 'src/components/title-item';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import { formatAddress } from 'src/services';
 
 export default function Overview() {

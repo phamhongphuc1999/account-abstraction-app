@@ -18,7 +18,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { ChainConfig } from 'src/configs/constance';
 import { CHAINS } from 'src/configs/network-config';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import { mergeSx } from 'src/services';
 import { useWalletAction } from 'src/wallet-connection/wallet-action';
 import { MuiImage } from '../utils';

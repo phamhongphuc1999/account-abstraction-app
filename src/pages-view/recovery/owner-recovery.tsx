@@ -8,7 +8,7 @@ import TitleItem from 'src/components/title-item';
 import { useHashGuardianContract } from 'src/contracts/hash-guardian-contract';
 import { AccountAbi__factory, HashGuardianAbi__factory } from 'src/contracts/typechain';
 import useSendUserOp from 'src/hooks/use-send-user-op';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import { formatAddress } from 'src/services';
 
 interface Props {

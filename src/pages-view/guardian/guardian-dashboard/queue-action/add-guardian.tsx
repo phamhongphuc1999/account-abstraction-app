@@ -10,7 +10,7 @@ import { OwnerTransactionType, SIMPLE_EXTEND } from 'src/configs/constance';
 import { AccountAbi__factory, HashGuardianAbi__factory } from 'src/contracts/typechain';
 import { GuardianHashType } from 'src/global';
 import useSendUserOp from 'src/hooks/use-send-user-op';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import { formatAddress, getEta } from 'src/services';
 import { generatePoseidonHash } from 'src/services/circom-utils';
 import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context';

@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import GuardianConfig from 'src/pages-view/guardian/guardian-config';
 import GuardianDashboard from 'src/pages-view/guardian/guardian-dashboard';
 import GuardianDeployment from 'src/pages-view/guardian/guardian-deployment';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 
 export default function Guardian() {
   const { deployType, configType } = useAppSelector((state) => state.guardian);

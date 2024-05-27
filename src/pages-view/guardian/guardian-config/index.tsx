@@ -6,7 +6,7 @@ import TitleItem from 'src/components/title-item';
 import { AccountAbi__factory, HashGuardianAbi__factory } from 'src/contracts/typechain';
 import { GuardianHashListType } from 'src/global';
 import useSendUserOp from 'src/hooks/use-send-user-op';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import { generatePoseidonHash } from 'src/services/circom-utils';
 import GuardianAddresses from './guardian-addresses';
 

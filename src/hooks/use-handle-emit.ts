@@ -1,6 +1,6 @@
 import { ContractTransactionResponse } from 'ethers';
 import { useCallback } from 'react';
-import { useAppDispatch } from 'src/redux-slices/hook';
+import { useAppDispatch } from 'src/redux-slices/store';
 import HandleEmit from 'src/services/handle-emit';
 
 export default function useHandleEmit() {

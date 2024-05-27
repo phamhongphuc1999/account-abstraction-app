@@ -9,7 +9,7 @@ import TitleItem from 'src/components/title-item';
 import { OwnerTransactionType, SIMPLE_EXTEND } from 'src/configs/constance';
 import { AccountAbi__factory, HashGuardianAbi__factory } from 'src/contracts/typechain';
 import useSendUserOp from 'src/hooks/use-send-user-op';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import { getEta } from 'src/services';
 import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context';
 

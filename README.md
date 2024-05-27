@@ -27,3 +27,7 @@ bun typechain:build
 ```shell
 bun dev
 ```
+
+## Reference
+
+- https://docs.google.com/document/d/1-W-X-rUGfvzDWIc6IzKMRQ5EBXeRBg5C2-S7Qhk1pLU/edit?usp=sharing

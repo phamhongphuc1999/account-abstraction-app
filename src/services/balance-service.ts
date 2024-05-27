@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { JsonRpcProvider } from 'ethers';
-import { Bep20Contract } from 'src/contracts/bep20-contract';
+import Bep20Contract from 'src/contracts/bep20-contract';
 import { StandardToken } from 'src/global';
 
 export default class BalanceService {

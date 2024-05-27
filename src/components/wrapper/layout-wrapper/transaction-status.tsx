@@ -1,7 +1,7 @@
 import { Clear, Done } from '@mui/icons-material';
 import { Box, CircularProgress, Theme, Typography, alpha, useTheme } from '@mui/material';
 import ExploreIcon from 'src/components/icons/explore-icon';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import { getTxStatus } from 'src/redux-slices/tx-status-slice';
 import { formatAddress } from 'src/services';
 

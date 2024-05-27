@@ -7,11 +7,11 @@ import { SIMPLE_SALT } from 'src/configs/constance';
 import { CHAINS } from 'src/configs/network-config';
 import { useAccountFactoryContract } from 'src/contracts/account-factory-contract';
 import { resetConfig, setNetworkConfig } from 'src/redux-slices/config-slice';
-import { useAppDispatch } from 'src/redux-slices/hook';
+import { useAppDispatch } from 'src/redux-slices/store';
 import { resetUser, updateAccountConfig } from 'src/redux-slices/user-slice';
+import { isDeploy } from 'src/services';
 import { useAccount, useConnect } from 'wagmi';
 import { usRpcProviderContext } from './rpc-provider-context';
-import { isDeploy } from 'src/services';
 
 export default function WalletEffect() {
   const dispatch = useAppDispatch();

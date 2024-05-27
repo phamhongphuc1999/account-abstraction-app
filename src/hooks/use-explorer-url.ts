@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 
 export type EXPLORER_TYPE = 'address' | 'transaction';
 

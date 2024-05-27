@@ -6,7 +6,7 @@ import CopyIcon from 'src/components/icons/copy-icon';
 import ExploreIcon from 'src/components/icons/explore-icon';
 import { CHAINS } from 'src/configs/network-config';
 import { StandardToken } from 'src/global';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import HideTokenDialog from './hide-token-dialog';
 import SendTokenDialog from './send-token-dialog';
 

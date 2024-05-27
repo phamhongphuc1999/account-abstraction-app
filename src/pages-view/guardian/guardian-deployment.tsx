@@ -3,7 +3,7 @@ import { Interface } from 'ethers';
 import { SIMPLE_SALT } from 'src/configs/constance';
 import { AccountAbi__factory } from 'src/contracts/typechain';
 import useSendUserOp from 'src/hooks/use-send-user-op';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 
 interface Props {
   props?: BoxProps;

@@ -2,7 +2,7 @@ import { Box, Button } from '@mui/material';
 import { Interface, isAddress } from 'ethers';
 import { AccountAbi__factory, HashGuardianAbi__factory } from 'src/contracts/typechain';
 import useSendUserOp from 'src/hooks/use-send-user-op';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import StaticQuery from 'src/services/static-query';
 
 export default function ChangeOwner() {

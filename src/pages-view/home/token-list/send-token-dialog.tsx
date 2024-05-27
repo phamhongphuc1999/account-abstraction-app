@@ -8,7 +8,7 @@ import { AccountAbi__factory, BEP20Abi__factory } from 'src/contracts/typechain'
 import { StandardToken } from 'src/global';
 import useRecoverTokens from 'src/hooks/use-recover-tokens';
 import useSendUserOp from 'src/hooks/use-send-user-op';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import { formatAddress } from 'src/services';
 
 interface Props {

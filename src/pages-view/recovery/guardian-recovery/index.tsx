@@ -6,7 +6,7 @@ import CssReactJson from 'src/components/css-react-json';
 import CopyIcon from 'src/components/icons/copy-icon';
 import TitleItem from 'src/components/title-item';
 import { ProofCallDataType } from 'src/global';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import { formatAddress } from 'src/services';
 import {
   generateCalldata,

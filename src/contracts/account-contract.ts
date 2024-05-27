@@ -1,12 +1,12 @@
 import { isAddress } from 'ethers';
 import { useMemo } from 'react';
 import { ContractType, GlobalProviderType } from 'src/global';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context';
 import RootContract from './root-contract';
 import { AccountAbi, AccountAbi__factory } from './typechain';
 
-export class AccountContract extends RootContract<AccountAbi> {
+export default class AccountContract extends RootContract<AccountAbi> {
   constructor(provider: GlobalProviderType, address: string) {
     super(AccountAbi__factory.connect(address, provider), AccountAbi__factory.abi, address);
   }

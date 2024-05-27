@@ -1,7 +1,7 @@
 import { isAddress } from 'ethers';
 import { useCallback } from 'react';
 import { useEntryPointContract } from 'src/contracts/entry-point-contract';
-import { useAppSelector } from 'src/redux-slices/hook';
+import { useAppSelector } from 'src/redux-slices/store';
 
 export default function useNonce() {
   const { accountAddress } = useAppSelector((state) => state.user);
