@@ -2,6 +2,10 @@ import { ZeroAddress } from 'ethers';
 import BSC from 'src/assets/images/tokens/bnb.svg';
 import { GasOverheads, UserOperation } from 'src/user-operation-service/type';
 
+export const LS = {
+  THEME: 'theme',
+};
+
 export const ChainConfig = [
   { chainId: 56, image: BSC, name: 'BSC Mainnet' },
   { chainId: 97, image: BSC, name: 'BSC Testnet' },

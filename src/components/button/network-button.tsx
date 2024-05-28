@@ -28,11 +28,10 @@ function useStyle(theme: Theme) {
     paper: {
       padding: 0,
       borderRadius: '8px',
-      background: theme.palette.mode === 'dark' ? '#00244D' : '#F2F4F7',
     },
     title: {
       paddingBottom: '0.5rem',
-      background: theme.palette.mode === 'dark' ? '#00244D' : '#F2F4F7',
+      background: theme.palette.background.paper,
     },
     listItem: {
       display: 'flex',

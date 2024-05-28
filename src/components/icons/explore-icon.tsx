@@ -30,7 +30,7 @@ export default function ExploreIcon({ hash, config, iconProps }: Props) {
       {config?.isShowText != false && <Typography>View on Explorer</Typography>}
       <Launch
         {...iconProps}
-        sx={mergeSx([{ fontSize: '16px', color: 'primary.main', ml: 0.5 }, iconProps?.sx])}
+        sx={mergeSx([{ fontSize: '16px', color: 'text.primary', ml: 0.5 }, iconProps?.sx])}
       />
     </Link>
   );

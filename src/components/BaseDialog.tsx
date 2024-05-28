@@ -1,5 +1,13 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Dialog, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material';
+import {
+  Box,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { ReactNode } from 'react';
 
 interface Props {
@@ -10,16 +18,15 @@ interface Props {
 }
 
 export default function BaseDialog({ title, open, onClose, children }: Props) {
+  const theme = useTheme();
+
   return (
     <Dialog
       fullWidth
       open={open}
-      PaperProps={{
-        elevation: 0,
-        sx: { maxWidth: 500, padding: 0, borderRadius: '8px', background: '#00244D' },
-      }}
+      PaperProps={{ elevation: 0, sx: { maxWidth: 500, padding: 0, borderRadius: '8px' } }}
     >
-      <DialogTitle sx={{ paddingBottom: '0.5rem', background: '#00244D' }}>
+      <DialogTitle sx={{ paddingBottom: '0.5rem', background: theme.palette.background.paper }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Typography color="text.header" variant="h5">
             {title}

@@ -7,6 +7,7 @@ import {
   DialogTitle,
   IconButton,
   Typography,
+  useTheme,
 } from '@mui/material';
 import { useMemo } from 'react';
 import CopyIcon from 'src/components/icons/copy-icon';
@@ -22,6 +23,7 @@ interface Props {
 }
 
 export default function ConnectedDialog({ open, onClose }: Props) {
+  const theme = useTheme();
   const { disconnect } = useWalletAction();
   const { connector } = useAppSelector((state) => state.config);
   const { ownerAddress, accountAddress, deployType } = useAppSelector((state) => state.user);
@@ -41,7 +43,7 @@ export default function ConnectedDialog({ open, onClose }: Props) {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
-      <DialogTitle sx={{ background: '#002753', alignItems: 'center' }}>
+      <DialogTitle sx={{ background: theme.palette.background.paper, alignItems: 'center' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h5">Wallet connection</Typography>
           <IconButton onClick={() => onClose()}>

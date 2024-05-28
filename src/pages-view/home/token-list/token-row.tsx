@@ -40,9 +40,11 @@ export default function TokenRow({ token, props }: Props) {
           <IconButton onClick={() => setOpenSend(true)}>
             <CallMadeOutlined sx={{ fontSize: '16px' }} />
           </IconButton>
-          <IconButton onClick={() => setOpenHide(true)}>
-            <DeleteOutlined sx={{ fontSize: '16px' }} />
-          </IconButton>
+          {isAddress(token.address) && (
+            <IconButton onClick={() => setOpenHide(true)}>
+              <DeleteOutlined sx={{ fontSize: '16px' }} />
+            </IconButton>
+          )}
         </Grid>
       </Grid>
       <SendTokenDialog open={openSend} token={token} onClose={() => setOpenSend(false)} />

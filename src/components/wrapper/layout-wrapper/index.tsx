@@ -1,8 +1,8 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Typography, useTheme } from '@mui/material';
 import { ReactNode } from 'react';
-import ConnectionButton from 'src/components/button/connection-button';
-import NetworkButton from 'src/components/button/network-button';
+import { getColor } from 'src/services';
 import AppEffect from './app-effect';
+import Header from './header';
 import Sidebar from './sidebar';
 import TransactionStatus from './transaction-status';
 
@@ -11,18 +11,15 @@ interface Props {
 }
 
 export default function LayoutWrapper({ children }: Props) {
+  const theme = useTheme();
+
   return (
     <Box>
       <AppEffect />
       <Sidebar />
       <Box sx={{ ml: '130px' }}>
-        <Box sx={{ position: 'sticky', backgroundColor: '#021C39' }}>
-          <Container sx={{ height: 65, display: 'flex', alignItems: 'center' }}>
-            <NetworkButton props={{ sx: { marginRight: '0.5rem' } }} />
-            <ConnectionButton />
-          </Container>
-        </Box>
-        <Box sx={{ background: '#061526' }}>
+        <Header />
+        <Box sx={{ background: getColor(theme.palette.mode, '#061526', '#F5F7FA') }}>
           <Box sx={{ minHeight: 'calc(100vh - 65px)' }}>
             <Container sx={{ paddingTop: '1rem' }}>{children}</Container>
           </Box>

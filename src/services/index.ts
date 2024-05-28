@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js';
 import { BytesLike, Interface, JsonRpcProvider, concat, hexlify, toBeHex } from 'ethers';
 import { SIMPLE_EXTEND } from 'src/configs/constance';
 import { AccountFactoryAbi__factory } from 'src/contracts/typechain';
+import { ThemeMode } from 'src/global';
 
 export function formatAddress(address: string, fractionDigits = 3) {
   return address.slice(0, fractionDigits) + '...' + address.slice(-fractionDigits);
@@ -52,6 +53,10 @@ export function getDecimalAmount(
   const _decimal = BigNumber('10').pow(decimal);
   if (mode == 'div') return BigNumber(rawAmount).div(_decimal);
   else return BigNumber(rawAmount).multipliedBy(_decimal);
+}
+
+export function getColor(theme: ThemeMode, darkMode: string, lightMode: string) {
+  return theme == 'dark' ? darkMode : lightMode;
 }
 
 export function mergeSx(sxs: Array<boolean | SxProps<Theme> | undefined>): SxProps<Theme> {
