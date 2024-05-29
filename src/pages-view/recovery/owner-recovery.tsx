@@ -2,7 +2,7 @@
 import { Box, BoxProps, TextField, Typography } from '@mui/material';
 import { Interface, ZeroAddress, isAddress } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
-import BaseForm from 'src/components/base-form';
+import BaseForm from 'src/components/form/base-form';
 import CopyIcon from 'src/components/icons/copy-icon';
 import TitleItem from 'src/components/title-item';
 import { useHashGuardianContract } from 'src/contracts/hash-guardian-contract';

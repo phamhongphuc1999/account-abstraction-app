@@ -2,11 +2,12 @@ import { CallMadeOutlined, DeleteOutlined } from '@mui/icons-material';
 import { Box, BoxProps, Grid, IconButton, Typography } from '@mui/material';
 import { isAddress } from 'ethers';
 import { useMemo, useState } from 'react';
-import CopyIcon from 'src/components/icons/copy-icon';
+import CopyIcon, { InfoIcon } from 'src/components/icons/copy-icon';
 import ExploreIcon from 'src/components/icons/explore-icon';
 import { CHAINS } from 'src/configs/network-config';
 import { StandardToken } from 'src/global';
 import { useAppSelector } from 'src/redux-slices/store';
+import { toFixed } from 'src/services';
 import HideTokenDialog from './hide-token-dialog';
 import SendTokenDialog from './send-token-dialog';
 
@@ -22,7 +23,7 @@ export default function TokenRow({ token, props }: Props) {
   return (
     <Box {...props}>
       <Grid container spacing={2}>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           {isAddress(token.address) ? (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Typography>{token.symbol}</Typography>
@@ -33,10 +34,13 @@ export default function TokenRow({ token, props }: Props) {
             <Typography>{token.symbol}</Typography>
           )}
         </Grid>
-        <Grid item xs={2}>
-          <Typography>{token.balance}</Typography>
+        <Grid item xs={3}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography>{toFixed(token.balance, 6)}</Typography>
+            <InfoIcon title={token.balance} />
+          </Box>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <IconButton onClick={() => setOpenSend(true)}>
             <CallMadeOutlined sx={{ fontSize: '16px' }} />
           </IconButton>

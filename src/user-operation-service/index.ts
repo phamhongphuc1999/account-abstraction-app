@@ -180,14 +180,22 @@ export default class UserOperationService {
     }
     if (!op1.maxFeePerGas) {
       const block = await reader.getBlock('latest');
-      if (block?.baseFeePerGas)
+      if (block?.baseFeePerGas) {
         op1.maxFeePerGas = BigNumber(block.baseFeePerGas.toString())
           .plus((op1.maxPriorityFeePerGas ?? DefaultsForUserOp.maxPriorityFeePerGas).toString())
           .toFixed();
+      } else op1.maxFeePerGas = '32000';
     }
     if (op1.maxPriorityFeePerGas == null) {
       op1.maxPriorityFeePerGas = DefaultsForUserOp.maxPriorityFeePerGas;
     }
+    // if (estimateGas) {
+    //   const estimateGasData = await estimateGas.estimateEIP1559Fee();
+    //   op1.maxFeePerGas = BigNumber(estimateGasData.gwei.maxFeePerGas)
+    //     .plus((op1.maxPriorityFeePerGas ?? DefaultsForUserOp.maxPriorityFeePerGas).toString())
+    //     .toFixed();
+    //   op1.maxPriorityFeePerGas = estimateGasData.gwei.maxPriorityFeePerGas;
+    // }
     const op2 = this.fillDefaults(op1);
     if (op2.preVerificationGas.toString() === '0') {
       op2.preVerificationGas = this.callDataCost(this.packUserOp(op2, false));

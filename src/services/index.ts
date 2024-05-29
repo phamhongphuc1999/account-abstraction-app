@@ -2,7 +2,15 @@
 import { SxProps, Theme } from '@mui/material';
 import { SystemStyleObject } from '@mui/system';
 import BigNumber from 'bignumber.js';
-import { BytesLike, Interface, JsonRpcProvider, concat, hexlify, toBeHex } from 'ethers';
+import {
+  BigNumberish,
+  BytesLike,
+  Interface,
+  JsonRpcProvider,
+  concat,
+  hexlify,
+  toBeHex,
+} from 'ethers';
 import { SIMPLE_EXTEND } from 'src/configs/constance';
 import { AccountFactoryAbi__factory } from 'src/contracts/typechain';
 import { ThemeMode } from 'src/global';
@@ -57,6 +65,20 @@ export function getDecimalAmount(
 
 export function getColor(theme: ThemeMode, darkMode: string, lightMode: string) {
   return theme == 'dark' ? darkMode : lightMode;
+}
+
+export function toHex(data: BigNumberish | BigNumber): string {
+  const rawResult = data.toString(16);
+  if (rawResult.slice(0, 1) != '0x') return `0x${rawResult}`;
+  return rawResult;
+}
+
+export function toFixed(num: number | string, fractionDigits = 0): number {
+  num = Number(num);
+  if (num == 0) return Number(num.toFixed(fractionDigits));
+  const fixedNum = Number(num.toFixed(fractionDigits));
+  if (fixedNum == 0) return toFixed(num, fractionDigits + 1);
+  return fixedNum;
 }
 
 export function mergeSx(sxs: Array<boolean | SxProps<Theme> | undefined>): SxProps<Theme> {

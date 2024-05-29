@@ -117,7 +117,7 @@ export default function ThemeWrapper({ children }: Props) {
         background: {
           paper: getColor(themeMode, '#00244D', '#F2F4F7'),
           secondary: '#021C39',
-          primary: getColor(themeMode, '#07111C', '#021C39'),
+          primary: getColor(themeMode, '#E5E5E5', '#132741'),
         },
         gradient: {
           main: 'linear-gradient(180deg, #B2CEEB 0%, #e5e9ed00 100%)',

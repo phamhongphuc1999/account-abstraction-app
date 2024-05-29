@@ -1,7 +1,7 @@
 import { Box, BoxProps, TextField, Typography } from '@mui/material';
 import { Interface } from 'ethers';
 import { useState } from 'react';
-import BaseForm from 'src/components/base-form';
+import BaseForm from 'src/components/form/base-form';
 import TitleItem from 'src/components/title-item';
 import { AccountAbi__factory, HashGuardianAbi__factory } from 'src/contracts/typechain';
 import { GuardianHashListType } from 'src/global';

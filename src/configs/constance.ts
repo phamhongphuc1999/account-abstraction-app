@@ -24,7 +24,7 @@ export const OwnerTransactionType = {
 
 export const DAY_SECOND = 86400;
 export const SIMPLE_SALT = '0x'.padEnd(66, '0');
-export const TX_FEE = '0.0002';
+export const TX_SEND_FEE = '0.000000003';
 export const SIMPLE_EXTEND = 100;
 
 export const DefaultsForUserOp: UserOperation = {

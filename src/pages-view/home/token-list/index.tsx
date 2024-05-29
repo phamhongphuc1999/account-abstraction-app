@@ -10,13 +10,13 @@ export default function TokenList() {
       <Typography variant="subtitle1">Tokens</Typography>
       <Box sx={{ mt: 2 }}>
         <Grid container spacing={2}>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <Typography>Token</Typography>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <Typography>Balance</Typography>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <Typography>Actions</Typography>
           </Grid>
         </Grid>

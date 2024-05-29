@@ -6,11 +6,13 @@ import {
   IconButtonProps,
   SvgIconProps,
   Tooltip,
+  TooltipProps,
   Typography,
   TypographyProps,
 } from '@mui/material';
 import { useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import { mergeSx } from 'src/services';
 
 export interface CopyIconProps {
   copyText?: string;
@@ -62,13 +64,14 @@ export function TextCopy({ title, rootProps, textProps, iconProps }: Props) {
 interface InfoIconProps {
   title: string;
   iconProps?: SvgIconProps;
+  props?: TooltipProps;
 }
 
-export function InfoIcon({ title, iconProps }: InfoIconProps) {
+export function InfoIcon({ title, iconProps, props }: InfoIconProps) {
   return (
-    <Tooltip title={title}>
+    <Tooltip title={title} {...props}>
       <IconButton>
-        <InfoOutlined {...iconProps} />
+        <InfoOutlined {...iconProps} sx={mergeSx([iconProps?.sx, { fontSize: '16px' }])} />
       </IconButton>
     </Tooltip>
   );

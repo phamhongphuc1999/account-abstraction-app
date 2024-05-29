@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import BaseDialog from 'src/components/BaseDialog';
-import BaseForm from 'src/components/base-form';
+import BaseForm from 'src/components/form/base-form';
 import { StandardToken } from 'src/global';
 import { useLocalStorageContext } from 'src/local-storage-connection/local-storage-context';
 import { useAppDispatch } from 'src/redux-slices/store';

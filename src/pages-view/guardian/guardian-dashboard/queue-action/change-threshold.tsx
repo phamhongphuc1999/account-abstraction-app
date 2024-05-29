@@ -4,7 +4,7 @@ import { Interface } from 'ethers';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import BaseDialog from 'src/components/BaseDialog';
-import BaseForm from 'src/components/base-form';
+import BaseForm from 'src/components/form/base-form';
 import TitleItem from 'src/components/title-item';
 import { OwnerTransactionType, SIMPLE_EXTEND } from 'src/configs/constance';
 import { AccountAbi__factory, HashGuardianAbi__factory } from 'src/contracts/typechain';

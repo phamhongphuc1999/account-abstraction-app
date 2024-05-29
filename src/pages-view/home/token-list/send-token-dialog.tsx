@@ -1,9 +1,11 @@
 import { TextField, Typography } from '@mui/material';
+import BigNumber from 'bignumber.js';
 import { Interface, ethers, isAddress } from 'ethers';
 import { useState } from 'react';
 import BaseDialog from 'src/components/BaseDialog';
-import BaseForm from 'src/components/base-form';
+import BaseForm from 'src/components/form/base-form';
 import TitleItem from 'src/components/title-item';
+import { TX_SEND_FEE } from 'src/configs/constance';
 import { AccountAbi__factory, BEP20Abi__factory } from 'src/contracts/typechain';
 import { StandardToken } from 'src/global';
 import useRecoverTokens from 'src/hooks/use-recover-tokens';
@@ -33,7 +35,7 @@ export default function SendTokenDialog({ open, token, onClose }: Props) {
   }
 
   function onMax() {
-    if (!isAddress(token.address)) setAmount(balance);
+    if (!isAddress(token.address)) setAmount(BigNumber(balance).minus(TX_SEND_FEE).toFixed());
     else setAmount(token.balance);
   }
 

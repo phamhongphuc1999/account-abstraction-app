@@ -3,7 +3,7 @@ import { Button, TextField } from '@mui/material';
 import { Interface } from 'ethers';
 import { useState } from 'react';
 import BaseDialog from 'src/components/BaseDialog';
-import BaseForm from 'src/components/base-form';
+import BaseForm from 'src/components/form/base-form';
 import HashSelect from 'src/components/selector/hash-selector';
 import TitleItem from 'src/components/title-item';
 import { OwnerTransactionType, SIMPLE_EXTEND } from 'src/configs/constance';

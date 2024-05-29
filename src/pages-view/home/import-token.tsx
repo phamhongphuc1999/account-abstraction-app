@@ -1,9 +1,10 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Box, BoxProps, TextField, Typography } from '@mui/material';
+import { BoxProps, TextField } from '@mui/material';
 import { isAddress } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
 import BaseDialog from 'src/components/BaseDialog';
-import BaseForm from 'src/components/base-form';
+import BaseActionForm from 'src/components/form/base-action-form';
+import BaseForm from 'src/components/form/base-form';
 import TitleItem from 'src/components/title-item';
 import Bep20Contract from 'src/contracts/bep20-contract';
 import { useLocalStorageContext } from 'src/local-storage-connection/local-storage-context';
@@ -63,21 +64,12 @@ export default function ImportToken({ props }: Props) {
   }
 
   return (
-    <Box {...props}>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }} onClick={() => setOpen(true)}>
-        <AddIcon sx={{ fontSize: '14px' }} />
-        <Typography
-          sx={{
-            fontSize: '16px',
-            cursor: 'pointer',
-            '&:hover': {
-              textDecoration: 'underline',
-            },
-          }}
-        >
-          Import new Token
-        </Typography>
-      </Box>
+    <BaseActionForm
+      IconComponent={AddIcon}
+      title="Import new Token"
+      boxIconProps={{ onClick: () => setOpen(true) }}
+      props={props}
+    >
       <BaseDialog title="Import Token" open={open} onClose={() => setOpen(false)}>
         <BaseForm events={{ onExecute: onImportToken }} metadata={{ executeTitle: 'Import' }}>
           <TitleItem
@@ -111,6 +103,6 @@ export default function ImportToken({ props }: Props) {
           />
         </BaseForm>
       </BaseDialog>
-    </Box>
+    </BaseActionForm>
   );
 }

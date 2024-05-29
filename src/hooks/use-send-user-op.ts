@@ -30,7 +30,7 @@ export default function useSendUserOp() {
           const _code =
             deployType == 'deployed'
               ? undefined
-              : await getAccountInitCode(ownerAddress, SIMPLE_SALT, ACCOUNT_FACTORY_ADDRESS);
+              : getAccountInitCode(ownerAddress, SIMPLE_SALT, ACCOUNT_FACTORY_ADDRESS);
           const nonce = await getNonce();
           if (nonce != undefined) {
             const op = await UserOperationService.fillSign(
