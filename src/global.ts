@@ -16,6 +16,7 @@ export type FStatus =
   | 'UPDATING'
   | 'WAIT_CONFIRM';
 export type DeployStatus = 'initial' | 'deployed' | 'notDeploy';
+export type AccountType = 'owner' | 'accountAbstraction';
 
 export type AddressesType = {
   ENTRY_POINT_ADDRESS: string;

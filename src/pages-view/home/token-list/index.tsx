@@ -1,13 +1,23 @@
-import { Box, Grid, Typography } from '@mui/material';
-import TokenRow, { NativeTokenRow } from './token-row';
+import { Box, BoxProps, Grid, Typography, useTheme } from '@mui/material';
+import { AccountType } from 'src/global';
 import { useAppSelector } from 'src/redux-slices/store';
+import { getTokenData } from 'src/redux-slices/token-slice';
+import { getColor } from 'src/services';
+import TokenRow, { NativeTokenRow } from './token-row';
 
-export default function TokenList() {
-  const { tokens } = useAppSelector((state) => state.token);
+interface Props {
+  type: AccountType;
+  props?: BoxProps;
+}
+
+function TokenAccountList({ type, props }: Props) {
+  const { tokens } = useAppSelector((state) => getTokenData(state.token, type));
 
   return (
-    <Box>
-      <Typography variant="subtitle1">Tokens</Typography>
+    <Box {...props}>
+      <Typography variant="subtitle1">
+        {type == 'accountAbstraction' ? 'Account Tokens' : 'Owner Tokens'}
+      </Typography>
       <Box sx={{ mt: 2 }}>
         <Grid container spacing={2}>
           <Grid item xs={3}>
@@ -20,11 +30,32 @@ export default function TokenList() {
             <Typography>Actions</Typography>
           </Grid>
         </Grid>
-        <NativeTokenRow props={{ sx: { mt: 1 } }} />
+        <NativeTokenRow type={type} props={{ sx: { mt: 1 } }} />
         {Object.values(tokens).map((token) => {
-          return <TokenRow key={token.address} token={token} props={{ sx: { mt: 1 } }} />;
+          return (
+            <TokenRow key={token.address} type={type} token={token} props={{ sx: { mt: 1 } }} />
+          );
         })}
       </Box>
     </Box>
+  );
+}
+
+export default function TokenList() {
+  const theme = useTheme();
+
+  return (
+    <>
+      <TokenAccountList type="owner" />
+      <TokenAccountList
+        type="accountAbstraction"
+        props={{
+          sx: {
+            borderTop: `2px solid ${getColor(theme.palette.mode, '#132741', '#E5E5E5')}`,
+            pt: 2,
+          },
+        }}
+      />
+    </>
   );
 }

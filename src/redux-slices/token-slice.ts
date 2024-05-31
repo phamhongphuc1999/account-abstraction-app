@@ -1,51 +1,67 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { StandardToken, StringListType } from 'src/global';
+import { PayloadAction, createDraftSafeSelector, createSlice } from '@reduxjs/toolkit';
+import { AccountType, StandardToken, StringListType } from 'src/global';
 
-export interface TokenSliceType {
+export interface TokenBalanceType {
   balance: string;
   tokens: StringListType<StandardToken & { balance: string }>;
 }
 
+export interface TokenSliceType {
+  owner: TokenBalanceType;
+  account: TokenBalanceType;
+}
+
 const initialState: TokenSliceType = {
-  balance: '0',
-  tokens: {},
+  owner: { balance: '0', tokens: {} },
+  account: { balance: '0', tokens: {} },
 };
 
 const tokenSlice = createSlice({
   name: 'tokenSlice',
   initialState,
   reducers: {
-    updateBalance: (state: TokenSliceType, actions: PayloadAction<Partial<string>>) => {
-      state.balance = actions.payload;
+    updateBalance: (
+      state: TokenSliceType,
+      actions: PayloadAction<{ balance: string; type: AccountType }>
+    ) => {
+      const { balance, type } = actions.payload;
+      if (type == 'accountAbstraction') state.account.balance = balance;
+      else state.owner.balance = balance;
     },
     updateNormalBalance: (
       state: TokenSliceType,
-      actions: PayloadAction<{ tokenAddress: string; balance: string }>
+      actions: PayloadAction<{ tokenAddress: string; balance: string; type: AccountType }>
     ) => {
-      const { tokenAddress, balance } = actions.payload;
-      const oldToken = state.tokens[tokenAddress];
-      if (oldToken) {
-        state.tokens[tokenAddress] = { ...oldToken, balance };
-      }
+      const { tokenAddress, balance, type } = actions.payload;
+      const _key: 'account' | 'owner' = type == 'accountAbstraction' ? 'account' : 'owner';
+      const oldToken = state[_key].tokens[tokenAddress];
+      if (oldToken) state[_key].tokens[tokenAddress] = { ...oldToken, balance };
     },
     setTokens: (
       state: TokenSliceType,
-      actions: PayloadAction<StringListType<StandardToken & { balance: string }>>
+      actions: PayloadAction<{
+        tokens: StringListType<StandardToken & { balance: string }>;
+        type: AccountType;
+      }>
     ) => {
-      state.tokens = actions.payload;
+      const { tokens, type } = actions.payload;
+      if (type == 'accountAbstraction') state.account.tokens = tokens;
+      else state.owner.tokens = tokens;
     },
     upsertToken: (
       state: TokenSliceType,
-      actions: PayloadAction<StandardToken & { balance: string }>
+      actions: PayloadAction<{ token: StandardToken; accountBalance: string; ownerBalance: string }>
     ) => {
-      const token = actions.payload;
+      const { token, accountBalance, ownerBalance } = actions.payload;
       const lowAddress = token.address.toLowerCase();
-      state.tokens[lowAddress] = { ...token, address: lowAddress };
+      state.owner.tokens[lowAddress] = { ...token, address: lowAddress, balance: ownerBalance };
+      state.account.tokens[lowAddress] = { ...token, address: lowAddress, balance: accountBalance };
     },
     deleteToken: (state: TokenSliceType, actions: PayloadAction<StandardToken>) => {
       const token = actions.payload;
       const lowAddress = token.address.toLowerCase();
-      delete state.tokens[lowAddress];
+      delete state.account.tokens[lowAddress];
+      delete state.owner.tokens[lowAddress];
     },
   },
 });
@@ -53,3 +69,11 @@ const tokenSlice = createSlice({
 export default tokenSlice.reducer;
 export const { updateBalance, updateNormalBalance, setTokens, upsertToken, deleteToken } =
   tokenSlice.actions;
+
+export const getTokenData = createDraftSafeSelector(
+  [(state: TokenSliceType) => state, (_: TokenSliceType, type: AccountType) => type],
+  (state: TokenSliceType, type) => {
+    if (type == 'accountAbstraction') return state.account;
+    else return state.owner;
+  }
+);

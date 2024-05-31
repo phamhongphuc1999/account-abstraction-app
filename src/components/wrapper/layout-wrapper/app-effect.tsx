@@ -5,12 +5,13 @@ import useFetchGuardianConfig from 'src/hooks/use-fetch-guardian-config';
 import useRecoverTokens from 'src/hooks/use-recover-tokens';
 import LocalStorage from 'src/local-storage-connection/local-storage';
 import { initLocalStorage } from 'src/redux-slices/config-slice';
-import { useAppDispatch } from 'src/redux-slices/store';
+import { useAppDispatch, useAppSelector } from 'src/redux-slices/store';
 
 export default function AppEffect() {
   const dispatch = useAppDispatch();
   const { fetchGuardianAddress, fetchGuardianConfig } = useFetchGuardianConfig();
   const { recoverTokens, fetchNativeBalance } = useRecoverTokens();
+  const { accountAddress, ownerAddress } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     const _theme = LocalStorage.get(LS.THEME);
@@ -18,8 +19,14 @@ export default function AppEffect() {
   }, [dispatch]);
 
   useEffect(() => {
-    fetchNativeBalance();
-  }, [fetchNativeBalance]);
+    fetchNativeBalance(accountAddress, 'accountAbstraction');
+    fetchNativeBalance(ownerAddress, 'owner');
+  }, [fetchNativeBalance, accountAddress, ownerAddress]);
+
+  useEffect(() => {
+    recoverTokens(accountAddress, 'accountAbstraction');
+    recoverTokens(ownerAddress, 'owner');
+  }, [recoverTokens, accountAddress, ownerAddress]);
 
   useEffect(() => {
     fetchGuardianAddress();
@@ -28,10 +35,6 @@ export default function AppEffect() {
   useEffect(() => {
     fetchGuardianConfig();
   }, [fetchGuardianConfig]);
-
-  useEffect(() => {
-    recoverTokens();
-  }, [recoverTokens]);
 
   return <></>;
 }

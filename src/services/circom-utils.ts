@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { buildPoseidon } from 'circomlibjs';
 import { Groth16Proof, PublicSignals, groth16 } from 'snarkjs';
 import { ProofCallDataType } from 'src/global';

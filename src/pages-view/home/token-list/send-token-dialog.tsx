@@ -6,25 +6,28 @@ import BaseDialog from 'src/components/BaseDialog';
 import BaseForm from 'src/components/form/base-form';
 import TitleItem from 'src/components/title-item';
 import { TX_SEND_FEE } from 'src/configs/constance';
+import Bep20Contract from 'src/contracts/bep20-contract';
 import { AccountAbi__factory, BEP20Abi__factory } from 'src/contracts/typechain';
-import { StandardToken } from 'src/global';
-import useRecoverTokens from 'src/hooks/use-recover-tokens';
+import { AccountType, StandardToken } from 'src/global';
 import useSendUserOp from 'src/hooks/use-send-user-op';
 import { useAppSelector } from 'src/redux-slices/store';
+import { getTokenData } from 'src/redux-slices/token-slice';
 import { formatAddress } from 'src/services';
+import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context';
 
 interface Props {
   open: boolean;
+  type: AccountType;
   token: StandardToken & { balance: string };
   onClose: () => void;
 }
 
-export default function SendTokenDialog({ open, token, onClose }: Props) {
+export default function SendTokenDialog({ open, type, token, onClose }: Props) {
   const [amount, setAmount] = useState('0');
   const [to, setTo] = useState('');
   const { sendEntryPoint } = useSendUserOp();
-  const { balance } = useAppSelector((state) => state.token);
-  const { fetchNativeBalance, fetchNormalBalance } = useRecoverTokens();
+  const { balance } = useAppSelector((state) => getTokenData(state.token, type));
+  const { signer } = usRpcProviderContext();
 
   function onAmountChange(value: string) {
     setAmount(value);
@@ -40,23 +43,31 @@ export default function SendTokenDialog({ open, token, onClose }: Props) {
   }
 
   async function nativeSubmit() {
-    const accountInter = new Interface(AccountAbi__factory.abi);
-    const callData = accountInter.encodeFunctionData('execute', [
-      to,
-      ethers.parseEther(amount),
-      '0x00',
-    ]);
-    const isCheck = await sendEntryPoint(callData);
-    if (isCheck) await fetchNativeBalance();
+    if (type == 'accountAbstraction') {
+      const accountInter = new Interface(AccountAbi__factory.abi);
+      const callData = accountInter.encodeFunctionData('execute', [
+        to,
+        ethers.parseEther(amount),
+        '0x00',
+      ]);
+      await sendEntryPoint(callData);
+    } else if (signer) {
+      signer.sendTransaction({ to, value: ethers.parseEther(amount) });
+    }
   }
 
   async function normalSubmit() {
-    const accountInter = new Interface(AccountAbi__factory.abi);
-    const bep20Inter = new Interface(BEP20Abi__factory.abi);
-    let callData = bep20Inter.encodeFunctionData('transfer', [to, ethers.parseEther(amount)]);
-    callData = accountInter.encodeFunctionData('execute', [token.address, 0, callData]);
-    const isCheck = await sendEntryPoint(callData);
-    if (isCheck) await fetchNormalBalance(token);
+    if (type == 'accountAbstraction') {
+      const accountInter = new Interface(AccountAbi__factory.abi);
+      const bep20Inter = new Interface(BEP20Abi__factory.abi);
+      let callData = bep20Inter.encodeFunctionData('transfer', [to, ethers.parseEther(amount)]);
+      callData = accountInter.encodeFunctionData('execute', [token.address, 0, callData]);
+      await sendEntryPoint(callData);
+    } else if (signer) {
+      const bep20Contract = new Bep20Contract(signer, token.address);
+      const tx = await bep20Contract.fn.transfer(to, ethers.parseEther(amount));
+      await tx.wait();
+    }
   }
 
   async function onSubmit() {

@@ -22,8 +22,9 @@ export default function ImportToken({ props }: Props) {
   const [tokenAddress, setTokenAddress] = useState('');
   const [decimal, setDecimal] = useState(0);
   const [symbol, setSymbol] = useState('');
-  const [balance, setBalance] = useState('0');
-  const { accountAddress } = useAppSelector((state) => state.user);
+  const [ownerBalance, setOwnerBalance] = useState('0');
+  const [accountBalance, setAccountBalance] = useState('0');
+  const { accountAddress, ownerAddress } = useAppSelector((state) => state.user);
   const { reader } = usRpcProviderContext();
   const dispatch = useAppDispatch();
   const { indexedStorage } = useLocalStorageContext();
@@ -36,19 +37,29 @@ export default function ImportToken({ props }: Props) {
       const intDecimal = parseInt(_decimal.toString());
       setDecimal(intDecimal);
       setSymbol(_symbol);
+      if (isAddress(ownerAddress)) {
+        const _balance = await bep20Contract.fn.balanceOf(ownerAddress);
+        setOwnerBalance(getDecimalAmount(_balance.toString(), intDecimal).toFixed());
+      }
       if (isAddress(accountAddress)) {
         const _balance = await bep20Contract.fn.balanceOf(accountAddress);
-        setBalance(getDecimalAmount(_balance.toString(), intDecimal).toFixed());
+        setAccountBalance(getDecimalAmount(_balance.toString(), intDecimal).toFixed());
       }
     }
-  }, [tokenAddress, reader, accountAddress]);
+  }, [tokenAddress, reader, ownerAddress, accountAddress]);
 
   useEffect(() => {
     _fetch();
   }, [_fetch]);
 
   async function onImportToken() {
-    dispatch(upsertToken({ address: tokenAddress, decimal, symbol, balance }));
+    dispatch(
+      upsertToken({
+        token: { address: tokenAddress, decimal, symbol },
+        ownerBalance,
+        accountBalance,
+      })
+    );
     if (indexedStorage) {
       await indexedStorage.token.upsert(tokenAddress.toLowerCase(), {
         address: tokenAddress.toLowerCase(),
@@ -60,7 +71,8 @@ export default function ImportToken({ props }: Props) {
     setTokenAddress('');
     setDecimal(0);
     setSymbol('');
-    setBalance('0');
+    setOwnerBalance('0');
+    setAccountBalance('0');
   }
 
   return (
@@ -97,8 +109,16 @@ export default function ImportToken({ props }: Props) {
           />
           <TitleItem
             titleWidth="80px"
-            title="Balance"
-            component={<TextField fullWidth value={balance} InputProps={{ readOnly: true }} />}
+            title="Owner Balance"
+            component={<TextField fullWidth value={ownerBalance} InputProps={{ readOnly: true }} />}
+            props={{ sx: { mt: 1 } }}
+          />
+          <TitleItem
+            titleWidth="80px"
+            title="Account Balance"
+            component={
+              <TextField fullWidth value={accountBalance} InputProps={{ readOnly: true }} />
+            }
             props={{ sx: { mt: 1 } }}
           />
         </BaseForm>

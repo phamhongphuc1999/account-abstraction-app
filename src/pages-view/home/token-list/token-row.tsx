@@ -5,18 +5,20 @@ import { useMemo, useState } from 'react';
 import CopyIcon, { InfoIcon } from 'src/components/icons/copy-icon';
 import ExploreIcon from 'src/components/icons/explore-icon';
 import { CHAINS } from 'src/configs/network-config';
-import { StandardToken } from 'src/global';
+import { AccountType, StandardToken } from 'src/global';
 import { useAppSelector } from 'src/redux-slices/store';
+import { getTokenData } from 'src/redux-slices/token-slice';
 import { toFixed } from 'src/services';
 import HideTokenDialog from './hide-token-dialog';
 import SendTokenDialog from './send-token-dialog';
 
 interface Props {
+  type: AccountType;
   token: StandardToken & { balance: string };
   props?: BoxProps;
 }
 
-export default function TokenRow({ token, props }: Props) {
+export default function TokenRow({ type, token, props }: Props) {
   const [openSend, setOpenSend] = useState(false);
   const [openHide, setOpenHide] = useState(false);
 
@@ -51,15 +53,20 @@ export default function TokenRow({ token, props }: Props) {
           )}
         </Grid>
       </Grid>
-      <SendTokenDialog open={openSend} token={token} onClose={() => setOpenSend(false)} />
+      <SendTokenDialog
+        open={openSend}
+        type={type}
+        token={token}
+        onClose={() => setOpenSend(false)}
+      />
       <HideTokenDialog open={openHide} token={token} onClose={() => setOpenHide(false)} />
     </Box>
   );
 }
 
-export function NativeTokenRow({ props }: { props?: BoxProps }) {
+export function NativeTokenRow({ type, props }: { type: AccountType; props?: BoxProps }) {
   const { chainId } = useAppSelector((state) => state.config);
-  const { balance } = useAppSelector((state) => state.token);
+  const { balance } = useAppSelector((state) => getTokenData(state.token, type));
 
   const token = useMemo<(StandardToken & { balance: string }) | undefined>(() => {
     if (chainId > 0) {
@@ -75,5 +82,5 @@ export function NativeTokenRow({ props }: { props?: BoxProps }) {
     }
   }, [chainId, balance]);
 
-  return token ? <TokenRow token={token} props={props} /> : <></>;
+  return token ? <TokenRow type={type} token={token} props={props} /> : <></>;
 }
