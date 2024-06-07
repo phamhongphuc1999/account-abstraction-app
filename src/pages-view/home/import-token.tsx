@@ -1,11 +1,11 @@
 import AddIcon from '@mui/icons-material/Add';
-import { BoxProps, TextField } from '@mui/material';
+import { BoxProps } from '@mui/material';
 import { isAddress } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
 import BaseDialog from 'src/components/BaseDialog';
 import BaseActionForm from 'src/components/form/base-action-form';
 import BaseForm from 'src/components/form/base-form';
-import TitleItem from 'src/components/title-item';
+import { TitleTextFieldItem } from 'src/components/title-item';
 import Bep20Contract from 'src/contracts/bep20-contract';
 import { useLocalStorageContext } from 'src/local-storage-connection/local-storage-context';
 import { useAppDispatch, useAppSelector } from 'src/redux-slices/store';
@@ -84,41 +84,46 @@ export default function ImportToken({ props }: Props) {
     >
       <BaseDialog title="Import Token" open={open} onClose={() => setOpen(false)}>
         <BaseForm events={{ onExecute: onImportToken }} metadata={{ executeTitle: 'Import' }}>
-          <TitleItem
+          <TitleTextFieldItem
             titleWidth="80px"
             title="Token Address"
-            component={
-              <TextField
-                fullWidth
-                value={tokenAddress}
-                onChange={(event) => setTokenAddress(event.target.value)}
-              />
-            }
+            textFieldProps={{
+              fullWidth: true,
+              value: tokenAddress,
+              onChange: (event) => setTokenAddress(event.target.value),
+            }}
+            props={{ sx: { mt: 1 } }}
           />
-          <TitleItem
+          <TitleTextFieldItem
             titleWidth="80px"
             title="Decimal"
-            component={<TextField fullWidth value={decimal} InputProps={{ readOnly: true }} />}
+            textFieldProps={{ fullWidth: true, value: decimal, InputProps: { readOnly: true } }}
             props={{ sx: { mt: 1 } }}
           />
-          <TitleItem
+          <TitleTextFieldItem
             titleWidth="80px"
             title="Symbol"
-            component={<TextField fullWidth value={symbol} InputProps={{ readOnly: true }} />}
+            textFieldProps={{ fullWidth: true, value: symbol, InputProps: { readOnly: true } }}
             props={{ sx: { mt: 1 } }}
           />
-          <TitleItem
+          <TitleTextFieldItem
             titleWidth="80px"
             title="Owner Balance"
-            component={<TextField fullWidth value={ownerBalance} InputProps={{ readOnly: true }} />}
+            textFieldProps={{
+              fullWidth: true,
+              value: ownerBalance,
+              InputProps: { readOnly: true },
+            }}
             props={{ sx: { mt: 1 } }}
           />
-          <TitleItem
+          <TitleTextFieldItem
             titleWidth="80px"
             title="Account Balance"
-            component={
-              <TextField fullWidth value={accountBalance} InputProps={{ readOnly: true }} />
-            }
+            textFieldProps={{
+              fullWidth: true,
+              value: accountBalance,
+              InputProps: { readOnly: true },
+            }}
             props={{ sx: { mt: 1 } }}
           />
         </BaseForm>

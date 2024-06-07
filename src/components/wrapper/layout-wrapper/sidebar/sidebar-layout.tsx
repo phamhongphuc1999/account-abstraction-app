@@ -1,14 +1,10 @@
-import { Box, Drawer, List, ListItem, Theme, useTheme } from '@mui/material';
+/* eslint-disable react/prop-types */
+import { Box, BoxProps, List, ListItem, Theme, useTheme } from '@mui/material';
 import { MuiNavLink } from 'src/components/utils';
+import { mergeSx } from 'src/services';
 
 function useStyle(theme: Theme) {
   return {
-    root: {
-      backgroundColor: theme.palette.mode === 'dark' ? '#0B1E33' : '#FFFFFF',
-      padding: 0,
-      zIndex: 1001,
-      minHeight: '650px',
-    },
     box: {
       width: '130px',
       height: '100%',
@@ -39,31 +35,33 @@ function useStyle(theme: Theme) {
   };
 }
 
-export default function Sidebar() {
+interface Props {
+  props?: BoxProps;
+}
+
+export default function SidebarLayout({ props }: Props) {
   const theme = useTheme();
   const cls = useStyle(theme);
 
   return (
-    <Drawer anchor="left" PaperProps={{ sx: cls.root }} variant="permanent">
-      <Box sx={cls.box}>
-        <List sx={{ padding: 0, width: '100%' }}>
-          <ListItem>
-            <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to="/">
-              Home
-            </MuiNavLink>
-          </ListItem>
-          <ListItem>
-            <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to="/guardian">
-              Guardian
-            </MuiNavLink>
-          </ListItem>
-          <ListItem>
-            <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to="/recovery">
-              Recovery
-            </MuiNavLink>
-          </ListItem>
-        </List>
-      </Box>
-    </Drawer>
+    <Box {...props} sx={mergeSx([cls.box, props?.sx])}>
+      <List sx={{ padding: 0, width: '100%' }}>
+        <ListItem>
+          <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to="/">
+            Home
+          </MuiNavLink>
+        </ListItem>
+        <ListItem>
+          <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to="/guardian">
+            Guardian
+          </MuiNavLink>
+        </ListItem>
+        <ListItem>
+          <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to="/recovery">
+            Recovery
+          </MuiNavLink>
+        </ListItem>
+      </List>
+    </Box>
   );
 }

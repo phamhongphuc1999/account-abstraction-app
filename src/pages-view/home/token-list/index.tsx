@@ -20,13 +20,13 @@ function TokenAccountList({ type, props }: Props) {
       </Typography>
       <Box sx={{ mt: 2 }}>
         <Grid container spacing={2}>
-          <Grid item xs={3}>
+          <Grid item md={3} xs={4}>
             <Typography>Token</Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item md={3} xs={4}>
             <Typography>Balance</Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item md={3} xs={4}>
             <Typography>Actions</Typography>
           </Grid>
         </Grid>

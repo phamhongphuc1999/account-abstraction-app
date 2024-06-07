@@ -1,11 +1,11 @@
 import DrawOutlinedIcon from '@mui/icons-material/DrawOutlined';
-import { BoxProps, TextField } from '@mui/material';
+import { BoxProps } from '@mui/material';
 import { useState } from 'react';
 import BaseDialog from 'src/components/BaseDialog';
 import BaseActionForm from 'src/components/form/base-action-form';
 import BaseForm from 'src/components/form/base-form';
 import CopyIcon from 'src/components/icons/copy-icon';
-import TitleItem from 'src/components/title-item';
+import { TitleTextFieldItem } from 'src/components/title-item';
 import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context';
 
 interface Props {
@@ -34,24 +34,26 @@ export default function SignMessage({ props }: Props) {
     >
       <BaseDialog open={open} onClose={() => setOpen(false)} title="Sign Message">
         <BaseForm events={{ onExecute: signMessage }}>
-          <TitleItem
+          <TitleTextFieldItem
             titleWidth="80px"
             title="Message"
-            component={<TextField fullWidth onChange={(event) => setMessage(event.target.value)} />}
+            textFieldProps={{
+              fullWidth: true,
+              onChange: (event) => setMessage(event.target.value),
+            }}
+            props={{ sx: { mt: 1 } }}
           />
-          <TitleItem
+          <TitleTextFieldItem
             titleWidth="80px"
             title="Result"
-            component={
-              <TextField
-                fullWidth
-                InputProps={{
-                  readOnly: true,
-                  endAdornment: result.length > 0 ? <CopyIcon copyText={result} /> : <></>,
-                }}
-                value={result}
-              />
-            }
+            textFieldProps={{
+              fullWidth: true,
+              InputProps: {
+                readOnly: true,
+                endAdornment: result.length > 0 ? <CopyIcon copyText={result} /> : <></>,
+              },
+              value: result,
+            }}
             props={{ sx: { mt: 1 } }}
           />
         </BaseForm>

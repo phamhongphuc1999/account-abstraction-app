@@ -17,7 +17,7 @@ export default function LayoutWrapper({ children }: Props) {
     <Box>
       <AppEffect />
       <Sidebar />
-      <Box sx={{ ml: '130px' }}>
+      <Box sx={{ [theme.breakpoints.up('sm')]: { ml: '130px' } }}>
         <Header />
         <Box sx={{ background: getColor(theme.palette.mode, '#061526', '#F5F7FA') }}>
           <Box sx={{ minHeight: 'calc(100vh - 65px)' }}>

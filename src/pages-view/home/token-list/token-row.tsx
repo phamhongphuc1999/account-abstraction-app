@@ -25,7 +25,7 @@ export default function TokenRow({ type, token, props }: Props) {
   return (
     <Box {...props}>
       <Grid container spacing={2}>
-        <Grid item xs={3}>
+        <Grid item md={3} xs={4}>
           {isAddress(token.address) ? (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Typography>{token.symbol}</Typography>
@@ -36,13 +36,13 @@ export default function TokenRow({ type, token, props }: Props) {
             <Typography>{token.symbol}</Typography>
           )}
         </Grid>
-        <Grid item xs={3}>
+        <Grid item md={3} xs={4}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography>{toFixed(token.balance, 6)}</Typography>
             <InfoIcon title={token.balance} />
           </Box>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item md={3} xs={4}>
           <IconButton onClick={() => setOpenSend(true)}>
             <CallMadeOutlined sx={{ fontSize: '16px' }} />
           </IconButton>

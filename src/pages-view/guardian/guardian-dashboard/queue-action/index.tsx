@@ -7,7 +7,14 @@ export default function QueueAction() {
   return (
     <Box sx={{ mt: 1 }}>
       <Typography>Create Queue Action</Typography>
-      <Box sx={{ mt: 1, display: 'flex', gap: 1 }}>
+      <Box
+        sx={(theme) => ({
+          mt: 1,
+          display: 'flex',
+          gap: 1,
+          [theme.breakpoints.down('sm')]: { flexDirection: 'column' },
+        })}
+      >
         <ChangeThreshold />
         <AddGuardian />
         <RemoveGuardian />
