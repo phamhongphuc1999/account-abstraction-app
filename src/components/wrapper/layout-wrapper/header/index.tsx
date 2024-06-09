@@ -1,11 +1,11 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import { Box, Container, Drawer, useTheme } from '@mui/material';
+import { useState } from 'react';
 import ConnectionButton from 'src/components/button/connection-button';
 import NetworkButton from 'src/components/button/network-button';
 import ThemeButton from 'src/components/button/theme-button';
 import { getColor } from 'src/services';
-import SidebarLayout from './sidebar/sidebar-layout';
-import { useState } from 'react';
+import SidebarLayout from '../sidebar/sidebar-layout';
 
 export default function Header() {
   const theme = useTheme();

@@ -29,6 +29,7 @@ export default function LocalStorageProvider({ children }: Props) {
     const db = await openDB('mvp-wallet', 1, {
       upgrade: (db) => {
         db.createObjectStore('tokens');
+        db.createObjectStore('hashWalletMetadata');
       },
     });
     const _indexedStorage = new IndexedStorage(db, 'aa-wallet');

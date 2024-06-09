@@ -4,6 +4,7 @@ import { GasOverheads, UserOperation } from 'src/user-operation-service/type';
 
 export const LS = {
   THEME: 'theme',
+  WALLET_TYPE: 'walletType',
 };
 
 export const ChainConfig = [

@@ -12,6 +12,10 @@ export default class LocalStorage {
     return localStorage.getItem(key);
   }
 
+  static remove(key: string) {
+    localStorage.removeItem(key);
+  }
+
   static expireSet<T extends SBase>(
     key: string,
     value: T,

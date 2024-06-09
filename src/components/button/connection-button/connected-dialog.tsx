@@ -10,10 +10,12 @@ import {
   useTheme,
 } from '@mui/material';
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CopyIcon from 'src/components/icons/copy-icon';
 import ExploreIcon from 'src/components/icons/explore-icon';
 import { CONNECTORS } from 'src/configs/network-config';
-import { useAppSelector } from 'src/redux-slices/store';
+import { changeWalletType } from 'src/redux-slices/config-slice';
+import { useAppDispatch, useAppSelector } from 'src/redux-slices/store';
 import { formatAddress } from 'src/services';
 import { useWalletAction } from 'src/wallet-connection/wallet-action';
 
@@ -24,6 +26,8 @@ interface Props {
 
 export default function ConnectedDialog({ open, onClose }: Props) {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { disconnect } = useWalletAction();
   const { connector } = useAppSelector((state) => state.config);
   const { ownerAddress, accountAddress, deployType } = useAppSelector((state) => state.user);
@@ -39,6 +43,11 @@ export default function ConnectedDialog({ open, onClose }: Props) {
   function onDisconnect() {
     disconnect();
     onClose();
+  }
+
+  function onLogout() {
+    dispatch(changeWalletType());
+    navigate('/login');
   }
 
   return (
@@ -90,9 +99,14 @@ export default function ConnectedDialog({ open, onClose }: Props) {
             <ExploreIcon hash={guardianAddress} />
           </>
         )}
-        <Button variant="outlined" sx={{ width: '100%', mt: 3 }} onClick={onDisconnect}>
-          Disconnect
-        </Button>
+        <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between', gap: 2 }}>
+          <Button variant="outlined" sx={{ width: '100%' }} onClick={onDisconnect}>
+            Disconnect
+          </Button>
+          <Button variant="outlined" sx={{ width: '100%' }} onClick={onLogout}>
+            Logout
+          </Button>
+        </Box>
       </DialogContent>
     </Dialog>
   );
