@@ -1,6 +1,6 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable @typescript-eslint/ban-types */
 import { Box, BoxProps, SvgIconTypeMap, Typography, useTheme } from '@mui/material';
-// eslint-disable-next-line import/no-unresolved
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { ReactNode } from 'react';
 import { mergeSx } from 'src/services';

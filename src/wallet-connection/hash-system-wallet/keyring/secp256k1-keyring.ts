@@ -2,40 +2,34 @@ import { HDKey } from '@scure/bip32';
 import * as bip39 from '@scure/bip39';
 import { wordlist } from '@scure/bip39/wordlists/english';
 import { HDKeyringErrors } from 'src/configs/constance';
-import { PrivateKey, SerializedHdKeyringState, SignatureScheme } from 'src/global';
-import BaseHashAccount from '../hash-account/base-hash-account';
+import { PrivateKey, SerializedHdKeyringState } from 'src/global';
 import EcdsaAccount from '../hash-account/ecdsa-account';
-import EddsaAccount from '../hash-account/eddsa-account';
 import BaseKeyring from './base-keyring';
 
 // eslint-disable-next-line quotes
 const hdPathString = "m/44'/60'/0'/0";
 const keyType = 'Custom HD Key Tree';
 
-export default class HDKeyring extends BaseKeyring {
+export default class Secp256k1Keyring extends BaseKeyring {
   mnemonic: string | undefined | null;
   hdWallet: HDKey | undefined | null;
   masterKey: HDKey | undefined | null;
-  accounts: Array<BaseHashAccount>;
+  accounts: Array<EcdsaAccount>;
 
   constructor() {
     super(keyType, hdPathString);
     this.accounts = [];
   }
 
-  public addKeys(schemas: Array<SignatureScheme>): Array<PrivateKey> {
+  public addKeys(numberOfKeys = 1): Array<PrivateKey> {
     if (!this.masterKey) throw new Error(HDKeyringErrors.NoSRPProvided);
     const oldLen = this.accounts.length;
     const newKeys: Array<PrivateKey> = [];
-    let counter = 0;
-    for (let i = oldLen; i < schemas.length + oldLen; i++) {
+    for (let i = oldLen; i < numberOfKeys + oldLen; i++) {
       const key = this.masterKey.deriveChild(i).privateKey;
       if (!key) throw new Error(HDKeyringErrors.MissingPrivateKey);
       newKeys.push(key);
-      this.accounts.push(
-        schemas[counter] == 'ecdsa_secp256k1' ? new EcdsaAccount(key) : new EddsaAccount(key)
-      );
-      counter++;
+      this.accounts.push(new EcdsaAccount(key));
     }
     return newKeys;
   }
@@ -55,28 +49,24 @@ export default class HDKeyring extends BaseKeyring {
     this.masterKey = this.hdWallet.derive(this.pathString);
   }
 
-  public getSchemas(): Array<SignatureScheme> {
-    return this.accounts.map((account) => account.signatureType);
-  }
-
   public serialize(): SerializedHdKeyringState {
     if (!this.mnemonic) throw new Error(HDKeyringErrors.MissingMnemonic);
     const uint8ArrayMnemonic = new TextEncoder().encode(this.mnemonic);
 
     return {
       mnemonic: Array.from(uint8ArrayMnemonic),
-      schemas: this.getSchemas(),
+      numberOfKeys: this.accounts.length,
       hdPath: this.pathString,
     };
   }
 
   public async deserialize(state: SerializedHdKeyringState): Promise<void> {
-    if (state.schemas.length > 0 && !state.mnemonic)
+    if (state.numberOfKeys > 0 && !state.mnemonic)
       throw new Error(HDKeyringErrors.DeserializeErrorNumberOfAccountWithMissingMnemonic);
 
     if (this.masterKey) throw new Error(HDKeyringErrors.SRPAlreadyProvided);
     const mnemonic = new TextDecoder().decode(new Uint8Array(state.mnemonic));
     this.initFromMnemonic(mnemonic);
-    if (state.schemas.length > 0) this.addKeys(state.schemas);
+    if (state.numberOfKeys > 0) this.addKeys(state.numberOfKeys);
   }
 }

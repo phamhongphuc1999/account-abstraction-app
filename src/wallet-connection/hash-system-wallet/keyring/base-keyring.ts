@@ -1,6 +1,6 @@
 import * as bip39 from '@scure/bip39';
 import { wordlist } from '@scure/bip39/wordlists/english';
-import { SerializedHdKeyringState } from 'src/global';
+import { PrivateKey, SerializedHdKeyringState } from 'src/global';
 
 export default abstract class BaseKeyring<State = SerializedHdKeyringState> {
   readonly keyType: string;
@@ -14,6 +14,9 @@ export default abstract class BaseKeyring<State = SerializedHdKeyringState> {
   static generateRandomMnemonic() {
     return bip39.generateMnemonic(wordlist);
   }
+
+  abstract addKeys(numberOfKeys: number): Array<PrivateKey>;
+  abstract initFromMnemonic(mnemonic: string): void;
 
   // Serialize the keyring state as a JSON-serializable object.
   abstract serialize(): State;

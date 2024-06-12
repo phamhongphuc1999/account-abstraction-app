@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dispatch, ReactNode, createContext, useContext, useMemo, useState } from 'react';
+import { SignatureScheme } from 'src/global';
 
 export interface HashRegisterContextProps {
-  password: string;
-  mnemonic: string;
-  step: number;
+  data: { signatureSchema: SignatureScheme; password: string; mnemonic: string; step: number };
   fn: {
+    setSignatureSchema: Dispatch<React.SetStateAction<SignatureScheme>>;
     setPassword: Dispatch<React.SetStateAction<string>>;
     setStep: Dispatch<React.SetStateAction<number>>;
     setMnemonic: Dispatch<React.SetStateAction<string>>;
@@ -12,10 +13,9 @@ export interface HashRegisterContextProps {
 }
 
 const HashRegisterContext = createContext<HashRegisterContextProps>({
-  password: '',
-  mnemonic: '',
-  step: 1,
+  data: { signatureSchema: 'ed125519', password: '', mnemonic: '', step: 1 },
   fn: {
+    setSignatureSchema: () => {},
     setPassword: () => {},
     setStep: () => {},
     setMnemonic: () => {},
@@ -27,13 +27,17 @@ interface Props {
 }
 
 export default function HashRegisterProvider({ children }: Props) {
+  const [signatureSchema, setSignatureSchema] = useState<SignatureScheme>('ed125519');
   const [password, setPassword] = useState('');
   const [mnemonic, setMnemonic] = useState('');
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
 
   const contextData = useMemo(() => {
-    return { password, mnemonic, step, fn: { setPassword, setStep, setMnemonic } };
-  }, [password, mnemonic, step]);
+    return {
+      data: { signatureSchema, password, mnemonic, step },
+      fn: { setSignatureSchema, setPassword, setStep, setMnemonic },
+    };
+  }, [signatureSchema, password, mnemonic, step]);
 
   return (
     <HashRegisterContext.Provider value={contextData}>{children}</HashRegisterContext.Provider>
@@ -42,4 +46,13 @@ export default function HashRegisterProvider({ children }: Props) {
 
 export function useHashRegisterContext() {
   return useContext(HashRegisterContext);
+}
+
+export function useHashRegisterSelector<T = any>(
+  selectorFn: (data: HashRegisterContextProps) => T
+) {
+  const data = useHashRegisterContext();
+  return useMemo(() => {
+    return selectorFn(data);
+  }, [data, selectorFn]);
 }

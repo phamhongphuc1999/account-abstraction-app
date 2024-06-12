@@ -7,7 +7,7 @@ import BaseHashAccount from './base-hash-account';
 
 export default class EcdsaAccount extends BaseHashAccount {
   constructor(_privateKey: PrivateKey) {
-    super(_privateKey, 'ecdsa_secp256k1');
+    super(_privateKey, 'ecdsa');
   }
 
   _normalizedPrivKey() {

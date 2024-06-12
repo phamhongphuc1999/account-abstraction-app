@@ -7,7 +7,7 @@ export default abstract class BaseHashAccount {
   public normalizedPrivKey: bigint;
   public publicKey: PublicKey;
 
-  constructor(_privateKey: PrivateKey, _signatureType: SignatureScheme = 'eddsa_babyjubjub') {
+  constructor(_privateKey: PrivateKey, _signatureType: SignatureScheme = 'ed125519') {
     this.signatureType = _signatureType;
 
     this.privateKey = _privateKey;

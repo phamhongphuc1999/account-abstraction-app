@@ -12,13 +12,13 @@ export default function PasswordForm() {
   function onSavePassword() {
     if (password == confirmPassword) {
       fn.setPassword(password);
-      fn.setStep(2);
+      fn.setStep(3);
     }
   }
 
   return (
     <>
-      <Typography variant="subtitle1">Step 1: Create your Password</Typography>
+      <Typography variant="subtitle1">Step 2: Create your Password</Typography>
       <BaseForm events={{ onExecute: onSavePassword }}>
         <TitleTextFieldItem
           titleWidth="80px"

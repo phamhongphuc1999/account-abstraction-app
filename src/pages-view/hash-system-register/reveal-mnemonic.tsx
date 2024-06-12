@@ -1,6 +1,7 @@
 import { Button, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import BaseForm from 'src/components/form/base-form';
+import CopyIcon from 'src/components/icons/copy-icon';
 import { useHashRegisterContext } from 'src/context/hash-register-context';
 import BaseKeyring from 'src/wallet-connection/hash-system-wallet/keyring/base-keyring';
 
@@ -17,13 +18,13 @@ export default function RevealMnemonic() {
 
   function onSaveMnemonic() {
     fn.setMnemonic(mnemonic);
-    fn.setStep(3);
+    fn.setStep(4);
   }
 
   return (
     <>
       <Typography variant="subtitle1" sx={{ mb: 1 }}>
-        Step 2: Reveal Mnemonic
+        Step 3: Reveal Mnemonic
       </Typography>
       <BaseForm events={{ onExecute: onSaveMnemonic }}>
         <TextField
@@ -31,11 +32,18 @@ export default function RevealMnemonic() {
           value={mnemonic}
           InputProps={{
             readOnly: true,
-            endAdornment: (
-              <Button disabled={mnemonic.length > 0} variant="outlined" onClick={onCreateMnemonic}>
-                Create mnemonic
-              </Button>
-            ),
+            endAdornment:
+              mnemonic.length > 0 ? (
+                <CopyIcon copyText={mnemonic} />
+              ) : (
+                <Button
+                  disabled={mnemonic.length > 0}
+                  variant="outlined"
+                  onClick={onCreateMnemonic}
+                >
+                  Create mnemonic
+                </Button>
+              ),
           }}
           maxRows={4}
         />
