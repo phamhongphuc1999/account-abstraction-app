@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { IDBPDatabase } from 'idb';
 import merge from 'lodash.merge';
-import { StandardToken, StoreName } from 'src/global';
+import { SignatureScheme, StandardToken, StoreName } from 'src/global';
+
+export type HashWalletType = {
+  schema: SignatureScheme;
+  mnemonic: string;
+  numberOfKeys: number;
+  hdPath?: string;
+};
 
 export class ObjectStorage<T = any> {
   public readonly storeName: StoreName;
@@ -42,11 +49,13 @@ export default class IndexedStorage {
   public readonly db: IDBPDatabase<unknown>;
 
   public readonly token: ObjectStorage<StandardToken>;
+  public readonly hashWalletMetadata: ObjectStorage<HashWalletType>;
 
   constructor(db: IDBPDatabase<unknown>, databaseName: string) {
     this.db = db;
     this.databaseName = databaseName;
 
     this.token = new ObjectStorage<StandardToken>(db, 'tokens');
+    this.hashWalletMetadata = new ObjectStorage<HashWalletType>(db, 'hashWalletMetadata');
   }
 }

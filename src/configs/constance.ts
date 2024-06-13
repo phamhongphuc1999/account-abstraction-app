@@ -4,6 +4,7 @@ import { GasOverheads, UserOperation } from 'src/user-operation-service/type';
 
 export const LS = {
   THEME: 'theme',
+  WALLET_TYPE: 'walletType',
 };
 
 export const ChainConfig = [
@@ -22,6 +23,7 @@ export const OwnerTransactionType = {
   SetThreshold: 2,
 };
 
+export const INDEXED_WALLET_KEY = 'walletMetadata';
 export const DAY_SECOND = 86400;
 export const SIMPLE_SALT = '0x'.padEnd(66, '0');
 export const TX_SEND_FEE = '0.000000003';
@@ -50,3 +52,19 @@ export const DefaultGasOverheads: GasOverheads = {
   bundleSize: 1,
   sigSize: 65,
 };
+
+export enum HDKeyringErrors {
+  MissingMnemonic = 'HdKeyring: Missing mnemonic when serializing',
+  MissingHdPath = 'HdKeyring: Missing hd path',
+  MissingPrivateKey = 'HdKeyring: Missing private key in wallet',
+  MissingPublicKey = 'HdKeyring: Missing public key in wallet',
+
+  NoSRPProvided = 'HdKeyring: No secret recovery phrase provided',
+  InvalidSRP = 'HdKeyring: Invalid secret recovery phrase provided',
+  SRPAlreadyProvided = 'HdKeyring: Secret recovery phrase already provided',
+
+  PublicKeyNotFound = 'HdKeyring: Public key not found in this keyring',
+  PublicKeyNotProvided = 'HdKeyring: Must specify public key.',
+
+  DeserializeErrorNumberOfAccountWithMissingMnemonic = 'HdKeyring: Deserialize method cannot be called with an opts value for numberOfAccounts and no menmonic',
+}

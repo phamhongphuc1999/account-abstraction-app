@@ -4,9 +4,9 @@ import { BigNumberish, InterfaceAbi, JsonRpcProvider, JsonRpcSigner } from 'ethe
 export type StringListType<T = unknown> = { [key: string]: T };
 
 export type ThemeMode = 'light' | 'dark';
-export type StoreName = 'tokens';
+export type StoreName = 'tokens' | 'hashWalletMetadata';
 export type ContractType = 'reader' | 'signer';
-export type ConnectorType = 'metamask' | 'coinbase';
+export type ConnectorType = 'metamask' | 'coinbase' | 'hash-system';
 export type FStatus =
   | 'INITIAL'
   | 'SKIP'
@@ -17,6 +17,7 @@ export type FStatus =
   | 'WAIT_CONFIRM';
 export type DeployStatus = 'initial' | 'deployed' | 'notDeploy';
 export type AccountType = 'owner' | 'accountAbstraction';
+export type WalletKeyType = 'wagmi' | 'hash-system';
 
 export type AddressesType = {
   ENTRY_POINT_ADDRESS: string;
@@ -95,3 +96,24 @@ export interface ProofCallDataType {
   pC: [BigNumberish, BigNumberish];
   pubSignals: [BigNumberish, BigNumberish];
 }
+
+/* hash system wallet types */
+export type SignatureScheme = 'ecdsa' | 'ed25519';
+export type WalletType = 'metamask' | SignatureScheme;
+
+export type PrivateKey = Uint8Array | bigint;
+export type PublicKey = Uint8Array;
+
+export type AccountSignature = {
+  raw: Uint8Array;
+  r: Buffer;
+  s: Buffer;
+  v?: bigint;
+};
+
+export type SerializedHdKeyringState = {
+  mnemonic: Array<number>;
+  numberOfKeys: number;
+  hdPath?: string;
+};
+/* end hash system wallet types */

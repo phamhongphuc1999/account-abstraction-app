@@ -11,6 +11,7 @@ import {
   hexlify,
   toBeHex,
 } from 'ethers';
+import cloneDeep from 'lodash.clonedeep';
 import { SIMPLE_EXTEND } from 'src/configs/constance';
 import { AccountFactoryAbi__factory } from 'src/contracts/typechain';
 import { ThemeMode } from 'src/global';
@@ -79,6 +80,20 @@ export function toFixed(num: number | string, fractionDigits = 0): number {
   const fixedNum = Number(num.toFixed(fractionDigits));
   if (fixedNum == 0) return toFixed(num, fractionDigits + 1);
   return fixedNum;
+}
+
+export function randomList<T = any>(_list: Array<T>, loops: number): Array<T> {
+  const _len = _list.length;
+  if (_len <= 1) return cloneDeep(_list);
+  const realLoops = loops > 0 ? loops : 1;
+  const _result = cloneDeep(_list);
+  for (let i = 0; i < realLoops; i++) {
+    const _entropy = Math.floor(Math.random() * (_len - 1)) + 1;
+    const temp = _result[0];
+    _result[0] = _result[_entropy];
+    _result[_entropy] = temp;
+  }
+  return _result;
 }
 
 export function mergeSx(sxs: Array<boolean | SxProps<Theme> | undefined>): SxProps<Theme> {

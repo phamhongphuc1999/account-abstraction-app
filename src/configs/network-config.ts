@@ -58,4 +58,9 @@ export const CONNECTORS: ConnectorListType = {
     type: 'coinbase',
     name: 'CoinBase',
   },
+  'hash-system': {
+    image: MetamaskImage,
+    type: 'hash-system',
+    name: 'HashSystem',
+  },
 };
