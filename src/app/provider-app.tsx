@@ -13,6 +13,7 @@ import LocalStorageProvider from 'src/local-storage-connection/local-storage-con
 import { initLocalStorage } from 'src/redux-slices/config-slice';
 import store, { useAppDispatch } from 'src/redux-slices/store';
 import WalletConnection from 'src/wallet-connection';
+import HashWalletProvider from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
 
 function CommonAppEffect() {
   const dispatch = useAppDispatch();
@@ -29,7 +30,27 @@ function CommonAppEffect() {
   return <></>;
 }
 
-function RemainApp() {
+function LoginApp() {
+  return (
+    <LocalStorageProvider>
+      <ThemeWrapper>
+        <SimpleLayoutWrapper>
+          <ToastContainer
+            autoClose={4000}
+            theme="dark"
+            hideProgressBar={false}
+            position="top-center"
+          />
+          <Outlet />
+          <CommonAppEffect />
+          <ScrollToTop />
+        </SimpleLayoutWrapper>
+      </ThemeWrapper>
+    </LocalStorageProvider>
+  );
+}
+
+function WagmiWalletApp() {
   return (
     <LocalStorageProvider>
       <WalletConnection>
@@ -51,32 +72,38 @@ function RemainApp() {
   );
 }
 
-function SimpleRemainApp() {
+function HashSystemApp() {
   return (
     <LocalStorageProvider>
-      <ThemeWrapper>
-        <SimpleLayoutWrapper>
-          <ToastContainer
-            autoClose={4000}
-            theme="dark"
-            hideProgressBar={false}
-            position="top-center"
-          />
-          <Outlet />
-          <CommonAppEffect />
-          <ScrollToTop />
-        </SimpleLayoutWrapper>
-      </ThemeWrapper>
+      <HashWalletProvider>
+        <ThemeWrapper>
+          <LayoutWrapper>
+            <ToastContainer
+              autoClose={4000}
+              theme="dark"
+              hideProgressBar={false}
+              position="top-center"
+            />
+            <Outlet />
+            <CommonAppEffect />
+            <ScrollToTop />
+          </LayoutWrapper>
+        </ThemeWrapper>
+      </HashWalletProvider>
     </LocalStorageProvider>
   );
 }
 
 interface Props {
-  mode: 'normal' | 'simple';
+  mode: 'wagmi-wallet' | 'login' | 'hash-system-wallet';
 }
 
 export default function ProviderApp({ mode }: Props) {
   return (
-    <Provider store={store}>{mode == 'normal' ? <RemainApp /> : <SimpleRemainApp />}</Provider>
+    <Provider store={store}>
+      {mode == 'login' && <LoginApp />}
+      {mode == 'wagmi-wallet' && <WagmiWalletApp />}
+      {mode == 'hash-system-wallet' && <HashSystemApp />}
+    </Provider>
   );
 }

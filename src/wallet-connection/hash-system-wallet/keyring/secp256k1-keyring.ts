@@ -17,7 +17,7 @@ export default class Secp256k1Keyring extends BaseKeyring {
   accounts: Array<EcdsaAccount>;
 
   constructor() {
-    super(keyType, hdPathString);
+    super(keyType, hdPathString, 'ecdsa');
     this.accounts = [];
   }
 

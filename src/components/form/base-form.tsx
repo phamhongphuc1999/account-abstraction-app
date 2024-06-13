@@ -8,10 +8,13 @@ interface Props {
   metadata?: {
     executeTitle?: string;
   };
+  component?: {
+    Footer?: ReactNode;
+  };
   children?: ReactNode;
 }
 
-export default function BaseForm({ events, metadata, children }: Props) {
+export default function BaseForm({ events, metadata, component, children }: Props) {
   const title = metadata?.executeTitle ?? 'Execute';
 
   function onExecute(event: FormEvent<HTMLFormElement>) {
@@ -23,7 +26,8 @@ export default function BaseForm({ events, metadata, children }: Props) {
     <form onSubmit={(event) => onExecute(event)}>
       {children}
       {events?.onExecute && (
-        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
+        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+          {component?.Footer}
           <Button variant="contained" type="submit">
             {title}
           </Button>

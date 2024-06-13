@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useLocalStorageContext } from 'src/local-storage-connection/local-storage-context';
 import { changeWalletType } from 'src/redux-slices/config-slice';
@@ -17,21 +17,24 @@ export default function LoginForm() {
   async function loginByHashSystemWallet() {
     if (indexedStorage) {
       const _metadata = await indexedStorage.hashWalletMetadata.getAll();
-      if (_metadata.length > 0) {
-        dispatch(changeWalletType({ walletType: 'hash-system' }));
-        navigate('/hash-system-wallet');
-      } else navigate('/hash-system-register');
+      if (_metadata.length > 0) navigate('/hash-system-wallet');
     }
   }
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-      <Button variant="contained" onClick={loginByMetamask}>
-        Login by Metamask
+    <>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
+        <Button variant="contained" onClick={loginByMetamask}>
+          Login by Metamask
+        </Button>
+        <Button variant="outlined" onClick={loginByHashSystemWallet}>
+          Login by Hash system Wallet
+        </Button>
+      </Box>
+      <Typography>OR</Typography>
+      <Button variant="contained" sx={{ mt: 1 }} onClick={() => navigate('/hash-system-register')}>
+        Register Hash system Wallet
       </Button>
-      <Button variant="outlined" onClick={loginByHashSystemWallet}>
-        Login by Hash system Wallet
-      </Button>
-    </Box>
+    </>
   );
 }

@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { ReactNode } from 'react';
 import { capitalizeFirstLetter, mergeSx } from 'src/services';
+import PasswordTextField from './text-field/password-text-field';
 
 interface Props {
   title?: string;
@@ -42,12 +43,14 @@ export default function TitleItem({ title, titleWidth = '55px', component, props
 }
 
 interface TextProps extends Omit<Props, 'component'> {
+  isPassword?: boolean;
   textFieldProps?: TextFieldProps;
 }
 
 export function TitleTextFieldItem({
   title,
   titleWidth = '55px',
+  isPassword,
   textFieldProps,
   props,
 }: TextProps) {
@@ -58,7 +61,13 @@ export function TitleTextFieldItem({
     <TitleItem
       title={smDown ? undefined : title}
       titleWidth={titleWidth}
-      component={<TextField {...textFieldProps} label={title} />}
+      component={
+        isPassword ? (
+          <PasswordTextField props={textFieldProps} />
+        ) : (
+          <TextField {...textFieldProps} label={title} />
+        )
+      }
       props={props}
     />
   );

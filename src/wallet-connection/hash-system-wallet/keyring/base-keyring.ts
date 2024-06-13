@@ -1,21 +1,27 @@
 import * as bip39 from '@scure/bip39';
 import { wordlist } from '@scure/bip39/wordlists/english';
-import { PrivateKey, SerializedHdKeyringState } from 'src/global';
+import { PrivateKey, SerializedHdKeyringState, SignatureScheme } from 'src/global';
 
 export default abstract class BaseKeyring<State = SerializedHdKeyringState> {
   readonly keyType: string;
   readonly pathString: string;
+  readonly signatureSchema: SignatureScheme;
 
-  constructor(_keyType: string, _pathString: string) {
+  constructor(
+    _keyType: string,
+    _pathString: string,
+    _signatureSchema: SignatureScheme = 'ed25519'
+  ) {
     this.keyType = _keyType;
     this.pathString = _pathString;
+    this.signatureSchema = _signatureSchema;
   }
 
   static generateRandomMnemonic() {
-    return bip39.generateMnemonic(wordlist);
+    return bip39.generateMnemonic(wordlist, 128);
   }
 
-  abstract addKeys(numberOfKeys: number): Array<PrivateKey>;
+  abstract addKeys(numberOfKeys?: number): Array<PrivateKey>;
   abstract initFromMnemonic(mnemonic: string): void;
 
   // Serialize the keyring state as a JSON-serializable object.

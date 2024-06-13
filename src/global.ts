@@ -3,7 +3,6 @@ import { BigNumberish, InterfaceAbi, JsonRpcProvider, JsonRpcSigner } from 'ethe
 
 export type StringListType<T = unknown> = { [key: string]: T };
 
-export type WalletType = 'metamask' | 'hash-system';
 export type ThemeMode = 'light' | 'dark';
 export type StoreName = 'tokens' | 'hashWalletMetadata';
 export type ContractType = 'reader' | 'signer';
@@ -98,7 +97,8 @@ export interface ProofCallDataType {
 }
 
 /* hash system wallet types */
-export type SignatureScheme = 'ecdsa' | 'ed125519';
+export type SignatureScheme = 'ecdsa' | 'ed25519';
+export type WalletType = 'metamask' | SignatureScheme;
 
 export type PrivateKey = Uint8Array | bigint;
 export type PublicKey = Uint8Array;

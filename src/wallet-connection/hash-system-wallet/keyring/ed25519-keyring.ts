@@ -7,7 +7,7 @@ import EddsaAccount from '../hash-account/eddsa-account';
 import BaseKeyring from './base-keyring';
 
 // eslint-disable-next-line quotes
-const hdPathString = "m/44'/60'/0'/0";
+const hdPathString = "m/44'/501'/0'/0'";
 const keyType = 'Custom ED25519 Key Tree';
 
 export default class Ed25519Keyring extends BaseKeyring {
@@ -21,12 +21,12 @@ export default class Ed25519Keyring extends BaseKeyring {
     this.accounts = [];
   }
 
-  public addKeys(numberOfKeys: number): Array<PrivateKey> {
+  public addKeys(numberOfKeys = 1): Array<PrivateKey> {
     if (!this.masterKey) throw new Error(HDKeyringErrors.NoSRPProvided);
-    const oldLen = this.accounts.length;
+    const oldLen = this.accounts.length + 1;
     const newKeys: Array<PrivateKey> = [];
     for (let i = oldLen; i < numberOfKeys + oldLen; i++) {
-      const key = this.masterKey.deriveChild(i).privateKey;
+      const key = this.masterKey.derive(`m/44'/501'/${i}'/0'`).privateKey;
       if (!key) throw new Error(HDKeyringErrors.MissingPrivateKey);
       newKeys.push(key);
       this.accounts.push(new EddsaAccount(key));
@@ -43,9 +43,10 @@ export default class Ed25519Keyring extends BaseKeyring {
     if (!isValid) throw new Error(HDKeyringErrors.InvalidSRP);
 
     // FIXME support other mnemonic type
-    const seed = bip39.mnemonicToSeedSync(this.mnemonic);
-    this.hdWallet = HDKey.fromMasterSeed(seed);
+    const seed = bip39.mnemonicToSeedSync(this.mnemonic, '');
+    this.hdWallet = HDKey.fromMasterSeed(Buffer.from(seed).toString('hex'));
     if (!this.pathString) throw new Error(HDKeyringErrors.MissingHdPath);
+    // eslint-disable-next-line quotes
     this.masterKey = this.hdWallet.derive(this.pathString);
   }
 

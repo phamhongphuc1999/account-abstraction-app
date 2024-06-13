@@ -2,8 +2,15 @@
 import { Dispatch, ReactNode, createContext, useContext, useMemo, useState } from 'react';
 import { SignatureScheme } from 'src/global';
 
+export type HashDataType = {
+  signatureSchema: SignatureScheme;
+  password: string;
+  mnemonic: string;
+  step: number;
+};
+
 export interface HashRegisterContextProps {
-  data: { signatureSchema: SignatureScheme; password: string; mnemonic: string; step: number };
+  data: HashDataType;
   fn: {
     setSignatureSchema: Dispatch<React.SetStateAction<SignatureScheme>>;
     setPassword: Dispatch<React.SetStateAction<string>>;
@@ -13,7 +20,7 @@ export interface HashRegisterContextProps {
 }
 
 const HashRegisterContext = createContext<HashRegisterContextProps>({
-  data: { signatureSchema: 'ed125519', password: '', mnemonic: '', step: 1 },
+  data: { signatureSchema: 'ed25519', password: '', mnemonic: '', step: 1 },
   fn: {
     setSignatureSchema: () => {},
     setPassword: () => {},
@@ -27,7 +34,7 @@ interface Props {
 }
 
 export default function HashRegisterProvider({ children }: Props) {
-  const [signatureSchema, setSignatureSchema] = useState<SignatureScheme>('ed125519');
+  const [signatureSchema, setSignatureSchema] = useState<SignatureScheme>('ed25519');
   const [password, setPassword] = useState('');
   const [mnemonic, setMnemonic] = useState('');
   const [step, setStep] = useState(1);

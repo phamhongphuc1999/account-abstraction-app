@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useState } from 'react';
 import BaseForm from 'src/components/form/base-form';
 import { TitleTextFieldItem } from 'src/components/title-item';
@@ -16,13 +16,28 @@ export default function PasswordForm() {
     }
   }
 
+  function onCancel() {
+    fn.setPassword('');
+    fn.setStep(1);
+  }
+
   return (
     <>
       <Typography variant="subtitle1">Step 2: Create your Password</Typography>
-      <BaseForm events={{ onExecute: onSavePassword }}>
+      <BaseForm
+        component={{
+          Footer: (
+            <Button variant="outlined" onClick={onCancel}>
+              Back
+            </Button>
+          ),
+        }}
+        events={{ onExecute: onSavePassword }}
+      >
         <TitleTextFieldItem
           titleWidth="80px"
           title="Password"
+          isPassword={true}
           textFieldProps={{
             fullWidth: true,
             value: password,
@@ -33,6 +48,7 @@ export default function PasswordForm() {
         <TitleTextFieldItem
           titleWidth="80px"
           title="Confirm Password"
+          isPassword={true}
           textFieldProps={{
             fullWidth: true,
             value: confirmPassword,
