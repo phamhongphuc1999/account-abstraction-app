@@ -1,4 +1,4 @@
-import { useRoutes } from 'react-router-dom';
+import { Navigate, useRoutes } from 'react-router-dom';
 import Guardian from 'src/pages/guardian';
 import HashSystemRegister from 'src/pages/hash-system-register';
 import HashSystemHome from 'src/pages/home/hash-system-home';
@@ -41,6 +41,11 @@ export default function App() {
       path: '/hash-system-register',
       element: <ProviderApp mode="login" />,
       children: [{ path: '', element: <HashSystemRegister /> }],
+    },
+    {
+      path: '*',
+      element: <ProviderApp mode="login" />,
+      children: [{ index: true, element: <Navigate to="/login" replace /> }],
     },
   ]);
 }

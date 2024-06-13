@@ -1,3 +1,4 @@
+import { bufferToHex, publicToAddress } from '@ethereumjs/util';
 import { Hex, numberToHexUnpadded } from '@noble/curves/abstract/utils';
 import { AccountSignature, PrivateKey, PublicKey, SignatureScheme } from 'src/global';
 
@@ -16,6 +17,10 @@ export default abstract class BaseHashAccount {
     this.normalizedPrivKey = this._normalizedPrivKey();
     this._hexPrivKey = numberToHexUnpadded(this.normalizedPrivKey);
     this.publicKey = this.getPublicKey();
+  }
+
+  public getEVMAddress(): string {
+    return bufferToHex(publicToAddress(Buffer.from(this.publicKey), true)).toLowerCase();
   }
 
   protected abstract _normalizedPrivKey(): bigint;

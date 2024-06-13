@@ -2,18 +2,16 @@ import { Box, Dialog, DialogContent, Typography } from '@mui/material';
 import { MuiImage } from 'src/components/utils';
 import { CONNECTORS } from 'src/configs/network-config';
 import { ConnectorType } from 'src/global';
-import { useWalletAction } from 'src/wallet-connection/wallet-action';
 
 interface Props {
   open: boolean;
+  connect?: (connector: ConnectorType, chainId?: number) => Promise<void>;
   onClose: () => void;
 }
 
-export default function ConnectionDialog({ open, onClose }: Props) {
-  const { connect } = useWalletAction();
-
+export default function ConnectionDialog({ open, connect, onClose }: Props) {
   function onConnectClick(connector: ConnectorType) {
-    connect(connector);
+    if (connect) connect(connector);
     onClose();
   }
 

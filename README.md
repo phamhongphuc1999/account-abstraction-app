@@ -32,6 +32,5 @@ bun dev
 
 - https://docs.google.com/document/d/1-W-X-rUGfvzDWIc6IzKMRQ5EBXeRBg5C2-S7Qhk1pLU/edit?usp=sharing
 - https://github.com/Electron-Labs/ed25519-circom/blob/main/circuits/verify.circom
-- https://github.com/paulmillr/micro-key-producer
 
-advice diet labor roast exercise solve group return festival type hen quality
+rose furnace jeans genre dove purchase update oyster pride rival chicken shell

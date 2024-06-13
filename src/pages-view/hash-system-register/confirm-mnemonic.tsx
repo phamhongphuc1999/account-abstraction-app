@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import BaseForm from 'src/components/form/base-form';
 import { useHashRegisterSelector } from 'src/context/hash-register-context';
 import useRecoverHashWallet from 'src/hooks/use-recover-hash-wallet';
-import { randomList } from 'src/services';
 
 function useStyle() {
   return {
@@ -59,7 +58,8 @@ export default function ConfirmMnemonic() {
   const { mnemonic } = data;
   const { importFn } = useRecoverHashWallet();
   const [correctMnemonic, setCorrectMnemonic] = useState<Array<string>>([]);
-  const [validatedMnemonic, setValidatedMnemonic] = useState(randomList(mnemonic.split(' '), 20));
+  // const [validatedMnemonic, setValidatedMnemonic] = useState(randomList(mnemonic.split(' '), 20));
+  const [validatedMnemonic, setValidatedMnemonic] = useState(mnemonic.split(' '));
 
   function addMnemonic(word: string, _index: number) {
     setCorrectMnemonic((preValue) => {
@@ -85,8 +85,6 @@ export default function ConfirmMnemonic() {
     if (correctMnemonic.join(' ') == mnemonic) {
       await importFn(data);
     } else toast.warn('Invalid mnemonic');
-
-    // await importFn(data);
   }
 
   return (

@@ -17,18 +17,17 @@ import { CONNECTORS } from 'src/configs/network-config';
 import { changeWalletType } from 'src/redux-slices/config-slice';
 import { useAppDispatch, useAppSelector } from 'src/redux-slices/store';
 import { formatAddress } from 'src/services';
-import { useWalletAction } from 'src/wallet-connection/wallet-action';
 
 interface Props {
   open: boolean;
+  disconnect?: () => void;
   onClose: () => void;
 }
 
-export default function ConnectedDialog({ open, onClose }: Props) {
+export default function ConnectedDialog({ open, disconnect, onClose }: Props) {
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { disconnect } = useWalletAction();
   const { connector } = useAppSelector((state) => state.config);
   const { ownerAddress, accountAddress, deployType } = useAppSelector((state) => state.user);
   const { guardianAddress } = useAppSelector((state) => state.guardian);
@@ -41,7 +40,7 @@ export default function ConnectedDialog({ open, onClose }: Props) {
   }, [deployType]);
 
   function onDisconnect() {
-    disconnect();
+    if (disconnect) disconnect();
     onClose();
   }
 

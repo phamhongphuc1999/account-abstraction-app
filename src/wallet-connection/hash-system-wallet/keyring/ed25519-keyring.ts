@@ -2,7 +2,8 @@ import * as bip39 from '@scure/bip39';
 import { wordlist } from '@scure/bip39/wordlists/english';
 import { HDKey } from 'micro-key-producer/slip10.js';
 import { HDKeyringErrors } from 'src/configs/constance';
-import { PrivateKey, SerializedHdKeyringState } from 'src/global';
+import { SerializedHdKeyringState } from 'src/global';
+import BaseHashAccount from '../hash-account/base-hash-account';
 import EddsaAccount from '../hash-account/eddsa-account';
 import BaseKeyring from './base-keyring';
 
@@ -21,17 +22,18 @@ export default class Ed25519Keyring extends BaseKeyring {
     this.accounts = [];
   }
 
-  public addKeys(numberOfKeys = 1): Array<PrivateKey> {
+  public addKeys(numberOfKeys = 1): Array<BaseHashAccount> {
     if (!this.masterKey) throw new Error(HDKeyringErrors.NoSRPProvided);
     const oldLen = this.accounts.length + 1;
-    const newKeys: Array<PrivateKey> = [];
+    const newAccounts: Array<BaseHashAccount> = [];
     for (let i = oldLen; i < numberOfKeys + oldLen; i++) {
       const key = this.masterKey.derive(`m/44'/501'/${i}'/0'`).privateKey;
       if (!key) throw new Error(HDKeyringErrors.MissingPrivateKey);
-      newKeys.push(key);
-      this.accounts.push(new EddsaAccount(key));
+      const _temp = new EddsaAccount(key);
+      newAccounts.push(_temp);
+      this.accounts.push(_temp);
     }
-    return newKeys;
+    return newAccounts;
   }
 
   initFromMnemonic(mnemonic: string): void {
@@ -46,7 +48,6 @@ export default class Ed25519Keyring extends BaseKeyring {
     const seed = bip39.mnemonicToSeedSync(this.mnemonic, '');
     this.hdWallet = HDKey.fromMasterSeed(Buffer.from(seed).toString('hex'));
     if (!this.pathString) throw new Error(HDKeyringErrors.MissingHdPath);
-    // eslint-disable-next-line quotes
     this.masterKey = this.hdWallet.derive(this.pathString);
   }
 

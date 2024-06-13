@@ -4,7 +4,11 @@ import { Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ScrollToTop from 'src/components/scroll-to-top';
-import LayoutWrapper, { SimpleLayoutWrapper } from 'src/components/wrapper/layout-wrapper';
+import {
+  HashSystemLayoutWrapper,
+  LoginLayoutWrapper,
+  WagmiLayoutWrapper,
+} from 'src/components/wrapper/layout-wrapper';
 import ThemeWrapper from 'src/components/wrapper/theme-wrapper';
 import { LS } from 'src/configs/constance';
 import { ThemeMode, WalletType } from 'src/global';
@@ -13,7 +17,7 @@ import LocalStorageProvider from 'src/local-storage-connection/local-storage-con
 import { initLocalStorage } from 'src/redux-slices/config-slice';
 import store, { useAppDispatch } from 'src/redux-slices/store';
 import WalletConnection from 'src/wallet-connection';
-import HashWalletProvider from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
+import HashSystemConnection from 'src/wallet-connection/hash-system-wallet';
 
 function CommonAppEffect() {
   const dispatch = useAppDispatch();
@@ -34,7 +38,7 @@ function LoginApp() {
   return (
     <LocalStorageProvider>
       <ThemeWrapper>
-        <SimpleLayoutWrapper>
+        <LoginLayoutWrapper>
           <ToastContainer
             autoClose={4000}
             theme="dark"
@@ -44,7 +48,7 @@ function LoginApp() {
           <Outlet />
           <CommonAppEffect />
           <ScrollToTop />
-        </SimpleLayoutWrapper>
+        </LoginLayoutWrapper>
       </ThemeWrapper>
     </LocalStorageProvider>
   );
@@ -55,7 +59,7 @@ function WagmiWalletApp() {
     <LocalStorageProvider>
       <WalletConnection>
         <ThemeWrapper>
-          <LayoutWrapper>
+          <WagmiLayoutWrapper>
             <ToastContainer
               autoClose={4000}
               theme="dark"
@@ -65,7 +69,7 @@ function WagmiWalletApp() {
             <Outlet />
             <CommonAppEffect />
             <ScrollToTop />
-          </LayoutWrapper>
+          </WagmiLayoutWrapper>
         </ThemeWrapper>
       </WalletConnection>
     </LocalStorageProvider>
@@ -75,9 +79,9 @@ function WagmiWalletApp() {
 function HashSystemApp() {
   return (
     <LocalStorageProvider>
-      <HashWalletProvider>
+      <HashSystemConnection>
         <ThemeWrapper>
-          <LayoutWrapper>
+          <HashSystemLayoutWrapper>
             <ToastContainer
               autoClose={4000}
               theme="dark"
@@ -87,9 +91,9 @@ function HashSystemApp() {
             <Outlet />
             <CommonAppEffect />
             <ScrollToTop />
-          </LayoutWrapper>
+          </HashSystemLayoutWrapper>
         </ThemeWrapper>
-      </HashWalletProvider>
+      </HashSystemConnection>
     </LocalStorageProvider>
   );
 }

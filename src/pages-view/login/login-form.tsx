@@ -1,23 +1,28 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { WalletKeyType } from 'src/global';
 import { useLocalStorageContext } from 'src/local-storage-connection/local-storage-context';
 import { changeWalletType } from 'src/redux-slices/config-slice';
 import { useAppDispatch } from 'src/redux-slices/store';
 
-export default function LoginForm() {
+interface Props {
+  setMode: (mode: WalletKeyType) => void;
+}
+
+export default function LoginForm({ setMode }: Props) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { indexedStorage } = useLocalStorageContext();
 
   function loginByMetamask() {
     dispatch(changeWalletType({ walletType: 'metamask' }));
-    navigate('/metamask');
+    navigate('/wagmi-wallet');
   }
 
   async function loginByHashSystemWallet() {
     if (indexedStorage) {
       const _metadata = await indexedStorage.hashWalletMetadata.getAll();
-      if (_metadata.length > 0) navigate('/hash-system-wallet');
+      if (_metadata.length > 0) setMode('hash-system');
     }
   }
 

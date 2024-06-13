@@ -2,7 +2,8 @@ import { HDKey } from '@scure/bip32';
 import * as bip39 from '@scure/bip39';
 import { wordlist } from '@scure/bip39/wordlists/english';
 import { HDKeyringErrors } from 'src/configs/constance';
-import { PrivateKey, SerializedHdKeyringState } from 'src/global';
+import { SerializedHdKeyringState } from 'src/global';
+import BaseHashAccount from '../hash-account/base-hash-account';
 import EcdsaAccount from '../hash-account/ecdsa-account';
 import BaseKeyring from './base-keyring';
 
@@ -21,17 +22,18 @@ export default class Secp256k1Keyring extends BaseKeyring {
     this.accounts = [];
   }
 
-  public addKeys(numberOfKeys = 1): Array<PrivateKey> {
+  public addKeys(numberOfKeys = 1): Array<BaseHashAccount> {
     if (!this.masterKey) throw new Error(HDKeyringErrors.NoSRPProvided);
     const oldLen = this.accounts.length;
-    const newKeys: Array<PrivateKey> = [];
+    const newAccounts: Array<BaseHashAccount> = [];
     for (let i = oldLen; i < numberOfKeys + oldLen; i++) {
       const key = this.masterKey.deriveChild(i).privateKey;
       if (!key) throw new Error(HDKeyringErrors.MissingPrivateKey);
-      newKeys.push(key);
-      this.accounts.push(new EcdsaAccount(key));
+      const _temp = new EcdsaAccount(key);
+      newAccounts.push(_temp);
+      this.accounts.push(_temp);
     }
-    return newKeys;
+    return newAccounts;
   }
 
   initFromMnemonic(mnemonic: string) {

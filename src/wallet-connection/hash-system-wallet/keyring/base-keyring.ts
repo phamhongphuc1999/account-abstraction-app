@@ -1,6 +1,7 @@
 import * as bip39 from '@scure/bip39';
 import { wordlist } from '@scure/bip39/wordlists/english';
-import { PrivateKey, SerializedHdKeyringState, SignatureScheme } from 'src/global';
+import { SerializedHdKeyringState, SignatureScheme } from 'src/global';
+import BaseHashAccount from '../hash-account/base-hash-account';
 
 export default abstract class BaseKeyring<State = SerializedHdKeyringState> {
   readonly keyType: string;
@@ -21,7 +22,7 @@ export default abstract class BaseKeyring<State = SerializedHdKeyringState> {
     return bip39.generateMnemonic(wordlist, 128);
   }
 
-  abstract addKeys(numberOfKeys?: number): Array<PrivateKey>;
+  abstract addKeys(numberOfKeys?: number): Array<BaseHashAccount>;
   abstract initFromMnemonic(mnemonic: string): void;
 
   // Serialize the keyring state as a JSON-serializable object.

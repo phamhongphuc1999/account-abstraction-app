@@ -14,7 +14,7 @@ export default function PasswordTextField({ props }: Props) {
     <TextField
       {...props}
       InputProps={{
-        type: isVisibility ? 'text' : 'new-password',
+        type: isVisibility ? 'text' : 'password',
         endAdornment: (
           <IconButton onClick={() => setIsVisibility((preValue) => !preValue)}>
             {isVisibility ? <VisibilityOutlinedIcon /> : <VisibilityOffOutlinedIcon />}
