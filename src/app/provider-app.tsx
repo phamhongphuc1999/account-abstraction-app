@@ -4,37 +4,28 @@ import { Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ScrollToTop from 'src/components/scroll-to-top';
-import {
-  HashSystemLayoutWrapper,
-  LoginLayoutWrapper,
-  WagmiLayoutWrapper,
-} from 'src/components/wrapper/layout-wrapper';
+import LayoutWrapper, { LoginLayoutWrapper } from 'src/components/wrapper/layout-wrapper';
 import ThemeWrapper from 'src/components/wrapper/theme-wrapper';
 import { LS } from 'src/configs/constance';
-import { ThemeMode, WalletType } from 'src/global';
+import { ThemeMode } from 'src/global';
 import LocalStorage from 'src/local-storage-connection/local-storage';
 import LocalStorageProvider from 'src/local-storage-connection/local-storage-context';
 import { initLocalStorage } from 'src/redux-slices/config-slice';
 import store, { useAppDispatch } from 'src/redux-slices/store';
 import WalletConnection from 'src/wallet-connection';
-import HashSystemConnection from 'src/wallet-connection/hash-system-wallet';
 
 function CommonAppEffect() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const _theme = LocalStorage.get(LS.THEME);
-    const _walletType = LocalStorage.get(LS.WALLET_TYPE) ?? undefined;
-    if (_theme)
-      dispatch(
-        initLocalStorage({ themeMode: _theme as ThemeMode, walletType: _walletType as WalletType })
-      );
+    if (_theme) dispatch(initLocalStorage({ themeMode: _theme as ThemeMode }));
   }, [dispatch]);
 
   return <></>;
 }
 
-function LoginApp() {
+function RegisterApp() {
   return (
     <LocalStorageProvider>
       <ThemeWrapper>
@@ -54,12 +45,13 @@ function LoginApp() {
   );
 }
 
-function WagmiWalletApp() {
+function WalletApp() {
   return (
     <LocalStorageProvider>
       <WalletConnection>
         <ThemeWrapper>
-          <WagmiLayoutWrapper>
+          <LayoutWrapper>
+            <CommonAppEffect />
             <ToastContainer
               autoClose={4000}
               theme="dark"
@@ -67,47 +59,18 @@ function WagmiWalletApp() {
               position="top-center"
             />
             <Outlet />
-            <CommonAppEffect />
             <ScrollToTop />
-          </WagmiLayoutWrapper>
+          </LayoutWrapper>
         </ThemeWrapper>
       </WalletConnection>
     </LocalStorageProvider>
   );
 }
 
-function HashSystemApp() {
-  return (
-    <LocalStorageProvider>
-      <HashSystemConnection>
-        <ThemeWrapper>
-          <HashSystemLayoutWrapper>
-            <ToastContainer
-              autoClose={4000}
-              theme="dark"
-              hideProgressBar={false}
-              position="top-center"
-            />
-            <Outlet />
-            <CommonAppEffect />
-            <ScrollToTop />
-          </HashSystemLayoutWrapper>
-        </ThemeWrapper>
-      </HashSystemConnection>
-    </LocalStorageProvider>
-  );
-}
-
 interface Props {
-  mode: 'wagmi-wallet' | 'login' | 'hash-system-wallet';
+  mode: 'wallet' | 'register';
 }
 
 export default function ProviderApp({ mode }: Props) {
-  return (
-    <Provider store={store}>
-      {mode == 'login' && <LoginApp />}
-      {mode == 'wagmi-wallet' && <WagmiWalletApp />}
-      {mode == 'hash-system-wallet' && <HashSystemApp />}
-    </Provider>
-  );
+  return <Provider store={store}>{mode == 'wallet' ? <WalletApp /> : <RegisterApp />}</Provider>;
 }

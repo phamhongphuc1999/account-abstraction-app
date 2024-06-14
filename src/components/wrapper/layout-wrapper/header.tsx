@@ -4,15 +4,10 @@ import { useState } from 'react';
 import ConnectionButton from 'src/components/button/connection-button';
 import NetworkButton from 'src/components/button/network-button';
 import ThemeButton from 'src/components/button/theme-button';
-import { WalletKeyType } from 'src/global';
 import { getColor } from 'src/services';
-import SidebarLayout from '../sidebar/sidebar-layout';
+import SidebarLayout from './sidebar/sidebar-layout';
 
-interface Props {
-  mode: WalletKeyType;
-}
-
-export default function Header({ mode }: Props) {
+export default function Header() {
   const theme = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -34,7 +29,6 @@ export default function Header({ mode }: Props) {
         >
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <NetworkButton
-              mode={mode}
               props={{
                 sx: {
                   marginRight: '0.5rem',
@@ -48,7 +42,7 @@ export default function Header({ mode }: Props) {
                 sx={{ [theme.breakpoints.up('md')]: { display: 'none' } }}
               />
             </Box>
-            <ConnectionButton mode={mode} />
+            <ConnectionButton />
           </Box>
           <ThemeButton />
         </Container>
@@ -79,10 +73,34 @@ export default function Header({ mode }: Props) {
           }}
         >
           <MenuIcon onClick={() => setIsOpen(false)} />
-          <NetworkButton mode={mode} />
+          <NetworkButton />
         </Box>
         <SidebarLayout props={{ sx: { width: '300px' } }} />
       </Drawer>
     </>
+  );
+}
+
+export function LoginHeader() {
+  const theme = useTheme();
+
+  return (
+    <Box
+      sx={{
+        position: 'sticky',
+        backgroundColor: getColor(theme.palette.mode, '#021C39', '#ffffff'),
+      }}
+    >
+      <Container
+        sx={{
+          height: 65,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <ThemeButton />
+      </Container>
+    </Box>
   );
 }

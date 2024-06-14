@@ -99,10 +99,9 @@ export interface ProofCallDataType {
 
 /* hash system wallet types */
 export type SignatureScheme = 'ecdsa' | 'ed25519';
-export type WalletType = 'metamask' | SignatureScheme;
 
-export type PrivateKey = Uint8Array | bigint;
-export type PublicKey = Uint8Array;
+export type PrivateKey = Uint8Array;
+export type PublicKey = string;
 
 export type AccountSignature = {
   raw: Uint8Array;
@@ -113,6 +112,12 @@ export type AccountSignature = {
 
 export type SerializedHdKeyringState = {
   mnemonic: Array<number>;
+  numberOfKeys: number;
+  hdPath?: string;
+};
+export type HashWalletType = {
+  schema: SignatureScheme;
+  mnemonic: string;
   numberOfKeys: number;
   hdPath?: string;
 };

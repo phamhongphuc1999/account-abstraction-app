@@ -1,12 +1,12 @@
 import { Typography } from '@mui/material';
 import HashRegisterProvider from 'src/context/hash-register-context';
-import RegisterForm from 'src/pages-view/hash-system-register/register-form';
+import CurveRegisterView from 'src/pages-view/curve-register-view';
 
-export default function HashSystemRegister() {
+export default function CurveRegister() {
   return (
     <HashRegisterProvider>
       <Typography variant="subtitle1">Hash Register</Typography>
-      <RegisterForm props={{ sx: { mt: 2 } }} />
+      <CurveRegisterView props={{ sx: { mt: 2 } }} />
     </HashRegisterProvider>
   );
 }

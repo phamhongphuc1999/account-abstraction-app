@@ -1,14 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { IDBPDatabase } from 'idb';
 import merge from 'lodash.merge';
-import { SignatureScheme, StandardToken, StoreName } from 'src/global';
-
-export type HashWalletType = {
-  schema: SignatureScheme;
-  mnemonic: string;
-  numberOfKeys: number;
-  hdPath?: string;
-};
+import { HashWalletType, StandardToken, StoreName } from 'src/global';
 
 export class ObjectStorage<T = any> {
   public readonly storeName: StoreName;

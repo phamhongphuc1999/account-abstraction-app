@@ -9,7 +9,7 @@ interface Props {
   props?: BoxProps;
 }
 
-export default function RegisterForm({ props }: Props) {
+export default function CurveRegisterView({ props }: Props) {
   const { step } = useHashRegisterSelector((state) => state.data);
 
   return (

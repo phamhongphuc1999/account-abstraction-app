@@ -4,7 +4,7 @@ import SignMessage from 'src/pages-view/home/sign-message';
 import TokenList from 'src/pages-view/home/token-list';
 import { getColor } from 'src/services';
 
-export default function WagmiWalletHome() {
+export default function Home() {
   const theme = useTheme();
 
   return (

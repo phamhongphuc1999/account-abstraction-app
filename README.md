@@ -34,3 +34,5 @@ bun dev
 - https://github.com/Electron-Labs/ed25519-circom/blob/main/circuits/verify.circom
 
 rose furnace jeans genre dove purchase update oyster pride rival chicken shell
+
+- 0xf0d6c8c8495fa44044086db0a0d0e787b18b4e8c

@@ -4,7 +4,6 @@ import { GasOverheads, UserOperation } from 'src/user-operation-service/type';
 
 export const LS = {
   THEME: 'theme',
-  WALLET_TYPE: 'walletType',
 };
 
 export const ChainConfig = [
@@ -23,7 +22,6 @@ export const OwnerTransactionType = {
   SetThreshold: 2,
 };
 
-export const INDEXED_WALLET_KEY = 'walletMetadata';
 export const DAY_SECOND = 86400;
 export const SIMPLE_SALT = '0x'.padEnd(66, '0');
 export const TX_SEND_FEE = '0.000000003';

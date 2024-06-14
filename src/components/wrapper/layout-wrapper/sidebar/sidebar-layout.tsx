@@ -61,6 +61,11 @@ export default function SidebarLayout({ props }: Props) {
             Recovery
           </MuiNavLink>
         </ListItem>
+        <ListItem>
+          <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to="/curve-page">
+            Curve
+          </MuiNavLink>
+        </ListItem>
       </List>
     </Box>
   );

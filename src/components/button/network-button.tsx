@@ -21,7 +21,7 @@ import { CHAINS } from 'src/configs/network-config';
 import { useAppSelector } from 'src/redux-slices/store';
 import { mergeSx } from 'src/services';
 import { useWalletAction } from 'src/wallet-connection/wallet-action';
-import { MuiImage } from '../../utils';
+import { MuiImage } from '../utils';
 
 function useStyle(theme: Theme) {
   return {
@@ -51,7 +51,7 @@ interface Props {
   props?: ButtonProps;
 }
 
-export default function WagmiNetworkButton({ props }: Props) {
+export default function NetworkButton({ props }: Props) {
   const theme = useTheme();
   const cls = useStyle(theme);
   const [open, setOpen] = useState(false);

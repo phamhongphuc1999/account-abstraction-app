@@ -1,10 +1,7 @@
 import { useCallback } from 'react';
-import { INDEXED_WALLET_KEY } from 'src/configs/constance';
 import { HashDataType } from 'src/context/hash-register-context';
+import { SignatureScheme } from 'src/global';
 import { useLocalStorageContext } from 'src/local-storage-connection/local-storage-context';
-import { changeWalletType, setNetworkConfig } from 'src/redux-slices/config-slice';
-import { useAppDispatch } from 'src/redux-slices/store';
-import { updateAccountConfig } from 'src/redux-slices/user-slice';
 import { decodeMnemonic, encodeMnemonic } from 'src/services/encrypt';
 import { useHashWalletContext } from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
 import Ed25519Keyring from 'src/wallet-connection/hash-system-wallet/keyring/ed25519-keyring';
@@ -12,7 +9,6 @@ import Secp256k1Keyring from 'src/wallet-connection/hash-system-wallet/keyring/s
 
 export default function useRecoverHashWallet() {
   const { fn } = useHashWalletContext();
-  const dispatch = useAppDispatch();
   const { indexedStorage } = useLocalStorageContext();
 
   const _import = useCallback(
@@ -23,7 +19,7 @@ export default function useRecoverHashWallet() {
       keyring.addKeys();
       if (indexedStorage) {
         const encryptMnemonic = await encodeMnemonic(mnemonic, password);
-        await indexedStorage.hashWalletMetadata.upsert(INDEXED_WALLET_KEY, {
+        await indexedStorage.hashWalletMetadata.upsert(signatureSchema, {
           mnemonic: encryptMnemonic,
           numberOfKeys: 1,
           schema: signatureSchema,
@@ -35,20 +31,19 @@ export default function useRecoverHashWallet() {
   );
 
   const _recover = useCallback(
-    async (password: string) => {
+    async (_schema: SignatureScheme, password: string) => {
       if (indexedStorage) {
         try {
-          const _metadata = await indexedStorage.hashWalletMetadata.getAll();
-          if (_metadata.length > 0) {
-            const { mnemonic, schema } = _metadata[0];
+          const _metadata = await indexedStorage.hashWalletMetadata.get(_schema);
+          if (_metadata) {
+            const { mnemonic, schema } = _metadata;
+            if (_schema != schema) return false;
             const realMnemonic = await decodeMnemonic(mnemonic, password);
             const keyring = schema == 'ed25519' ? new Ed25519Keyring() : new Secp256k1Keyring();
             keyring.initFromMnemonic(realMnemonic);
-            const accounts = keyring.addKeys();
+            keyring.addKeys();
             fn.setKeyring(schema, keyring);
-            dispatch(setNetworkConfig({ chainId: 97, connector: 'hash-system' }));
-            dispatch(changeWalletType({ walletType: schema }));
-            dispatch(updateAccountConfig({ ownerAddress: accounts[0].getEVMAddress() }));
+            fn.setMetadata(_metadata);
             return true;
           } else return false;
         } catch (error) {
@@ -57,7 +52,7 @@ export default function useRecoverHashWallet() {
         }
       } else return false;
     },
-    [fn, indexedStorage, dispatch]
+    [fn, indexedStorage]
   );
 
   return { importFn: _import, recoverFn: _recover };
