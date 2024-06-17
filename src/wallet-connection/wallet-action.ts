@@ -9,7 +9,6 @@ import { coinbaseWallet } from 'wagmi/connectors';
 export const connectorFns: { [id in ConnectorType]: CreateConnectorFn } = {
   metamask: injected({ target: 'metaMask' }),
   coinbase: coinbaseWallet({ appName: 'My App', appLogoUrl: '' }),
-  'hash-system': injected({ target: 'metaMask' }),
 };
 
 export const wagmiConfig = createConfig({

@@ -9,6 +9,7 @@ import {
   useState,
 } from 'react';
 import { HashWalletType, SignatureScheme } from 'src/global';
+import BabyjubAccount from './hash-account/babyjub-account';
 import BaseKeyring from './keyring/base-keyring';
 import Ed25519Keyring from './keyring/ed25519-keyring';
 import Secp256k1Keyring from './keyring/secp256k1-keyring';
@@ -19,8 +20,10 @@ export interface HashWalletContextProps {
   metadata: HashWalletType | null;
   ed25519Keyring: Ed25519Keyring | null;
   secp256k1Keyring: Secp256k1Keyring | null;
+  babyjubAccount: BabyjubAccount | null;
   fn: {
     setKeyring: (schema: SignatureScheme, keyring: BaseKeyring) => void;
+    setBabyjubAccount: Dispatch<React.SetStateAction<BabyjubAccount | null>>;
     setMetadata: Dispatch<React.SetStateAction<HashWalletType | null>>;
   };
 }
@@ -29,8 +32,10 @@ const HashWalletContext = createContext<HashWalletContextProps>({
   metadata: null,
   ed25519Keyring: null,
   secp256k1Keyring: null,
+  babyjubAccount: null,
   fn: {
     setKeyring: () => {},
+    setBabyjubAccount: () => {},
     setMetadata: () => {},
   },
 });
@@ -43,6 +48,7 @@ export default function HashWalletProvider({ children }: Props) {
   const [metadata, setMetadata] = useState<HashWalletType | null>(null);
   const [ed25519Keyring, setEd25519Keyring] = useState<Ed25519Keyring | null>(null);
   const [secp256k1Keyring, setSecp256k1Keyring] = useState<Secp256k1Keyring | null>(null);
+  const [babyjubAccount, setBabyjubAccount] = useState<BabyjubAccount | null>(null);
 
   const _setKeyring = useCallback((schema: SignatureScheme, keyring: BaseKeyring) => {
     if (schema == 'ed25519') setEd25519Keyring(keyring as Ed25519Keyring);
@@ -54,9 +60,10 @@ export default function HashWalletProvider({ children }: Props) {
       metadata,
       ed25519Keyring,
       secp256k1Keyring,
-      fn: { setKeyring: _setKeyring, setMetadata },
+      babyjubAccount,
+      fn: { setKeyring: _setKeyring, setBabyjubAccount, setMetadata },
     };
-  }, [metadata, ed25519Keyring, secp256k1Keyring, _setKeyring]);
+  }, [metadata, ed25519Keyring, secp256k1Keyring, babyjubAccount, _setKeyring]);
 
   return <HashWalletContext.Provider value={contextData}>{children}</HashWalletContext.Provider>;
 }

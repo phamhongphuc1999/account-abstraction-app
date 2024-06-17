@@ -1,4 +1,5 @@
-import { useRoutes } from 'react-router-dom';
+import { Navigate, useRoutes } from 'react-router-dom';
+import BabyjubRegister from 'src/pages/babyjub-register';
 import CurvePage from 'src/pages/curve-page';
 import CurveRegister from 'src/pages/curve-register';
 import Guardian from 'src/pages/guardian';
@@ -19,11 +20,16 @@ export default function App() {
       children: [{ path: '', element: <CurveRegister /> }],
     },
     {
+      path: '/babyjub-register',
+      element: <ProviderApp mode="register" />,
+      children: [{ path: '', element: <BabyjubRegister /> }],
+    },
+    {
       path: '/curve-page',
       element: <ProviderApp mode="wallet" />,
       children: [
         { path: ':schema', element: <CurvePage /> },
-        // { path: '/', element: <Navigate to="/ed25519" replace={true} /> },
+        { path: '', element: <Navigate to="/curve-page/ed25519" /> },
       ],
     },
     {
@@ -36,7 +42,7 @@ export default function App() {
       element: <ProviderApp mode="wallet" />,
       children: [
         { path: ':position', element: <Recovery /> },
-        { path: '', element: <Recovery /> },
+        { path: '', element: <Navigate to="/recovery/owner" /> },
       ],
     },
   ]);

@@ -6,7 +6,7 @@ import { AccountSignature, PrivateKey } from 'src/global';
 import { decodeUTF8 } from 'tweetnacl-util';
 import BaseHashAccount from './base-hash-account';
 
-export default class EddsaAccount extends BaseHashAccount {
+export default class Ed25519Account extends BaseHashAccount {
   protected normalizedPrivKey: bigint;
   protected hexPrivKey: string;
 

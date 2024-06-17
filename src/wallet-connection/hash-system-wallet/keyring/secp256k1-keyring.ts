@@ -4,7 +4,7 @@ import { wordlist } from '@scure/bip39/wordlists/english';
 import { HDKeyringErrors } from 'src/configs/constance';
 import { SerializedHdKeyringState } from 'src/global';
 import BaseHashAccount from '../hash-account/base-hash-account';
-import EcdsaAccount from '../hash-account/ecdsa-account';
+import Secp256k1Account from '../hash-account/secp256k1-account';
 import BaseKeyring from './base-keyring';
 
 // eslint-disable-next-line quotes
@@ -15,7 +15,7 @@ export default class Secp256k1Keyring extends BaseKeyring {
   mnemonic: string | undefined | null;
   hdWallet: HDKey | undefined | null;
   masterKey: HDKey | undefined | null;
-  accounts: Array<EcdsaAccount>;
+  accounts: Array<Secp256k1Account>;
 
   constructor() {
     super(keyType, hdPathString, 'ecdsa');
@@ -29,7 +29,7 @@ export default class Secp256k1Keyring extends BaseKeyring {
     for (let i = oldLen; i < numberOfKeys + oldLen; i++) {
       const key = this.masterKey.deriveChild(i).privateKey;
       if (!key) throw new Error(HDKeyringErrors.MissingPrivateKey);
-      const _temp = new EcdsaAccount(key);
+      const _temp = new Secp256k1Account(key);
       newAccounts.push(_temp);
       this.accounts.push(_temp);
     }
@@ -40,11 +40,9 @@ export default class Secp256k1Keyring extends BaseKeyring {
     if (this.masterKey) throw new Error(HDKeyringErrors.SRPAlreadyProvided);
     this.mnemonic = mnemonic;
 
-    // validate before initializing
     const isValid = bip39.validateMnemonic(this.mnemonic, wordlist);
     if (!isValid) throw new Error(HDKeyringErrors.InvalidSRP);
 
-    // FIXME support other mnemonic type
     const seed = bip39.mnemonicToSeedSync(this.mnemonic);
     this.hdWallet = HDKey.fromMasterSeed(seed);
     if (!this.pathString) throw new Error(HDKeyringErrors.MissingHdPath);

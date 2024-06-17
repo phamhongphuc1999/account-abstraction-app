@@ -4,7 +4,11 @@ import BaseForm from 'src/components/form/base-form';
 import { TitleTextFieldItem } from 'src/components/title-item';
 import { useHashRegisterContext } from 'src/context/hash-register-context';
 
-export default function PasswordForm() {
+interface Props {
+  step?: number;
+}
+
+export default function PasswordForm({ step = 2 }: Props) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const { fn } = useHashRegisterContext();
@@ -12,7 +16,7 @@ export default function PasswordForm() {
   function onSavePassword() {
     if (password == confirmPassword) {
       fn.setPassword(password);
-      fn.setStep(3);
+      fn.setStep(step + 1);
     }
   }
 
@@ -23,7 +27,7 @@ export default function PasswordForm() {
 
   return (
     <>
-      <Typography variant="subtitle1">Step 2: Create your Password</Typography>
+      <Typography variant="subtitle1">{`Step ${step}: Create your Password`}</Typography>
       <BaseForm
         component={{
           Footer: (

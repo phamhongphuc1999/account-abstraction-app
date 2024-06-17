@@ -2,6 +2,7 @@
 import { SxProps, Theme } from '@mui/material';
 import { SystemStyleObject } from '@mui/system';
 import BigNumber from 'bignumber.js';
+import { Signature } from 'circomlibjs';
 import {
   BigNumberish,
   BytesLike,
@@ -15,6 +16,7 @@ import cloneDeep from 'lodash.clonedeep';
 import { SIMPLE_EXTEND } from 'src/configs/constance';
 import { AccountFactoryAbi__factory } from 'src/contracts/typechain';
 import { ThemeMode } from 'src/global';
+import { JubSignatureType } from 'src/wallet-connection/hash-system-wallet/hash-account/babyjub-account';
 
 export function formatAddress(address: string, fractionDigits = 3) {
   return address.slice(0, fractionDigits) + '...' + address.slice(-fractionDigits);
@@ -94,6 +96,23 @@ export function randomList<T = any>(_list: Array<T>, loops: number): Array<T> {
     _result[_entropy] = temp;
   }
   return _result;
+}
+
+export function convertUint8ToString(_in: Uint8Array) {
+  return Buffer.from(_in).toString('hex');
+}
+
+export function convertStringToUint8(_in: string) {
+  return Uint8Array.from(Buffer.from(_in, 'hex'));
+}
+
+function convertSign(data: Signature) {
+  const { R8 } = data;
+  return { R8: [convertUint8ToString(R8[0]), convertUint8ToString(R8[1])], S: data.S.toString() };
+}
+export function convertBabyJubSignature(signature: JubSignatureType) {
+  const { raw, p, u } = signature;
+  return { raw: convertSign(raw), p: convertUint8ToString(p), u: convertSign(u) };
 }
 
 export function mergeSx(sxs: Array<boolean | SxProps<Theme> | undefined>): SxProps<Theme> {

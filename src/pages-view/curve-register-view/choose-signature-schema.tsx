@@ -5,7 +5,7 @@ import { useHashRegisterContext } from 'src/context/hash-register-context';
 import { SignatureScheme } from 'src/global';
 
 export default function ChooseSignatureSchema() {
-  const [schema, setSchema] = useState<SignatureScheme>('ed25519');
+  const [schema, setSchema] = useState<SignatureScheme>('babyjub');
   const { fn } = useHashRegisterContext();
 
   function onSaveSchema() {
@@ -22,11 +22,13 @@ export default function ChooseSignatureSchema() {
           variant="outlined"
           onClick={() =>
             setSchema((preValue) => {
-              return preValue == 'ed25519' ? 'ecdsa' : 'ed25519';
+              if (preValue == 'babyjub') return 'ed25519';
+              else if (preValue == 'ed25519') return 'ecdsa';
+              else return 'babyjub';
             })
           }
         >
-          {schema == 'ed25519' ? 'ed25519' : 'ecdsa'}
+          {schema}
         </Button>
       </BaseForm>
     </>
