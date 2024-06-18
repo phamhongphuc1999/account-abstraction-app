@@ -7,7 +7,7 @@ import BaseForm from 'src/components/form/base-form';
 import HashSelect from 'src/components/selector/hash-selector';
 import TitleItem from 'src/components/title-item';
 import { OwnerTransactionType, SIMPLE_EXTEND } from 'src/configs/constance';
-import { AccountAbi__factory, HashGuardianAbi__factory } from 'src/contracts/typechain';
+import { AccountAbi__factory, ZKGuardianAbi__factory } from 'src/contracts/typechain';
 import useSendUserOp from 'src/hooks/use-send-user-op';
 import { useAppSelector } from 'src/redux-slices/store';
 import { getEta } from 'src/services';
@@ -28,7 +28,7 @@ export default function RemoveGuardian() {
 
   async function onRemoveGuardian() {
     if (reader) {
-      const guardianInter = new Interface(HashGuardianAbi__factory.abi);
+      const guardianInter = new Interface(ZKGuardianAbi__factory.abi);
       const accountInter = new Interface(AccountAbi__factory.abi);
       const _eta = await getEta(reader, extend);
       if (_eta) {

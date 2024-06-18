@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import BaseDialog from 'src/components/BaseDialog';
 import BaseForm from 'src/components/form/base-form';
 import TitleItem from 'src/components/title-item';
-import HashGuardianContract from 'src/contracts/hash-guardian-contract';
+import ZKGuardianContract from 'src/contracts/zk-guardian-contract';
 import { ProofCallDataType } from 'src/global';
 import useHandleEmit from 'src/hooks/use-handle-emit';
 import { analyticError } from 'src/services';
@@ -30,7 +30,7 @@ export default function SubmitProof({ calldata }: Props) {
       const id = createEmit('submit proof');
       try {
         const { pA, pB, pC, pubSignals } = calldata;
-        const guardianContract = new HashGuardianContract(signer, guardianAddress);
+        const guardianContract = new ZKGuardianContract(signer, guardianAddress);
         const tx = await guardianContract.fn.confirmChangeOwner(pA, pB, pC, pubSignals);
         await handleEmit(tx, id);
       } catch (error) {

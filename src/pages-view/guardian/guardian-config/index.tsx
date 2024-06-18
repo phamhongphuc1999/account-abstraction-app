@@ -3,7 +3,7 @@ import { Interface } from 'ethers';
 import { useState } from 'react';
 import BaseForm from 'src/components/form/base-form';
 import TitleItem from 'src/components/title-item';
-import { AccountAbi__factory, HashGuardianAbi__factory } from 'src/contracts/typechain';
+import { AccountAbi__factory, ZKGuardianAbi__factory } from 'src/contracts/typechain';
 import { GuardianHashListType } from 'src/global';
 import useSendUserOp from 'src/hooks/use-send-user-op';
 import { useAppSelector } from 'src/redux-slices/store';
@@ -38,7 +38,7 @@ export default function GuardianConfig({ props }: Props) {
   }
 
   async function onConfigGuardian() {
-    const guardianInter = new Interface(HashGuardianAbi__factory.abi);
+    const guardianInter = new Interface(ZKGuardianAbi__factory.abi);
     const accountInter = new Interface(AccountAbi__factory.abi);
     let callData = guardianInter.encodeFunctionData('setupGuardians', [
       Object.values(addresses).map((item) => item.hash),

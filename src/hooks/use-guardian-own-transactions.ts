@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { useHashGuardianContract } from 'src/contracts/hash-guardian-contract';
-import { HashGuardianAbi__factory } from 'src/contracts/typechain';
+import { ZKGuardianAbi__factory } from 'src/contracts/typechain';
+import { useZKGuardianContract } from 'src/contracts/zk-guardian-contract';
 import { GuardianOwnTransactionType, MultiCallType } from 'src/global';
 import { updateGuardianOwnTransactions } from 'src/redux-slices/guardian-slice';
 import { useAppDispatch, useAppSelector } from 'src/redux-slices/store';
@@ -12,7 +12,7 @@ export default function useGuardianOwnTransactions() {
   const { config } = useAppSelector((state) => state.guardian);
   const { ownerTransactionCount } = config;
   const { reader } = usRpcProviderContext();
-  const guardianContract = useHashGuardianContract();
+  const guardianContract = useZKGuardianContract();
   const { multiCallFn } = useMultiCall();
 
   const _fetchOwnTransaction = useCallback(async () => {
@@ -27,7 +27,7 @@ export default function useGuardianOwnTransactions() {
         });
         counter++;
       }
-      const result = await multiCallFn({ abi: HashGuardianAbi__factory.abi, calls, reader });
+      const result = await multiCallFn({ abi: ZKGuardianAbi__factory.abi, calls, reader });
       if (result) {
         const _data: { [data: string]: GuardianOwnTransactionType } = {};
         counter = 0;

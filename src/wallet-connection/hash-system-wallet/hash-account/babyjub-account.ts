@@ -13,6 +13,7 @@ function buffer2bits(buff: Uint8Array) {
 }
 
 export type JubSignatureType = { raw: Signature; p: Uint8Array; u: Signature };
+export type JubProofType = { A: bigint[]; R8: bigint[]; S: bigint[]; msg: bigint[] };
 
 export default class BabyjubAccount {
   readonly pubKey: Point;

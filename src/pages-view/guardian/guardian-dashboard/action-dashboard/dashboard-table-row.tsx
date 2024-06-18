@@ -7,7 +7,7 @@ import GuardianTransactionTypeIcon, {
   GuardianTransactionExecutedType,
 } from 'src/components/icons/guardian-transaction-type-icon';
 import { OwnerExecutedType } from 'src/configs/constance';
-import { AccountAbi__factory, HashGuardianAbi__factory } from 'src/contracts/typechain';
+import { AccountAbi__factory, ZKGuardianAbi__factory } from 'src/contracts/typechain';
 import { GuardianOwnTransactionType } from 'src/global';
 import useSendUserOp from 'src/hooks/use-send-user-op';
 import { useAppSelector } from 'src/redux-slices/store';
@@ -31,7 +31,7 @@ export default function DashboardTableRow({ transaction }: Props) {
 
   async function onExecute() {
     if (reader) {
-      const guardianInter = new Interface(HashGuardianAbi__factory.abi);
+      const guardianInter = new Interface(ZKGuardianAbi__factory.abi);
       const accountInter = new Interface(AccountAbi__factory.abi);
       let _callData = guardianInter.encodeFunctionData('execute', [transaction.index]);
       _callData = accountInter.encodeFunctionData('execute', [guardianAddress, 0, _callData]);
@@ -41,7 +41,7 @@ export default function DashboardTableRow({ transaction }: Props) {
 
   async function onCancel() {
     if (reader) {
-      const guardianInter = new Interface(HashGuardianAbi__factory.abi);
+      const guardianInter = new Interface(ZKGuardianAbi__factory.abi);
       const accountInter = new Interface(AccountAbi__factory.abi);
       let _callData = guardianInter.encodeFunctionData('cancel', [transaction.index]);
       _callData = accountInter.encodeFunctionData('execute', [guardianAddress, 0, _callData]);

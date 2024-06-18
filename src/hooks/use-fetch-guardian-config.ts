@@ -1,7 +1,7 @@
 import { ZeroAddress, isAddress } from 'ethers';
 import { useCallback } from 'react';
 import { useAccountContract } from 'src/contracts/account-contract';
-import { useHashGuardianContract } from 'src/contracts/hash-guardian-contract';
+import { useZKGuardianContract } from 'src/contracts/zk-guardian-contract';
 import { setGuardianAddress, updateGuardianConfig } from 'src/redux-slices/guardian-slice';
 import { useAppDispatch, useAppSelector } from 'src/redux-slices/store';
 
@@ -9,7 +9,7 @@ export default function useFetchGuardianConfig() {
   const accountContract = useAccountContract();
   const dispatch = useAppDispatch();
   const { guardianAddress, deployType, configType } = useAppSelector((state) => state.guardian);
-  const guardianContract = useHashGuardianContract();
+  const guardianContract = useZKGuardianContract();
 
   const _fetchGuardianAddress = useCallback(async () => {
     if (accountContract && deployType == 'initial') {

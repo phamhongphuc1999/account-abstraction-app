@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material';
 import { Interface, isAddress } from 'ethers';
-import { AccountAbi__factory, HashGuardianAbi__factory } from 'src/contracts/typechain';
+import { AccountAbi__factory, ZKGuardianAbi__factory } from 'src/contracts/typechain';
 import useSendUserOp from 'src/hooks/use-send-user-op';
 import { useAppSelector } from 'src/redux-slices/store';
 import StaticQuery from 'src/services/static-query';
@@ -13,7 +13,7 @@ export default function ChangeOwner() {
   async function onChangeOwner() {
     const accountFactoryAddress = StaticQuery.getAddresses(chainId).ACCOUNT_FACTORY_ADDRESS;
     if (isAddress(accountFactoryAddress) && isAddress(guardianAddress)) {
-      const guardianInter = new Interface(HashGuardianAbi__factory.abi);
+      const guardianInter = new Interface(ZKGuardianAbi__factory.abi);
       const accountInter = new Interface(AccountAbi__factory.abi);
       let _callData = guardianInter.encodeFunctionData('changeOwner', [accountFactoryAddress]);
       _callData = accountInter.encodeFunctionData('execute', [guardianAddress, 0, _callData]);

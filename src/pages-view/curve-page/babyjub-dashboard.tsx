@@ -1,10 +1,10 @@
 import { Box, Typography, useTheme } from '@mui/material';
 import { buildBabyjub, buildEddsa } from 'circomlibjs';
 import { useCallback, useEffect } from 'react';
-import { TextCopy } from 'src/components/icons/copy-icon';
+import CssReactJson from 'src/components/css-react-json';
 import TitleItem from 'src/components/title-item';
 import { useLocalStorageContext } from 'src/local-storage-connection/local-storage-context';
-import { convertStringToUint8, convertUint8ToString, formatAddress } from 'src/services';
+import { convertStringToUint8, convertUint8ToString } from 'src/services';
 import { decodeMnemonic } from 'src/services/encrypt';
 import BabyjubAccount from 'src/wallet-connection/hash-system-wallet/hash-account/babyjub-account';
 import { useHashWalletContext } from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
@@ -16,7 +16,7 @@ export default function BabyjubDashboard() {
   const { indexedStorage } = useLocalStorageContext();
 
   const _recover = useCallback(async () => {
-    if (indexedStorage) {
+    if (indexedStorage && !babyjubAccount) {
       const _metadata = await indexedStorage.hashWalletMetadata.get('babyjub');
       if (_metadata) {
         const { mnemonic } = _metadata;
@@ -28,7 +28,7 @@ export default function BabyjubDashboard() {
         fn.setBabyjubAccount(_account);
       }
     }
-  }, [indexedStorage, fn]);
+  }, [indexedStorage, fn, babyjubAccount]);
 
   useEffect(() => {
     _recover();
@@ -40,25 +40,23 @@ export default function BabyjubDashboard() {
       {babyjubAccount && (
         <>
           <TitleItem
-            titleWidth="120px"
-            title="Private key"
+            titleWidth="80px"
+            title="Key"
             component={
-              <TextCopy title={formatAddress(convertUint8ToString(babyjubAccount.privateKey), 6)} />
+              <CssReactJson
+                jsonProps={{
+                  src: {
+                    privateKey: convertUint8ToString(babyjubAccount.privateKey),
+                    publicKey: {
+                      x: convertUint8ToString(babyjubAccount.pubKey[0]),
+                      y: convertUint8ToString(babyjubAccount.pubKey[1]),
+                    },
+                  },
+                  collapsed: true,
+                }}
+              />
             }
-          />
-          <TitleItem
-            titleWidth="120px"
-            title="Public key(x)"
-            component={
-              <TextCopy title={formatAddress(convertUint8ToString(babyjubAccount.pubKey[0]), 6)} />
-            }
-          />
-          <TitleItem
-            titleWidth="120px"
-            title="Public key(y)"
-            component={
-              <TextCopy title={formatAddress(convertUint8ToString(babyjubAccount.pubKey[1]), 6)} />
-            }
+            props={{ sx: { mt: 1, alignItems: 'flex-start' } }}
           />
           <BabyJubSignature babyJubAccount={babyjubAccount} />
         </>

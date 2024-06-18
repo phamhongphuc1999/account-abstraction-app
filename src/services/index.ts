@@ -16,7 +16,10 @@ import cloneDeep from 'lodash.clonedeep';
 import { SIMPLE_EXTEND } from 'src/configs/constance';
 import { AccountFactoryAbi__factory } from 'src/contracts/typechain';
 import { ThemeMode } from 'src/global';
-import { JubSignatureType } from 'src/wallet-connection/hash-system-wallet/hash-account/babyjub-account';
+import {
+  JubProofType,
+  JubSignatureType,
+} from 'src/wallet-connection/hash-system-wallet/hash-account/babyjub-account';
 
 export function formatAddress(address: string, fractionDigits = 3) {
   return address.slice(0, fractionDigits) + '...' + address.slice(-fractionDigits);
@@ -113,6 +116,18 @@ function convertSign(data: Signature) {
 export function convertBabyJubSignature(signature: JubSignatureType) {
   const { raw, p, u } = signature;
   return { raw: convertSign(raw), p: convertUint8ToString(p), u: convertSign(u) };
+}
+function convertBigintArray(_arr: Array<bigint>) {
+  return _arr.map((item) => item.toString());
+}
+export function convertJubProof(proof: JubProofType) {
+  const { A, R8, S, msg } = proof;
+  return {
+    A: convertBigintArray(A),
+    R8: convertBigintArray(R8),
+    S: convertBigintArray(S),
+    msg: convertBigintArray(msg),
+  };
 }
 
 export function mergeSx(sxs: Array<boolean | SxProps<Theme> | undefined>): SxProps<Theme> {

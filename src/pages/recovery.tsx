@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useHashGuardianContract } from 'src/contracts/hash-guardian-contract';
+import { useZKGuardianContract } from 'src/contracts/zk-guardian-contract';
 import ChangeOwner from 'src/pages-view/recovery/change-owner';
 import GeneratePoseidon from 'src/pages-view/recovery/generate-poseidon';
 import GuardianRecovery from 'src/pages-view/recovery/guardian-recovery';
@@ -13,7 +13,7 @@ export default function Recovery() {
   const [position, setPosition] = useState(urlPosition == 'guardian' ? 'guardian' : 'owner');
   const [enoughConfirm, setEnoughConfirm] = useState(false);
   const [tempNewOwner, setTempNewOwner] = useState('');
-  const guardianContract = useHashGuardianContract();
+  const guardianContract = useZKGuardianContract();
 
   function onPositionChange() {
     setPosition((preValue) => {
