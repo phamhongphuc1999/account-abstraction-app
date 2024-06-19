@@ -1,9 +1,10 @@
-import { Box, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import { Interface, isAddress } from 'ethers';
 import { AccountAbi__factory, ZKGuardianAbi__factory } from 'src/contracts/typechain';
 import useSendUserOp from 'src/hooks/use-send-user-op';
 import { useAppSelector } from 'src/redux-slices/store';
 import StaticQuery from 'src/services/static-query';
+import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
 
 export default function ChangeOwner() {
   const { chainId } = useAppSelector((state) => state.config);
@@ -22,10 +23,8 @@ export default function ChangeOwner() {
   }
 
   return (
-    <Box>
-      <Button variant="contained" onClick={onChangeOwner}>
-        Change Owner
-      </Button>
-    </Box>
+    <Button variant="outlined" onClick={onChangeOwner} startIcon={<ChangeCircleOutlinedIcon />}>
+      Change Owner
+    </Button>
   );
 }

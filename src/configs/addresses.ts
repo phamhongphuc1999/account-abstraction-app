@@ -16,7 +16,7 @@ const BscTestnetAddresses: AddressesType = {
 
   /* using standard entry point */
   ENTRY_POINT_ADDRESS: '0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789',
-  ACCOUNT_FACTORY_ADDRESS: '0x08354D30Fb309F8873af9352abC247B4A734c2A5',
+  ACCOUNT_FACTORY_ADDRESS: '0x81EcF5E293fc00C6c70DFA232A1A90a07Dc149E3',
 };
 
 export const AddressesConfig: AddressesListType = {

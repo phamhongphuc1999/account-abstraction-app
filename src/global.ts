@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Signature } from 'circomlibjs';
 import { BigNumberish, InterfaceAbi, JsonRpcProvider, JsonRpcSigner } from 'ethers';
 
 export type StringListType<T = unknown> = { [key: string]: T };
@@ -23,6 +24,9 @@ export type AddressesType = {
   ACCOUNT_FACTORY_ADDRESS: string;
   MULTI_CALL_ADDRESS: string;
 };
+export type JubSignatureType = { raw: Signature; p: Uint8Array; u: Signature };
+export type JubProofType = { A: bigint[]; R8: bigint[]; S: bigint[]; msg: bigint[] };
+
 export type AddressesListType = { [chainId: number]: AddressesType };
 
 export type GuardianHashType = {

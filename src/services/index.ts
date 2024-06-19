@@ -15,11 +15,7 @@ import {
 import cloneDeep from 'lodash.clonedeep';
 import { SIMPLE_EXTEND } from 'src/configs/constance';
 import { AccountFactoryAbi__factory } from 'src/contracts/typechain';
-import { ThemeMode } from 'src/global';
-import {
-  JubProofType,
-  JubSignatureType,
-} from 'src/wallet-connection/hash-system-wallet/hash-account/babyjub-account';
+import { JubSignatureType, ThemeMode } from 'src/global';
 
 export function formatAddress(address: string, fractionDigits = 3) {
   return address.slice(0, fractionDigits) + '...' + address.slice(-fractionDigits);
@@ -109,6 +105,20 @@ export function convertStringToUint8(_in: string) {
   return Uint8Array.from(Buffer.from(_in, 'hex'));
 }
 
+export function convertBigIntsToNumber(
+  _in: bigint[],
+  _len: number,
+  mode: 'normal' | 'hex' = 'normal'
+) {
+  let result: bigint = BigInt('0');
+  let e2 = BigInt('1');
+  for (let i = 0; i < _len; i++) {
+    result += _in[i] * e2;
+    e2 = e2 + e2;
+  }
+  return mode == 'normal' ? result.toString(16) : `0x${result.toString(16)}`;
+}
+
 function convertSign(data: Signature) {
   const { R8 } = data;
   return { R8: [convertUint8ToString(R8[0]), convertUint8ToString(R8[1])], S: data.S.toString() };
@@ -116,18 +126,6 @@ function convertSign(data: Signature) {
 export function convertBabyJubSignature(signature: JubSignatureType) {
   const { raw, p, u } = signature;
   return { raw: convertSign(raw), p: convertUint8ToString(p), u: convertSign(u) };
-}
-function convertBigintArray(_arr: Array<bigint>) {
-  return _arr.map((item) => item.toString());
-}
-export function convertJubProof(proof: JubProofType) {
-  const { A, R8, S, msg } = proof;
-  return {
-    A: convertBigintArray(A),
-    R8: convertBigintArray(R8),
-    S: convertBigintArray(S),
-    msg: convertBigintArray(msg),
-  };
 }
 
 export function mergeSx(sxs: Array<boolean | SxProps<Theme> | undefined>): SxProps<Theme> {

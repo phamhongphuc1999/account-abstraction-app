@@ -1,19 +1,6 @@
 import { BabyJub, Eddsa, Point, Signature } from 'circomlibjs';
+import { JubSignatureType } from 'src/global';
 import { decodeUTF8 } from 'tweetnacl-util';
-
-function buffer2bits(buff: Uint8Array) {
-  const res = [];
-  for (let i = 0; i < buff.length; i++) {
-    for (let j = 0; j < 8; j++) {
-      if ((buff[i] >> j) & 1) res.push(1n);
-      else res.push(0n);
-    }
-  }
-  return res;
-}
-
-export type JubSignatureType = { raw: Signature; p: Uint8Array; u: Signature };
-export type JubProofType = { A: bigint[]; R8: bigint[]; S: bigint[]; msg: bigint[] };
 
 export default class BabyjubAccount {
   readonly pubKey: Point;
@@ -40,15 +27,5 @@ export default class BabyjubAccount {
   verify(message: string, uSignature: Signature): boolean {
     const messageBytes = decodeUTF8(message);
     return this.eddsa.verifyPedersen(messageBytes, uSignature, this.pubKey);
-  }
-
-  proof(message: string, pSignature: Uint8Array) {
-    const messageBytes = decodeUTF8(message);
-    const msgBits = buffer2bits(messageBytes);
-    const r8Bits = buffer2bits(pSignature.slice(0, 32));
-    const sBits = buffer2bits(pSignature.slice(32, 64));
-    const pPubKey = this.babyJub.packPoint(this.pubKey);
-    const aBits = buffer2bits(pPubKey);
-    return { A: aBits, R8: r8Bits, S: sBits, msg: msgBits };
   }
 }

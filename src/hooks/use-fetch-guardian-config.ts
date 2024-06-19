@@ -32,6 +32,7 @@ export default function useFetchGuardianConfig() {
         const _guardianCount = parseInt(guardianCount.toString());
         const expirePeriod = await guardianContract.fn.expirePeriod();
         const delay = await guardianContract.fn.delay();
+        const increment = await guardianContract.fn.increment();
         const ownerTransactionCount = await guardianContract.fn.getOwnerTransactionCount();
         const hashList: Array<string> = [];
         let counter = 0;
@@ -48,6 +49,7 @@ export default function useFetchGuardianConfig() {
             expirePeriod: parseInt(expirePeriod.toString()),
             delay: parseInt(delay.toString()),
             ownerTransactionCount: parseInt(ownerTransactionCount.toString()),
+            increment: parseInt(increment.toString()),
             hashList,
             configType: 'alreadyConfig',
           })

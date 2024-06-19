@@ -9,6 +9,7 @@ import {
   useState,
 } from 'react';
 import { HashWalletType, SignatureScheme } from 'src/global';
+import { getHexPublicKey } from 'src/services/circom-utils';
 import BabyjubAccount from './hash-account/babyjub-account';
 import BaseKeyring from './keyring/base-keyring';
 import Ed25519Keyring from './keyring/ed25519-keyring';
@@ -20,10 +21,13 @@ export interface HashWalletContextProps {
   metadata: HashWalletType | null;
   ed25519Keyring: Ed25519Keyring | null;
   secp256k1Keyring: Secp256k1Keyring | null;
-  babyjubAccount: BabyjubAccount | null;
+  babyJubjub: {
+    jubAccount: BabyjubAccount | null;
+    pacPubKey: string;
+  };
   fn: {
     setKeyring: (schema: SignatureScheme, keyring: BaseKeyring) => void;
-    setBabyjubAccount: Dispatch<React.SetStateAction<BabyjubAccount | null>>;
+    setBabyjubAccount: (account: BabyjubAccount) => Promise<void>;
     setMetadata: Dispatch<React.SetStateAction<HashWalletType | null>>;
   };
 }
@@ -32,12 +36,8 @@ const HashWalletContext = createContext<HashWalletContextProps>({
   metadata: null,
   ed25519Keyring: null,
   secp256k1Keyring: null,
-  babyjubAccount: null,
-  fn: {
-    setKeyring: () => {},
-    setBabyjubAccount: () => {},
-    setMetadata: () => {},
-  },
+  babyJubjub: { jubAccount: null, pacPubKey: '' },
+  fn: { setKeyring: () => {}, setBabyjubAccount: async () => {}, setMetadata: () => {} },
 });
 
 interface Props {
@@ -49,10 +49,16 @@ export default function HashWalletProvider({ children }: Props) {
   const [ed25519Keyring, setEd25519Keyring] = useState<Ed25519Keyring | null>(null);
   const [secp256k1Keyring, setSecp256k1Keyring] = useState<Secp256k1Keyring | null>(null);
   const [babyjubAccount, setBabyjubAccount] = useState<BabyjubAccount | null>(null);
+  const [pacPubKey, setPacPubKey] = useState('');
 
   const _setKeyring = useCallback((schema: SignatureScheme, keyring: BaseKeyring) => {
     if (schema == 'ed25519') setEd25519Keyring(keyring as Ed25519Keyring);
     else setSecp256k1Keyring(keyring as Secp256k1Keyring);
+  }, []);
+
+  const _setBabyjubAccount = useCallback(async (account: BabyjubAccount) => {
+    setBabyjubAccount(account);
+    setPacPubKey(await getHexPublicKey(account.pubKey));
   }, []);
 
   const contextData = useMemo<HashWalletContextProps>(() => {
@@ -60,10 +66,18 @@ export default function HashWalletProvider({ children }: Props) {
       metadata,
       ed25519Keyring,
       secp256k1Keyring,
-      babyjubAccount,
-      fn: { setKeyring: _setKeyring, setBabyjubAccount, setMetadata },
+      babyJubjub: { jubAccount: babyjubAccount, pacPubKey },
+      fn: { setKeyring: _setKeyring, setBabyjubAccount: _setBabyjubAccount, setMetadata },
     };
-  }, [metadata, ed25519Keyring, secp256k1Keyring, babyjubAccount, _setKeyring]);
+  }, [
+    metadata,
+    ed25519Keyring,
+    secp256k1Keyring,
+    babyjubAccount,
+    pacPubKey,
+    _setKeyring,
+    _setBabyjubAccount,
+  ]);
 
   return <HashWalletContext.Provider value={contextData}>{children}</HashWalletContext.Provider>;
 }
@@ -87,4 +101,11 @@ export function useHashKeyring(schema: SignatureScheme) {
       ? { keyring: ed25519Keyring, metadata }
       : { keyring: secp256k1Keyring, metadata };
   }, [ed25519Keyring, secp256k1Keyring, schema, metadata]);
+}
+
+export function useBabyJub() {
+  const { babyJubjub, fn } = useHashWalletContext();
+  return useMemo(() => {
+    return { ...babyJubjub, fn };
+  }, [babyJubjub, fn]);
 }

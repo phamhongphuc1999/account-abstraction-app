@@ -12,6 +12,7 @@ export interface GuardianSliceType {
     delay: number;
     expirePeriod: number;
     ownerTransactionCount: number;
+    increment: number;
     hashList: Array<string>;
   };
   deployType: DeployStatus;
@@ -28,6 +29,7 @@ const initialState: GuardianSliceType = {
     delay: 0,
     expirePeriod: 0,
     ownerTransactionCount: 0,
+    increment: 0,
     hashList: [],
   },
   deployType: 'initial',

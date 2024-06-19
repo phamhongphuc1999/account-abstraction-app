@@ -1,6 +1,7 @@
 import { Launch } from '@mui/icons-material';
 import { Link, SvgIconProps, Typography } from '@mui/material';
-import useExplorerUrl, { ExploreConfigProps } from 'src/hooks/use-explorer-url';
+import { ExploreConfigProps, useExplorerUrl } from '@peter-present/react-hook-utils';
+import { useAppSelector } from 'src/redux-slices/store';
 import { mergeSx } from 'src/services';
 
 interface Props {
@@ -10,7 +11,9 @@ interface Props {
 }
 
 export default function ExploreIcon({ hash, config, iconProps }: Props) {
-  const { link } = useExplorerUrl(hash, config);
+  const { chainId: appChainId } = useAppSelector((state) => state.config);
+  const realChainId = appChainId > 0 ? appChainId : config?.chainId ? config.chainId : 56;
+  const { link } = useExplorerUrl(hash, { ...config, chainId: realChainId });
 
   return (
     <Link

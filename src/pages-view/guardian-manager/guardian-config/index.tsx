@@ -53,7 +53,7 @@ export default function GuardianConfig({ props }: Props) {
   return (
     <Box {...props}>
       <Typography>Config your Guardian</Typography>
-      <Box sx={{ mt: 2, width: '70%' }}>
+      <Box sx={{ mt: 2 }}>
         <BaseForm events={{ onExecute: onConfigGuardian }}>
           <TitleItem
             titleWidth="110px"

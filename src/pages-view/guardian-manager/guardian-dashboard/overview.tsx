@@ -5,9 +5,8 @@ import { useAppSelector } from 'src/redux-slices/store';
 import { formatAddress } from 'src/services';
 
 export default function Overview() {
-  const { threshold, expirePeriod, delay, guardianCount, maxGuardians, hashList } = useAppSelector(
-    (state) => state.guardian.config
-  );
+  const { threshold, expirePeriod, delay, guardianCount, maxGuardians, hashList, increment } =
+    useAppSelector((state) => state.guardian.config);
 
   return (
     <Box>
@@ -42,6 +41,12 @@ export default function Overview() {
             titleWidth="110px"
             title="Max Guardians"
             component={<TextField value={maxGuardians} InputProps={{ readOnly: true }} />}
+            props={{ sx: { mt: 1 } }}
+          />
+          <TitleItem
+            titleWidth="110px"
+            title="Current increment"
+            component={<TextField value={increment} InputProps={{ readOnly: true }} />}
             props={{ sx: { mt: 1 } }}
           />
         </Grid>

@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import AddGuardian from './add-guardian';
+import ChangeOwner from './change-owner';
 import ChangeThreshold from './change-threshold';
 import RemoveGuardian from './remove-guardian';
 
@@ -15,6 +16,7 @@ export default function QueueAction() {
           [theme.breakpoints.down('sm')]: { flexDirection: 'column' },
         })}
       >
+        <ChangeOwner />
         <ChangeThreshold />
         <AddGuardian />
         <RemoveGuardian />

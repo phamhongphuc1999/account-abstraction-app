@@ -2,8 +2,8 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import BabyjubRegister from 'src/pages/babyjub-register';
 import CurvePage from 'src/pages/curve-page';
 import CurveRegister from 'src/pages/curve-register';
-import Guardian from 'src/pages/guardian';
-import Recovery from 'src/pages/recovery';
+import GuardianAccount from 'src/pages/guardian-account';
+import GuardianManager from 'src/pages/guardian-manager';
 import Home from '../pages/home';
 import ProviderApp from './provider-app';
 
@@ -35,14 +35,9 @@ export default function App() {
     {
       path: '/guardian',
       element: <ProviderApp mode="wallet" />,
-      children: [{ path: '', element: <Guardian /> }],
-    },
-    {
-      path: '/recovery',
-      element: <ProviderApp mode="wallet" />,
       children: [
-        { path: ':position', element: <Recovery /> },
-        { path: '', element: <Navigate to="/recovery/owner" /> },
+        { path: 'manager', element: <GuardianManager /> },
+        { path: 'account', element: <GuardianAccount /> },
       ],
     },
   ]);

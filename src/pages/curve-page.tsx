@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SignatureScheme } from 'src/global';
 import useRecoverHashWallet from 'src/hooks/use-recover-hash-wallet';
-import BabyjubDashboard from 'src/pages-view/curve-page/babyjub-dashboard';
 import CurveDashboard from 'src/pages-view/curve-page/curve-dashboard';
 import CurveSignature from 'src/pages-view/curve-page/curve-signature';
 import { useHashKeyring } from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
@@ -40,7 +39,6 @@ export default function CurvePage() {
           </Box>
         </>
       )}
-      <BabyjubDashboard />
     </>
   );
 }

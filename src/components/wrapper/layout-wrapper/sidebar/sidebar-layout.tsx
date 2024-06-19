@@ -52,13 +52,13 @@ export default function SidebarLayout({ props }: Props) {
           </MuiNavLink>
         </ListItem>
         <ListItem>
-          <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to="/guardian">
-            Guardian
+          <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to="/guardian/manager">
+            Recovery Manager
           </MuiNavLink>
         </ListItem>
         <ListItem>
-          <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to="/recovery">
-            Recovery
+          <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to="/guardian/account">
+            Guardian Account
           </MuiNavLink>
         </ListItem>
         <ListItem>
