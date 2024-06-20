@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
-import { Box, BoxProps, List, ListItem, Theme, useTheme } from '@mui/material';
+import { Box, BoxProps, List, ListItem, Theme, Typography, useTheme } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 import { MuiNavLink } from 'src/components/utils';
 import { mergeSx } from 'src/services';
 
@@ -35,6 +36,13 @@ function useStyle(theme: Theme) {
   };
 }
 
+const config: Array<{ name: string; path: string; exact: boolean }> = [
+  { name: 'Home', path: '/', exact: true },
+  { name: 'Recovery Manager', path: '/guardian/manager', exact: true },
+  { name: 'Guardian Account', path: '/guardian/account', exact: true },
+  { name: 'Curve', path: '/curve-page', exact: false },
+];
+
 interface Props {
   props?: BoxProps;
 }
@@ -42,30 +50,29 @@ interface Props {
 export default function SidebarLayout({ props }: Props) {
   const theme = useTheme();
   const cls = useStyle(theme);
+  const location = useLocation();
 
   return (
     <Box {...props} sx={mergeSx([cls.box, props?.sx])}>
       <List sx={{ padding: 0, width: '100%' }}>
-        <ListItem>
-          <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to="/">
-            Home
-          </MuiNavLink>
-        </ListItem>
-        <ListItem>
-          <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to="/guardian/manager">
-            Recovery Manager
-          </MuiNavLink>
-        </ListItem>
-        <ListItem>
-          <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to="/guardian/account">
-            Guardian Account
-          </MuiNavLink>
-        </ListItem>
-        <ListItem>
-          <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to="/curve-page">
-            Curve
-          </MuiNavLink>
-        </ListItem>
+        {config.map((item) => {
+          const isMatch = item.exact
+            ? item.path == location.pathname
+            : location.pathname.includes(item.path);
+          return (
+            <ListItem key={item.path}>
+              <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to={item.path}>
+                <Typography
+                  sx={{
+                    textDecoration: isMatch ? 'underline' : 'initial',
+                  }}
+                >
+                  {item.name}
+                </Typography>
+              </MuiNavLink>
+            </ListItem>
+          );
+        })}
       </List>
     </Box>
   );

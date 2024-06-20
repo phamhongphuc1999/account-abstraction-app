@@ -1,10 +1,12 @@
 import { TextField } from '@mui/material';
 import { buildBabyjub, buildEddsa } from 'circomlibjs';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import CopyIcon from 'src/components/icons/copy-icon';
 import TitleItem from 'src/components/title-item';
+import { CssDivide } from 'src/components/utils';
 import { useLocalStorageContext } from 'src/local-storage-connection/local-storage-context';
 import { convertStringToUint8, convertUint8ToString } from 'src/services';
+import { generatePoseidonHash } from 'src/services/circom-utils';
 import { decodeMnemonic } from 'src/services/encrypt';
 import BabyjubAccount from 'src/wallet-connection/hash-system-wallet/hash-account/babyjub-account';
 import { useBabyJub } from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
@@ -13,6 +15,7 @@ import BabyJubSignature from './babyjub-signature';
 export default function BabyjubDashboard() {
   const { jubAccount, pacPubKey, fn } = useBabyJub();
   const { indexedStorage } = useLocalStorageContext();
+  const [poseidonPubKey, setPoseidonPubKey] = useState('');
 
   const _recover = useCallback(async () => {
     if (indexedStorage && !jubAccount) {
@@ -29,6 +32,10 @@ export default function BabyjubDashboard() {
     }
   }, [indexedStorage, fn, jubAccount]);
 
+  const _getPoseidonKey = useCallback(async () => {
+    setPoseidonPubKey(await generatePoseidonHash(pacPubKey, 'hex'));
+  }, [pacPubKey]);
+
   const _privateKey = useMemo(() => {
     if (jubAccount) return convertUint8ToString(jubAccount.privateKey);
     else return '';
@@ -37,6 +44,10 @@ export default function BabyjubDashboard() {
   useEffect(() => {
     _recover();
   }, [_recover]);
+
+  useEffect(() => {
+    _getPoseidonKey();
+  }, [_getPoseidonKey]);
 
   return jubAccount ? (
     <>
@@ -64,6 +75,19 @@ export default function BabyjubDashboard() {
           />
         }
       />
+      <TitleItem
+        props={{ sx: { mt: 1 } }}
+        titleWidth="95px"
+        title="Poseidon public key"
+        component={
+          <TextField
+            fullWidth
+            value={poseidonPubKey}
+            InputProps={{ readOnly: true, endAdornment: <CopyIcon copyText={poseidonPubKey} /> }}
+          />
+        }
+      />
+      <CssDivide props={{ sx: { mt: 2 } }} />
       <BabyJubSignature babyJubAccount={jubAccount} />
     </>
   ) : (

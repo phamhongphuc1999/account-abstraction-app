@@ -1,4 +1,5 @@
 import { Navigate, useRoutes } from 'react-router-dom';
+import BabyjubImport from 'src/pages/babyjub-import';
 import BabyjubRegister from 'src/pages/babyjub-register';
 import CurvePage from 'src/pages/curve-page';
 import CurveRegister from 'src/pages/curve-register';
@@ -20,12 +21,16 @@ export default function App() {
       children: [{ path: '', element: <CurveRegister /> }],
     },
     {
-      path: '/babyjub-register',
+      path: '/babyjub',
       element: <ProviderApp mode="register" />,
-      children: [{ path: '', element: <BabyjubRegister /> }],
+      children: [
+        { path: 'register', element: <BabyjubRegister /> },
+        { path: 'import', element: <BabyjubImport /> },
+      ],
     },
     {
       path: '/curve-page',
+      id: 'curve',
       element: <ProviderApp mode="wallet" />,
       children: [
         { path: ':schema', element: <CurvePage /> },
