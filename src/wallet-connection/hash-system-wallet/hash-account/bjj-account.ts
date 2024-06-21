@@ -2,7 +2,7 @@ import { BabyJub, Eddsa, Point, Signature } from 'circomlibjs';
 import { JubSignatureType } from 'src/global';
 import { decodeUTF8 } from 'tweetnacl-util';
 
-export default class BabyjubAccount {
+export default class BJJAccount {
   readonly pubKey: Point;
   readonly privateKey: Uint8Array;
   public eddsa: Eddsa;

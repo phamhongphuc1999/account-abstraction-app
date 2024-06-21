@@ -1,6 +1,6 @@
 import { Navigate, useRoutes } from 'react-router-dom';
-import BabyjubImport from 'src/pages/babyjub-import';
-import BabyjubRegister from 'src/pages/babyjub-register';
+import BJJImport from 'src/pages/bjj-import';
+import BJJRegister from 'src/pages/bjj-register';
 import CurvePage from 'src/pages/curve-page';
 import CurveRegister from 'src/pages/curve-register';
 import GuardianAccount from 'src/pages/guardian-account';
@@ -21,11 +21,11 @@ export default function App() {
       children: [{ path: '', element: <CurveRegister /> }],
     },
     {
-      path: '/babyjub',
+      path: '/baby-jub',
       element: <ProviderApp mode="register" />,
       children: [
-        { path: 'register', element: <BabyjubRegister /> },
-        { path: 'import', element: <BabyjubImport /> },
+        { path: 'register', element: <BJJRegister /> },
+        { path: 'import', element: <BJJImport /> },
       ],
     },
     {

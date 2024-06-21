@@ -8,11 +8,11 @@ import { useLocalStorageContext } from 'src/local-storage-connection/local-stora
 import { convertStringToUint8, convertUint8ToString } from 'src/services';
 import { generatePoseidonHash } from 'src/services/circom-utils';
 import { decodeMnemonic } from 'src/services/encrypt';
-import BabyjubAccount from 'src/wallet-connection/hash-system-wallet/hash-account/babyjub-account';
+import BJJAccount from 'src/wallet-connection/hash-system-wallet/hash-account/bjj-account';
 import { useBabyJub } from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
-import BabyJubSignature from './babyjub-signature';
+import BabyJubSignature from './bjj-signature';
 
-export default function BabyjubDashboard() {
+export default function BJJDashboard() {
   const { jubAccount, pacPubKey, fn } = useBabyJub();
   const { indexedStorage } = useLocalStorageContext();
   const [poseidonPubKey, setPoseidonPubKey] = useState('');
@@ -26,8 +26,8 @@ export default function BabyjubDashboard() {
         const _privateKey = convertStringToUint8(realMnemonic);
         const eddsa = await buildEddsa();
         const babyJub = await buildBabyjub();
-        const _account = new BabyjubAccount(eddsa, babyJub, _privateKey);
-        fn.setBabyjubAccount(_account);
+        const _account = new BJJAccount(eddsa, babyJub, _privateKey);
+        fn.setBabyJubAccount(_account);
       }
     }
   }, [indexedStorage, fn, jubAccount]);

@@ -4,13 +4,13 @@ import BaseForm from 'src/components/form/base-form';
 import TitleItem, { TitleTextFieldItem } from 'src/components/title-item';
 import { JubSignatureType } from 'src/global';
 import { convertBabyJubSignature } from 'src/services';
-import BabyjubAccount from 'src/wallet-connection/hash-system-wallet/hash-account/babyjub-account';
+import BJJAccount from 'src/wallet-connection/hash-system-wallet/hash-account/bjj-account';
 
 interface Props {
-  babyJubAccount: BabyjubAccount;
+  babyJubAccount: BJJAccount;
 }
 
-export default function BabyJubSignature({ babyJubAccount }: Props) {
+export default function BJJSignature({ babyJubAccount }: Props) {
   const [message, setMessage] = useState('');
   const [result, setResult] = useState<JubSignatureType | null>(null);
 

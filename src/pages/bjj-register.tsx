@@ -1,12 +1,12 @@
 import { Typography } from '@mui/material';
 import HashRegisterProvider from 'src/context/hash-register-context';
-import BabyjubRegisterView from 'src/pages-view/babyjub-register-view';
+import BJJRegisterView from 'src/pages-view/bjj-register-view';
 
-export default function BabyjubRegister() {
+export default function BJJRegister() {
   return (
     <HashRegisterProvider>
       <Typography variant="subtitle1">Hash Register</Typography>
-      <BabyjubRegisterView props={{ sx: { mt: 2 } }} />
+      <BJJRegisterView props={{ sx: { mt: 2 } }} />
     </HashRegisterProvider>
   );
 }

@@ -7,7 +7,7 @@ interface Props {
   props?: BoxProps;
 }
 
-export default function BabyjubRegisterView({ props }: Props) {
+export default function BJJRegisterView({ props }: Props) {
   const { step } = useHashRegisterSelector((state) => state.data);
 
   return (

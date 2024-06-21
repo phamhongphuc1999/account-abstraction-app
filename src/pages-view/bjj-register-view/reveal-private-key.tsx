@@ -8,7 +8,7 @@ import { useHashRegisterSelector } from 'src/context/hash-register-context';
 import { useLocalStorageContext } from 'src/local-storage-connection/local-storage-context';
 import { convertUint8ToString } from 'src/services';
 import { encodeMnemonic } from 'src/services/encrypt';
-import BabyjubAccount from 'src/wallet-connection/hash-system-wallet/hash-account/babyjub-account';
+import BJJAccount from 'src/wallet-connection/hash-system-wallet/hash-account/bjj-account';
 import { useHashWalletContext } from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
 
 export default function RevealPrivateKey() {
@@ -25,7 +25,7 @@ export default function RevealPrivateKey() {
     if (privateKey) {
       const eddsa = await buildEddsa();
       const babyJub = await buildBabyjub();
-      const _account = new BabyjubAccount(eddsa, babyJub, privateKey);
+      const _account = new BJJAccount(eddsa, babyJub, privateKey);
       if (indexedStorage) {
         const encryptMnemonic = await encodeMnemonic(convertUint8ToString(privateKey), password);
         await indexedStorage.hashWalletMetadata.upsert('babyjub', {
@@ -33,7 +33,7 @@ export default function RevealPrivateKey() {
           numberOfKeys: 1,
           schema: 'babyjub',
         });
-        fn.setBabyjubAccount(_account);
+        fn.setBabyJubAccount(_account);
       }
     }
   }
