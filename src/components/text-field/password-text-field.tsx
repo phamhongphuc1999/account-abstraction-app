@@ -1,5 +1,4 @@
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import { VisibilityOffOutlined, VisibilityOutlined } from '@mui/icons-material';
 import { IconButton, TextField, TextFieldProps } from '@mui/material';
 import { useState } from 'react';
 
@@ -17,7 +16,7 @@ export default function PasswordTextField({ props }: Props) {
         type: isVisibility ? 'text' : 'password',
         endAdornment: (
           <IconButton onClick={() => setIsVisibility((preValue) => !preValue)}>
-            {isVisibility ? <VisibilityOutlinedIcon /> : <VisibilityOffOutlinedIcon />}
+            {isVisibility ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
           </IconButton>
         ),
       }}

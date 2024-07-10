@@ -15,13 +15,8 @@ interface Props {
   props?: BoxProps;
 }
 
-export default function BaseActionForm({
-  IconComponent,
-  title,
-  children,
-  boxIconProps,
-  props,
-}: Props) {
+export default function BaseActionForm(params: Props) {
+  const { IconComponent, title, children, boxIconProps, props } = params;
   const theme = useTheme();
 
   return (

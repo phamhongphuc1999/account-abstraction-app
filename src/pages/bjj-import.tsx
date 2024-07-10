@@ -23,7 +23,7 @@ function BJJImportLayout({ props }: Props) {
   const { fn } = useHashWalletContext();
   const navigate = useNavigate();
 
-  async function _buildBabyjub() {
+  async function _buildBabyJub() {
     if (privateKey.length > 0) {
       const eddsa = await buildEddsa();
       const babyJub = await buildBabyjub();
@@ -45,7 +45,7 @@ function BJJImportLayout({ props }: Props) {
     <Box {...props}>
       {step == 1 && <PasswordForm step={1} />}
       {step == 2 && (
-        <BaseForm events={{ onExecute: _buildBabyjub }}>
+        <BaseForm events={{ onExecute: _buildBabyJub }}>
           <TitleTextFieldItem
             titleWidth="95px"
             title="Private Key"

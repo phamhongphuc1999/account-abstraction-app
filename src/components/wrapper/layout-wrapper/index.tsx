@@ -1,10 +1,10 @@
 import { Box, Container, Typography, useTheme } from '@mui/material';
 import { ReactNode } from 'react';
 import { getColor } from 'src/services';
-import AppEffect from './app-effect';
 import Header, { LoginHeader } from './header';
 import Sidebar from './sidebar';
 import TransactionStatus from './transaction-status';
+import useAppEffect from './use-app-effect';
 
 interface Props {
   children: ReactNode;
@@ -12,10 +12,10 @@ interface Props {
 
 export default function LayoutWrapper({ children }: Props) {
   const theme = useTheme();
+  useAppEffect();
 
   return (
     <Box>
-      <AppEffect />
       <Sidebar />
       <Box sx={{ [theme.breakpoints.up('sm')]: { ml: '130px' } }}>
         <Header />
