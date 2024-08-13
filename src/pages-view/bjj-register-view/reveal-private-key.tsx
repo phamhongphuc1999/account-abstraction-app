@@ -21,7 +21,7 @@ export default function RevealPrivateKey() {
     setPrivateKey(randomBytes(32));
   }
 
-  async function _buildBabyjub() {
+  async function _buildBabyJub() {
     if (privateKey) {
       const eddsa = await buildEddsa();
       const babyJub = await buildBabyjub();
@@ -63,8 +63,8 @@ export default function RevealPrivateKey() {
         }
       />
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
-        <Button variant="outlined" onClick={_buildBabyjub}>
-          Create Babyjub
+        <Button variant="outlined" onClick={_buildBabyJub}>
+          Create BabyJub
         </Button>
       </Box>
     </>

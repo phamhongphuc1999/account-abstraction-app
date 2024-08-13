@@ -92,12 +92,7 @@ export function LoginHeader() {
       }}
     >
       <Container
-        sx={{
-          height: 65,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
+        sx={{ height: 65, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
       >
         <ThemeButton />
       </Container>

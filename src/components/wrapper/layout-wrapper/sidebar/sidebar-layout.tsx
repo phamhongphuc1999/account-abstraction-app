@@ -62,11 +62,7 @@ export default function SidebarLayout({ props }: Props) {
           return (
             <ListItem key={item.path}>
               <MuiNavLink sx={[cls.subBaseLink, cls.activeLink]} to={item.path}>
-                <Typography
-                  sx={{
-                    textDecoration: isMatch ? 'underline' : 'initial',
-                  }}
-                >
+                <Typography sx={{ textDecoration: isMatch ? 'underline' : 'initial' }}>
                   {item.name}
                 </Typography>
               </MuiNavLink>

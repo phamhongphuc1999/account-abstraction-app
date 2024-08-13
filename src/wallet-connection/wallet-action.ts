@@ -14,10 +14,7 @@ export const connectorFns: { [id in ConnectorType]: CreateConnectorFn } = {
 export const wagmiConfig = createConfig({
   chains: [bsc, bscTestnet],
   connectors: [connectorFns.metamask, connectorFns.coinbase],
-  transports: {
-    [bsc.id]: http(),
-    [bscTestnet.id]: http(),
-  },
+  transports: { [bsc.id]: http(), [bscTestnet.id]: http() },
 });
 
 export function useWalletAction() {

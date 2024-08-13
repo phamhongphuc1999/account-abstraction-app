@@ -47,13 +47,8 @@ interface TextProps extends Omit<Props, 'component'> {
   textFieldProps?: TextFieldProps;
 }
 
-export function TitleTextFieldItem({
-  title,
-  titleWidth = '55px',
-  isPassword,
-  textFieldProps,
-  props,
-}: TextProps) {
+export function TitleTextFieldItem(params: TextProps) {
+  const { title, titleWidth = '55px', isPassword, textFieldProps, props } = params;
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('md'));
 

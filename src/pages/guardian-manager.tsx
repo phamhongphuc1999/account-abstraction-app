@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import GuardianConfig from 'src/pages-view/guardian-manager/guardian-config';
 import GuardianDashboard from 'src/pages-view/guardian-manager/guardian-dashboard';
 import GuardianDeployment from 'src/pages-view/guardian-manager/guardian-deployment';
@@ -8,7 +8,7 @@ export default function GuardianManager() {
   const { deployType, configType } = useAppSelector((state) => state.guardian);
 
   return (
-    <Box>
+    <>
       <Typography variant="subtitle1">Guardians Manager</Typography>
       {deployType == 'initial' && configType == 'initial' && (
         <Typography>
@@ -22,6 +22,6 @@ export default function GuardianManager() {
       {deployType == 'deployed' && configType == 'alreadyConfig' && (
         <GuardianDashboard props={{ sx: { mt: 2 } }} />
       )}
-    </Box>
+    </>
   );
 }

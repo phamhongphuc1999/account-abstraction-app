@@ -41,12 +41,7 @@ export function TokenImage({ symbol, image, size = '20px', textProps, imageProps
           <MuiImage
             src={image[0]}
             sx={mergeSx([
-              {
-                position: 'absolute',
-                marginRight: 0,
-                top: 0,
-                width: `calc(${size} / 1.4142)`,
-              },
+              { position: 'absolute', marginRight: 0, top: 0, width: `calc(${size} / 1.4142)` },
               imageProps?.sx,
             ])}
           />

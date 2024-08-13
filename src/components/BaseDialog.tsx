@@ -1,4 +1,4 @@
-import CloseIcon from '@mui/icons-material/Close';
+import { Close } from '@mui/icons-material';
 import {
   Box,
   Dialog,
@@ -32,7 +32,7 @@ export default function BaseDialog({ title, open, onClose, children }: Props) {
             {title}
           </Typography>
           <IconButton onClick={() => onClose()}>
-            <CloseIcon sx={{ color: 'text.header' }} />
+            <Close sx={{ color: 'text.header' }} />
           </IconButton>
         </Box>
       </DialogTitle>
