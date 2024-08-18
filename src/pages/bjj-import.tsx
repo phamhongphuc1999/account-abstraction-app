@@ -12,11 +12,7 @@ import { encodeMnemonic } from 'src/services/encrypt';
 import BJJAccount from 'src/wallet-connection/hash-system-wallet/hash-account/bjj-account';
 import { useHashWalletContext } from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
 
-interface Props {
-  props?: BoxProps;
-}
-
-function BJJImportLayout({ props }: Props) {
+function BJJImportLayout(props: BoxProps) {
   const { step, password } = useHashRegisterSelector((state) => state.data);
   const [privateKey, setPrivateKey] = useState('');
   const { indexedStorage } = useLocalStorageContext();
@@ -54,7 +50,7 @@ function BJJImportLayout({ props }: Props) {
               value: privateKey,
               onChange: (event) => setPrivateKey(event.target.value),
             }}
-            props={{ sx: { mt: 1 } }}
+            sx={{ mt: 1 }}
           />
         </BaseForm>
       )}
@@ -66,7 +62,7 @@ export default function BJJImport() {
   return (
     <HashRegisterProvider>
       <Typography variant="subtitle1">Hash Import</Typography>
-      <BJJImportLayout props={{ sx: { mt: 2 } }} />
+      <BJJImportLayout sx={{ mt: 2 }} />
     </HashRegisterProvider>
   );
 }

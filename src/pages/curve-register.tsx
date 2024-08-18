@@ -6,7 +6,7 @@ export default function CurveRegister() {
   return (
     <HashRegisterProvider>
       <Typography variant="subtitle1">Hash Register</Typography>
-      <CurveRegisterView props={{ sx: { mt: 2 } }} />
+      <CurveRegisterView sx={{ mt: 2 }} />
     </HashRegisterProvider>
   );
 }

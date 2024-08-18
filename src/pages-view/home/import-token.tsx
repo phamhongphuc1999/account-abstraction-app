@@ -13,11 +13,7 @@ import { upsertToken } from 'src/redux-slices/token-slice';
 import { getDecimalAmount } from 'src/services';
 import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context';
 
-interface Props {
-  props?: BoxProps;
-}
-
-export default function ImportToken({ props }: Props) {
+export default function ImportToken(props: BoxProps) {
   const [open, setOpen] = useState(false);
   const [tokenAddress, setTokenAddress] = useState('');
   const [decimal, setDecimal] = useState(0);
@@ -80,7 +76,7 @@ export default function ImportToken({ props }: Props) {
       IconComponent={AddIcon}
       title="Import new Token"
       boxIconProps={{ onClick: () => setOpen(true) }}
-      props={props}
+      {...props}
     >
       <BaseDialog title="Import Token" open={open} onClose={() => setOpen(false)}>
         <BaseForm events={{ onExecute: onImportToken }} metadata={{ executeTitle: 'Import' }}>
@@ -92,19 +88,19 @@ export default function ImportToken({ props }: Props) {
               value: tokenAddress,
               onChange: (event) => setTokenAddress(event.target.value),
             }}
-            props={{ sx: { mt: 1 } }}
+            sx={{ mt: 1 }}
           />
           <TitleTextFieldItem
             titleWidth="80px"
             title="Decimal"
             textFieldProps={{ fullWidth: true, value: decimal, InputProps: { readOnly: true } }}
-            props={{ sx: { mt: 1 } }}
+            sx={{ mt: 1 }}
           />
           <TitleTextFieldItem
             titleWidth="80px"
             title="Symbol"
             textFieldProps={{ fullWidth: true, value: symbol, InputProps: { readOnly: true } }}
-            props={{ sx: { mt: 1 } }}
+            sx={{ mt: 1 }}
           />
           <TitleTextFieldItem
             titleWidth="80px"
@@ -114,7 +110,7 @@ export default function ImportToken({ props }: Props) {
               value: ownerBalance,
               InputProps: { readOnly: true },
             }}
-            props={{ sx: { mt: 1 } }}
+            sx={{ mt: 1 }}
           />
           <TitleTextFieldItem
             titleWidth="80px"
@@ -124,7 +120,7 @@ export default function ImportToken({ props }: Props) {
               value: accountBalance,
               InputProps: { readOnly: true },
             }}
-            props={{ sx: { mt: 1 } }}
+            sx={{ mt: 1 }}
           />
         </BaseForm>
       </BaseDialog>

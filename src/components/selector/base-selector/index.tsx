@@ -93,7 +93,10 @@ export default function BaseSelector<T = unknown>(params: BaseCssSelectProps<T>)
           {fn.popoverFn({
             items,
             events: { onSelectItem },
-            props: { id: popoverId, open, anchorEl, onClose: () => setAnchorEl(null) },
+            id: popoverId,
+            open,
+            anchorEl,
+            onClose: () => setAnchorEl(null),
           })}
         </>
       )}

@@ -6,16 +6,15 @@ import TitleItem from 'src/components/title-item';
 import { GuardianHashListType } from 'src/global';
 import { formatAddress } from 'src/services';
 
-interface Props {
+interface Props extends BoxProps {
   value: GuardianHashListType;
   events?: {
     onAdd?: (address: string) => Promise<void>;
     onRemove?: (address: string) => void;
   };
-  props?: BoxProps;
 }
 
-export default function GuardianAddresses({ value, events, props }: Props) {
+export default function GuardianAddresses({ value, events, ...props }: Props) {
   const [addressValue, setAddressValue] = useState('');
   const len = Object.values(value).length;
 
@@ -62,7 +61,7 @@ export default function GuardianAddresses({ value, events, props }: Props) {
                     />
                   </Box>
                 }
-                props={{ sx: { mx: 3 } }}
+                sx={{ mx: 3 }}
               />
               <Button variant="outlined" onClick={() => onRemove(item.address)}>
                 Remove
@@ -89,7 +88,7 @@ export default function GuardianAddresses({ value, events, props }: Props) {
             }}
           />
         }
-        props={{ sx: { mt: 2 } }}
+        sx={{ mt: 2 }}
       />
     </Box>
   );

@@ -3,12 +3,11 @@ import { Box, BoxProps } from '@mui/material';
 import ReactJson, { ReactJsonViewProps } from 'react-json-view';
 import { mergeSx } from 'src/services';
 
-interface Props {
+interface Props extends BoxProps {
   jsonProps: ReactJsonViewProps;
-  props?: BoxProps;
 }
 
-export default function CssReactJson({ jsonProps, props }: Props) {
+export default function CssReactJson({ jsonProps, ...props }: Props) {
   return (
     <Box
       {...props}

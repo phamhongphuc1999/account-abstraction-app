@@ -72,7 +72,7 @@ export default function RemoveGuardian() {
                 onChange={(event) => setExtend(parseInt(event.target.value))}
               />
             }
-            props={{ sx: { mt: 1 } }}
+            sx={{ mt: 1 }}
           />
         </BaseForm>
       </BaseDialog>

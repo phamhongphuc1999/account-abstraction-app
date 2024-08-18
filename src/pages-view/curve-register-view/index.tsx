@@ -5,11 +5,7 @@ import ConfirmMnemonic from './confirm-mnemonic';
 import PasswordForm from './password-form';
 import RevealMnemonic from './reveal-mnemonic';
 
-interface Props {
-  props?: BoxProps;
-}
-
-export default function CurveRegisterView({ props }: Props) {
+export default function CurveRegisterView(props: BoxProps) {
   const { step } = useHashRegisterSelector((state) => state.data);
 
   return (

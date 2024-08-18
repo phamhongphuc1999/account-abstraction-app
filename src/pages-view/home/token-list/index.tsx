@@ -5,12 +5,11 @@ import { getTokenData } from 'src/redux-slices/token-slice';
 import { getColor } from 'src/services';
 import TokenRow, { NativeTokenRow } from './token-row';
 
-interface Props {
+interface Props extends BoxProps {
   type: AccountType;
-  props?: BoxProps;
 }
 
-function TokenAccountList({ type, props }: Props) {
+function TokenAccountList({ type, ...props }: Props) {
   const { tokens } = useAppSelector((state) => getTokenData(state.token, type));
 
   return (
@@ -32,9 +31,7 @@ function TokenAccountList({ type, props }: Props) {
         </Grid>
         <NativeTokenRow type={type} props={{ sx: { mt: 1 } }} />
         {Object.values(tokens).map((token) => {
-          return (
-            <TokenRow key={token.address} type={type} token={token} props={{ sx: { mt: 1 } }} />
-          );
+          return <TokenRow key={token.address} type={type} token={token} sx={{ mt: 1 }} />;
         })}
       </Box>
     </Box>
@@ -49,11 +46,9 @@ export default function TokenList() {
       <TokenAccountList type="owner" />
       <TokenAccountList
         type="accountAbstraction"
-        props={{
-          sx: {
-            borderTop: `2px solid ${getColor(theme.palette.mode, '#132741', '#E5E5E5')}`,
-            pt: 2,
-          },
+        sx={{
+          borderTop: `2px solid ${getColor(theme.palette.mode, '#132741', '#E5E5E5')}`,
+          pt: 2,
         }}
       />
     </>

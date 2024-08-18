@@ -43,11 +43,7 @@ const config: Array<{ name: string; path: string; exact: boolean }> = [
   { name: 'Curve', path: '/curve-page', exact: false },
 ];
 
-interface Props {
-  props?: BoxProps;
-}
-
-export default function SidebarLayout({ props }: Props) {
+export default function SidebarLayout(props: BoxProps) {
   const theme = useTheme();
   const cls = useStyle(theme);
   const location = useLocation();

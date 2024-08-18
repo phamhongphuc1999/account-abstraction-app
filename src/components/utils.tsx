@@ -6,10 +6,7 @@ export const MuiImage = styled('img')(() => ({}));
 export const MuiLink = styled(Link)(() => ({}));
 export const MuiNavLink = styled(NavLink)(() => ({}));
 
-interface CssDivideProps {
-  props?: BoxProps;
-}
-export function CssDivide({ props }: CssDivideProps) {
+export function CssDivide(props: BoxProps) {
   const theme = useTheme();
 
   return (

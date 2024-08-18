@@ -6,7 +6,7 @@ export default function BJJRegister() {
   return (
     <HashRegisterProvider>
       <Typography variant="subtitle1">Hash Register</Typography>
-      <BJJRegisterView props={{ sx: { mt: 2 } }} />
+      <BJJRegisterView sx={{ mt: 2 }} />
     </HashRegisterProvider>
   );
 }

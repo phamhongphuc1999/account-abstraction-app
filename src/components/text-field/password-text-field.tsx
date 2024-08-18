@@ -2,11 +2,7 @@ import { VisibilityOffOutlined, VisibilityOutlined } from '@mui/icons-material';
 import { IconButton, TextField, TextFieldProps } from '@mui/material';
 import { useState } from 'react';
 
-interface Props {
-  props?: TextFieldProps;
-}
-
-export default function PasswordTextField({ props }: Props) {
+export default function PasswordTextField(props: TextFieldProps) {
   const [isVisibility, setIsVisibility] = useState(false);
 
   return (

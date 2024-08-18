@@ -10,11 +10,7 @@ import { useAppSelector } from 'src/redux-slices/store';
 import { generatePoseidonHash } from 'src/services/circom-utils';
 import GuardianAddresses from './guardian-addresses';
 
-interface Props {
-  props?: BoxProps;
-}
-
-export default function GuardianConfig({ props }: Props) {
+export default function GuardianConfig(props: BoxProps) {
   const { sendEntryPoint } = useSendUserOp();
   const [threshold, setThreshold] = useState('0');
   const [expirePeriod, setExpirePeriod] = useState('0');
@@ -76,7 +72,7 @@ export default function GuardianConfig({ props }: Props) {
                 onChange={(event) => setExpirePeriod(event.target.value)}
               />
             }
-            props={{ sx: { mt: 2 } }}
+            sx={{ mt: 2 }}
           />
           <TitleItem
             titleWidth="110px"
@@ -88,7 +84,7 @@ export default function GuardianConfig({ props }: Props) {
                 onChange={(event) => setDelay(event.target.value)}
               />
             }
-            props={{ sx: { mt: 2 } }}
+            sx={{ mt: 2 }}
           />
           <Box sx={{ borderTop: '1px solid #ffffff', mt: 1 }} />
           <GuardianAddresses value={addresses} events={{ onAdd, onRemove }} />

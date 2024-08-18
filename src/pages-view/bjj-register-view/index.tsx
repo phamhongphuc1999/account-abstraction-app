@@ -3,11 +3,7 @@ import { useHashRegisterSelector } from 'src/context/hash-register-context';
 import PasswordForm from '../curve-register-view/password-form';
 import RevealPrivateKey from './reveal-private-key';
 
-interface Props {
-  props?: BoxProps;
-}
-
-export default function BJJRegisterView({ props }: Props) {
+export default function BJJRegisterView(props: BoxProps) {
   const { step } = useHashRegisterSelector((state) => state.data);
 
   return (

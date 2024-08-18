@@ -39,7 +39,7 @@ export default function HashRegisterProvider({ children }: Props) {
   const [mnemonic, setMnemonic] = useState('');
   const [step, setStep] = useState(1);
 
-  const contextData = useMemo(() => {
+  const contextData = useMemo<HashRegisterContextProps>(() => {
     return {
       data: { signatureSchema, password, mnemonic, step },
       fn: { setSignatureSchema, setPassword, setStep, setMnemonic },

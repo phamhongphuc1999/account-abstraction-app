@@ -47,11 +47,7 @@ function useStyle(theme: Theme) {
   };
 }
 
-interface Props {
-  props?: ButtonProps;
-}
-
-export default function NetworkButton({ props }: Props) {
+export default function NetworkButton(props: ButtonProps) {
   const theme = useTheme();
   const cls = useStyle(theme);
   const [open, setOpen] = useState(false);

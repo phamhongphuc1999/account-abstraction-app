@@ -28,7 +28,7 @@ function useStyle(theme: Theme) {
   };
 }
 
-export interface BasePopoverProps<T = unknown> {
+export interface BasePopoverProps<T = unknown> extends PopoverProps {
   items: Array<T>;
   fn: {
     keyFn?: (item: T) => string;
@@ -41,11 +41,10 @@ export interface BasePopoverProps<T = unknown> {
   metadataProps?: {
     showSearch?: boolean;
   };
-  props: PopoverProps;
 }
 
 export default function BaseSelectorPopover<T = unknown>(params: BasePopoverProps<T>) {
-  const { items, fn, events, metadataProps, props } = params;
+  const { items, fn, events, metadataProps, ...props } = params;
   const theme = useTheme();
   const cls = useStyle(theme);
   const [searchText, setSearchText] = useState('');
@@ -64,9 +63,7 @@ export default function BaseSelectorPopover<T = unknown>(params: BasePopoverProp
   return (
     <Popover {...props} sx={{ '& .MuiPaper-root': cls.popover }}>
       {showSearch && (
-        <SearchTextField
-          props={{ fullWidth: true, onChange: (event) => setSearchText(event.target.value) }}
-        />
+        <SearchTextField fullWidth={true} onChange={(event) => setSearchText(event.target.value)} />
       )}
       <Box sx={{ maxHeight: '300px', mt: '1rem', overflow: 'auto scroll' }}>
         {realItems.map((item, index) => {

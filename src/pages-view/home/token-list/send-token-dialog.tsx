@@ -107,7 +107,7 @@ export default function SendTokenDialog({ open, type, token, onClose }: Props) {
               }}
             />
           }
-          props={{ sx: { mt: 1.5 } }}
+          sx={{ mt: 1.5 }}
         />
         <TitleItem
           titleWidth="65px"
@@ -120,7 +120,7 @@ export default function SendTokenDialog({ open, type, token, onClose }: Props) {
               onChange={(event) => onToChange(event.target.value)}
             />
           }
-          props={{ sx: { mt: 1.5 } }}
+          sx={{ mt: 1.5 }}
         />
       </BaseForm>
     </BaseDialog>

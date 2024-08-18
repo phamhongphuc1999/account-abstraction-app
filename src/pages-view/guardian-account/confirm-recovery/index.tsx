@@ -68,7 +68,7 @@ export default function ConfirmRecovery() {
             titleWidth="80px"
             title="Proof"
             component={<CssReactJson jsonProps={{ src: proof, collapsed: true }} />}
-            props={{ sx: { mt: 1, alignItems: 'flex-start' } }}
+            sx={{ mt: 1, alignItems: 'flex-start' }}
           />
         </>
       )}
@@ -78,7 +78,7 @@ export default function ConfirmRecovery() {
             titleWidth="80px"
             title="Calldata"
             component={<CssReactJson jsonProps={{ src: callDataProof, collapsed: true }} />}
-            props={{ sx: { mt: 1, alignItems: 'flex-start' } }}
+            sx={{ mt: 1, alignItems: 'flex-start' }}
           />
         </Box>
       )}

@@ -29,11 +29,9 @@ export default function Header() {
         >
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <NetworkButton
-              props={{
-                sx: {
-                  marginRight: '0.5rem',
-                  [theme.breakpoints.down('sm')]: { display: 'none' },
-                },
+              sx={{
+                marginRight: '0.5rem',
+                [theme.breakpoints.down('sm')]: { display: 'none' },
               }}
             />
             <Box sx={{ marginRight: '0.5rem', [theme.breakpoints.up('sm')]: { display: 'none' } }}>
@@ -75,7 +73,7 @@ export default function Header() {
           <MenuIcon onClick={() => setIsOpen(false)} />
           <NetworkButton />
         </Box>
-        <SidebarLayout props={{ sx: { width: '300px' } }} />
+        <SidebarLayout sx={{ width: '300px' }} />
       </Drawer>
     </>
   );

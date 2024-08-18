@@ -15,12 +15,10 @@ export default function GuardianManager() {
           Please deploy your account abstraction before trying guardian feature
         </Typography>
       )}
-      {deployType == 'notDeploy' && <GuardianDeployment props={{ sx: { mt: 2 } }} />}
-      {deployType == 'deployed' && configType == 'notConfig' && (
-        <GuardianConfig props={{ sx: { mt: 2 } }} />
-      )}
+      {deployType == 'notDeploy' && <GuardianDeployment sx={{ mt: 2 }} />}
+      {deployType == 'deployed' && configType == 'notConfig' && <GuardianConfig sx={{ mt: 2 }} />}
       {deployType == 'deployed' && configType == 'alreadyConfig' && (
-        <GuardianDashboard props={{ sx: { mt: 2 } }} />
+        <GuardianDashboard sx={{ mt: 2 }} />
       )}
     </>
   );

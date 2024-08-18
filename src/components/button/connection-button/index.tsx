@@ -8,11 +8,7 @@ import { useWalletAction } from 'src/wallet-connection/wallet-action';
 import ConnectedDialog from './connected-dialog';
 import ConnectionDialog from './connection-dialog';
 
-interface Props {
-  props?: ButtonProps;
-}
-
-export default function ConnectionButton({ props }: Props) {
+export default function ConnectionButton(props: ButtonProps) {
   const [connectionOpen, setConnectionOpen] = useState(false);
   const [connectedOpen, setConnectedOpen] = useState(false);
   const { ownerAddress } = useAppSelector((state) => state.user);

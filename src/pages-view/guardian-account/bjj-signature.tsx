@@ -28,7 +28,7 @@ export default function BJJSignature({ babyJubAccount }: Props) {
           fullWidth: true,
           onChange: (event) => setMessage(event.target.value),
         }}
-        props={{ sx: { mt: 1 } }}
+        sx={{ mt: 1 }}
       />
       {result && (
         <TitleItem
@@ -37,7 +37,7 @@ export default function BJJSignature({ babyJubAccount }: Props) {
           component={
             <CssReactJson jsonProps={{ src: convertBabyJubSignature(result), collapsed: true }} />
           }
-          props={{ sx: { mt: 1, alignItems: 'flex-start' } }}
+          sx={{ mt: 1, alignItems: 'flex-start' }}
         />
       )}
     </BaseForm>

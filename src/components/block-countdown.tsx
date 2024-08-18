@@ -3,15 +3,14 @@ import { useCallback, useEffect, useState } from 'react';
 import { getEta } from 'src/services';
 import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context';
 
-interface Props {
+interface Props extends TypographyProps {
   endBlock: number;
   events?: {
     onComplete?: () => void;
   };
-  props?: TypographyProps;
 }
 
-export default function BlockCountdown({ endBlock, events, props }: Props) {
+export default function BlockCountdown({ endBlock, events, ...props }: Props) {
   const [blockTimestamp, setBlockTimestamp] = useState(0);
   const { reader } = usRpcProviderContext();
 

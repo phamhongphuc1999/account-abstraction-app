@@ -12,14 +12,13 @@ import { ReactNode } from 'react';
 import { capitalizeFirstLetter, mergeSx } from 'src/services';
 import PasswordTextField from './text-field/password-text-field';
 
-interface Props {
+interface Props extends Omit<BoxProps, 'component'> {
   title?: string;
   titleWidth?: string;
   component: ReactNode;
-  props?: BoxProps;
 }
 
-export default function TitleItem({ title, titleWidth = '55px', component, props }: Props) {
+export default function TitleItem({ title, titleWidth = '55px', component, ...props }: Props) {
   const theme = useTheme();
 
   return (
@@ -48,7 +47,7 @@ interface TextProps extends Omit<Props, 'component'> {
 }
 
 export function TitleTextFieldItem(params: TextProps) {
-  const { title, titleWidth = '55px', isPassword, textFieldProps, props } = params;
+  const { title, titleWidth = '55px', isPassword, textFieldProps, ...props } = params;
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -58,12 +57,12 @@ export function TitleTextFieldItem(params: TextProps) {
       titleWidth={titleWidth}
       component={
         isPassword ? (
-          <PasswordTextField props={textFieldProps} />
+          <PasswordTextField {...textFieldProps} />
         ) : (
           <TextField {...textFieldProps} label={title} />
         )
       }
-      props={props}
+      {...props}
     />
   );
 }

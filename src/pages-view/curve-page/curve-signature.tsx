@@ -9,12 +9,11 @@ import CopyIcon from 'src/components/icons/copy-icon';
 import { TitleTextFieldItem } from 'src/components/title-item';
 import { KeyringType } from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
 
-interface Props {
+interface Props extends BoxProps {
   keyring: KeyringType;
-  props?: BoxProps;
 }
 
-export default function CurveSignature({ keyring, props }: Props) {
+export default function CurveSignature({ keyring, ...props }: Props) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [result, setResult] = useState('');
@@ -31,7 +30,7 @@ export default function CurveSignature({ keyring, props }: Props) {
       IconComponent={DrawOutlinedIcon}
       title="Sign Message"
       boxIconProps={{ onClick: () => setOpen(true) }}
-      props={props}
+      {...props}
     >
       <BaseDialog open={open} onClose={() => setOpen(false)} title="Sign Message">
         <BaseForm events={{ onExecute: signMessage }}>
@@ -42,7 +41,7 @@ export default function CurveSignature({ keyring, props }: Props) {
               fullWidth: true,
               onChange: (event) => setMessage(event.target.value),
             }}
-            props={{ sx: { mt: 1 } }}
+            sx={{ mt: 1 }}
           />
           <TitleTextFieldItem
             titleWidth="80px"
@@ -55,7 +54,7 @@ export default function CurveSignature({ keyring, props }: Props) {
               },
               value: result,
             }}
-            props={{ sx: { mt: 1 } }}
+            sx={{ mt: 1 }}
           />
         </BaseForm>
       </BaseDialog>

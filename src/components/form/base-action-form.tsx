@@ -5,18 +5,17 @@ import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { ReactNode } from 'react';
 import { mergeSx } from 'src/services';
 
-interface Props {
+interface Props extends BoxProps {
   IconComponent: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
     muiName: string;
   };
   title: string;
   children?: ReactNode;
   boxIconProps?: BoxProps;
-  props?: BoxProps;
 }
 
 export default function BaseActionForm(params: Props) {
-  const { IconComponent, title, children, boxIconProps, props } = params;
+  const { IconComponent, title, children, boxIconProps, ...props } = params;
   const theme = useTheme();
 
   return (

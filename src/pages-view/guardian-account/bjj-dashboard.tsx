@@ -52,7 +52,7 @@ export default function BJJDashboard() {
   return jubAccount ? (
     <>
       <TitleItem
-        props={{ sx: { mt: 1 } }}
+        sx={{ mt: 1 }}
         titleWidth="95px"
         title="Private key"
         component={
@@ -64,7 +64,7 @@ export default function BJJDashboard() {
         }
       />
       <TitleItem
-        props={{ sx: { mt: 1 } }}
+        sx={{ mt: 1 }}
         titleWidth="95px"
         title="Public key"
         component={
@@ -76,7 +76,7 @@ export default function BJJDashboard() {
         }
       />
       <TitleItem
-        props={{ sx: { mt: 1 } }}
+        sx={{ mt: 1 }}
         titleWidth="95px"
         title="Poseidon public key"
         component={
@@ -87,7 +87,7 @@ export default function BJJDashboard() {
           />
         }
       />
-      <CssDivide props={{ sx: { mt: 2 } }} />
+      <CssDivide sx={{ mt: 2 }} />
       <BabyJubSignature babyJubAccount={jubAccount} />
     </>
   ) : (

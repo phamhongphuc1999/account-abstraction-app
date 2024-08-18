@@ -42,7 +42,7 @@ export default function RevealPrivateKey() {
     <>
       <Typography variant="subtitle1">Step 2: Reveal babyjubjub private key</Typography>
       <TitleItem
-        props={{ sx: { mt: 2 } }}
+        sx={{ mt: 2 }}
         title="Private key"
         titleWidth="95px"
         component={

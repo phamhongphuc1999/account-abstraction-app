@@ -12,13 +12,12 @@ import { toFixed } from 'src/services';
 import HideTokenDialog from './hide-token-dialog';
 import SendTokenDialog from './send-token-dialog';
 
-interface Props {
+interface Props extends BoxProps {
   type: AccountType;
   token: StandardToken & { balance: string };
-  props?: BoxProps;
 }
 
-export default function TokenRow({ type, token, props }: Props) {
+export default function TokenRow({ type, token, ...props }: Props) {
   const [openSend, setOpenSend] = useState(false);
   const [openHide, setOpenHide] = useState(false);
 
@@ -82,5 +81,5 @@ export function NativeTokenRow({ type, props }: { type: AccountType; props?: Box
     }
   }, [chainId, balance]);
 
-  return token ? <TokenRow type={type} token={token} props={props} /> : <></>;
+  return token ? <TokenRow type={type} token={token} {...props} /> : <></>;
 }

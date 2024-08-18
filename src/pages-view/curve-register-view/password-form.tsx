@@ -47,7 +47,7 @@ export default function PasswordForm({ step = 2 }: Props) {
             value: password,
             onChange: (event) => setPassword(event.target.value),
           }}
-          props={{ sx: { mt: 1 } }}
+          sx={{ mt: 1 }}
         />
         <TitleTextFieldItem
           titleWidth="80px"
@@ -58,7 +58,7 @@ export default function PasswordForm({ step = 2 }: Props) {
             value: confirmPassword,
             onChange: (event) => setConfirmPassword(event.target.value),
           }}
-          props={{ sx: { mt: 1 } }}
+          sx={{ mt: 1 }}
         />
       </BaseForm>
     </>

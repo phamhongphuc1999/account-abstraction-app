@@ -4,11 +4,7 @@ import Overview from './overview';
 import QueueAction from './queue-action';
 import SubmitNewOwner from './queue-action/submit-new-owner';
 
-interface Props {
-  props?: BoxProps;
-}
-
-export default function GuardianDashboard({ props }: Props) {
+export default function GuardianDashboard(props: BoxProps) {
   return (
     <Box {...props}>
       <Overview />

@@ -5,11 +5,7 @@ import { AccountAbi__factory } from 'src/contracts/typechain';
 import useSendUserOp from 'src/hooks/use-send-user-op';
 import { useAppSelector } from 'src/redux-slices/store';
 
-interface Props {
-  props?: BoxProps;
-}
-
-export default function GuardianDeployment({ props }: Props) {
+export default function GuardianDeployment(props: BoxProps) {
   const { accountAddress } = useAppSelector((state) => state.user);
   const { sendEntryPoint } = useSendUserOp();
 

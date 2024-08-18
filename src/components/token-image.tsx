@@ -3,16 +3,17 @@ import { Box, BoxProps, Typography, TypographyProps } from '@mui/material';
 import { mergeSx } from 'src/services';
 import { MuiImage } from './utils';
 
-interface Props {
+interface Props extends BoxProps {
   image: string | [string, string];
   symbol?: string;
   size?: string;
   textProps?: TypographyProps;
   imageProps?: BoxProps;
-  props?: BoxProps;
 }
 
-export function TokenImage({ symbol, image, size = '20px', textProps, imageProps, props }: Props) {
+export function TokenImage(params: Props) {
+  const { symbol, image, size = '20px', textProps, imageProps, ...props } = params;
+
   return (
     <Box {...props} sx={mergeSx([{ display: 'flex', alignItems: 'center' }, props?.sx])}>
       {Array.isArray(image) ? (

@@ -11,13 +11,12 @@ import useSendUserOp from 'src/hooks/use-send-user-op';
 import { useAppSelector } from 'src/redux-slices/store';
 import { formatAddress } from 'src/services';
 
-interface Props {
+interface Props extends BoxProps {
   enoughConfirm: boolean;
   tempNewOwner: string;
-  props?: BoxProps;
 }
 
-export default function OwnerRecovery({ enoughConfirm, tempNewOwner, props }: Props) {
+export default function OwnerRecovery({ enoughConfirm, tempNewOwner, ...props }: Props) {
   const { ownerAddress } = useAppSelector((state) => state.user);
   const { guardianAddress, config } = useAppSelector((state) => state.guardian);
   const { hashList } = config;
@@ -76,7 +75,7 @@ export default function OwnerRecovery({ enoughConfirm, tempNewOwner, props }: Pr
                       <CopyIcon copyText={confirm.hash} />
                     </Box>
                   }
-                  props={{ sx: { mt: 2 } }}
+                  sx={{ mt: 2 }}
                 />
               );
             })}
@@ -85,7 +84,7 @@ export default function OwnerRecovery({ enoughConfirm, tempNewOwner, props }: Pr
             titleWidth="100px"
             title="New Owner"
             component={<TextField fullWidth value={tempNewOwner} InputProps={{ readOnly: true }} />}
-            props={{ sx: { mt: 1 } }}
+            sx={{ mt: 1 }}
           />
         </Box>
       ) : (

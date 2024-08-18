@@ -17,37 +17,37 @@ export default function Overview() {
             titleWidth="110px"
             title="Threshold"
             component={<TextField value={threshold} InputProps={{ readOnly: true }} />}
-            props={{ sx: { mt: 1 } }}
+            sx={{ mt: 1 }}
           />
           <TitleItem
             titleWidth="110px"
             title="Expire Period"
             component={<TextField value={expirePeriod} InputProps={{ readOnly: true }} />}
-            props={{ sx: { mt: 1 } }}
+            sx={{ mt: 1 }}
           />
           <TitleItem
             titleWidth="110px"
             title="Delay"
             component={<TextField value={delay} InputProps={{ readOnly: true }} />}
-            props={{ sx: { mt: 1 } }}
+            sx={{ mt: 1 }}
           />
           <TitleItem
             titleWidth="110px"
             title="Number of Guardians"
             component={<TextField value={guardianCount} InputProps={{ readOnly: true }} />}
-            props={{ sx: { mt: 1 } }}
+            sx={{ mt: 1 }}
           />
           <TitleItem
             titleWidth="110px"
             title="Max Guardians"
             component={<TextField value={maxGuardians} InputProps={{ readOnly: true }} />}
-            props={{ sx: { mt: 1 } }}
+            sx={{ mt: 1 }}
           />
           <TitleItem
             titleWidth="110px"
             title="Current increment"
             component={<TextField value={increment} InputProps={{ readOnly: true }} />}
-            props={{ sx: { mt: 1 } }}
+            sx={{ mt: 1 }}
           />
         </Grid>
         <Grid item md={5} sm={12}>
@@ -63,7 +63,7 @@ export default function Overview() {
                       <CopyIcon copyText={hash} />
                     </Box>
                   }
-                  props={{ sx: { mt: 1 } }}
+                  sx={{ mt: 1 }}
                 />
               </Box>
             );
