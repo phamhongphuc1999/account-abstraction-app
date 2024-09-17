@@ -58,7 +58,6 @@ export default function ConfirmMnemonic() {
   const { mnemonic } = data;
   const { importFn } = useRecoverHashWallet();
   const [correctMnemonic, setCorrectMnemonic] = useState<Array<string>>([]);
-  // const [validatedMnemonic, setValidatedMnemonic] = useState(randomList(mnemonic.split(' '), 20));
   const [validatedMnemonic, setValidatedMnemonic] = useState(mnemonic.split(' '));
 
   function addMnemonic(word: string, _index: number) {

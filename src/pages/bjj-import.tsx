@@ -3,6 +3,7 @@ import { buildBabyjub, buildEddsa } from 'circomlibjs';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BaseForm from 'src/components/form/base-form';
+import ReactSeo from 'src/components/ReactSeo';
 import { TitleTextFieldItem } from 'src/components/title-item';
 import HashRegisterProvider, { useHashRegisterSelector } from 'src/context/hash-register-context';
 import { useLocalStorageContext } from 'src/local-storage-connection/local-storage-context';
@@ -39,20 +40,28 @@ function BJJImportLayout(props: BoxProps) {
 
   return (
     <Box {...props}>
-      {step == 1 && <PasswordForm step={1} />}
+      {step == 1 && (
+        <PasswordForm
+          step={1}
+          seoProps={{ title: 'Guardian Key Import | Password', isShowDefault: false }}
+        />
+      )}
       {step == 2 && (
-        <BaseForm events={{ onExecute: _buildBabyJub }}>
-          <TitleTextFieldItem
-            titleWidth="95px"
-            title="Private Key"
-            textFieldProps={{
-              fullWidth: true,
-              value: privateKey,
-              onChange: (event) => setPrivateKey(event.target.value),
-            }}
-            sx={{ mt: 1 }}
-          />
-        </BaseForm>
+        <>
+          <ReactSeo title="Guardian Key Import | Private Key" />
+          <BaseForm events={{ onExecute: _buildBabyJub }}>
+            <TitleTextFieldItem
+              titleWidth="95px"
+              title="Private Key"
+              textFieldProps={{
+                fullWidth: true,
+                value: privateKey,
+                onChange: (event) => setPrivateKey(event.target.value),
+              }}
+              sx={{ mt: 1 }}
+            />
+          </BaseForm>
+        </>
       )}
     </Box>
   );
@@ -61,7 +70,7 @@ function BJJImportLayout(props: BoxProps) {
 export default function BJJImport() {
   return (
     <HashRegisterProvider>
-      <Typography variant="subtitle1">Hash Import</Typography>
+      <Typography variant="subtitle1">Guardian Key Import</Typography>
       <BJJImportLayout sx={{ mt: 2 }} />
     </HashRegisterProvider>
   );

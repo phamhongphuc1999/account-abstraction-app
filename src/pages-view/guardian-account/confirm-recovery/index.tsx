@@ -16,6 +16,7 @@ import {
 } from 'src/services/circom-utils';
 import { useBabyJub } from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
 import SubmitProof from './submit-proof';
+import { toast } from 'react-toastify';
 
 export default function ConfirmRecovery() {
   const { config } = useAppSelector((state) => state.guardian);
@@ -39,6 +40,7 @@ export default function ConfirmRecovery() {
         }
       } catch (error) {
         console.error(error);
+        toast.error(String(error));
       }
     }
   }, [jubAccount, increment, pacPubKey]);

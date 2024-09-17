@@ -1,4 +1,5 @@
 import { Box, useTheme } from '@mui/material';
+import ReactSeo from 'src/components/ReactSeo';
 import ImportToken from 'src/pages-view/home/import-token';
 import SignMessage from 'src/pages-view/home/sign-message';
 import TokenList from 'src/pages-view/home/token-list';
@@ -9,6 +10,7 @@ export default function Home() {
 
   return (
     <>
+      <ReactSeo title="Home" />
       <TokenList />
       <Box
         sx={{

@@ -5,7 +5,7 @@ import BJJRegisterView from 'src/pages-view/bjj-register-view';
 export default function BJJRegister() {
   return (
     <HashRegisterProvider>
-      <Typography variant="subtitle1">Hash Register</Typography>
+      <Typography variant="subtitle1">Guardian Key Register</Typography>
       <BJJRegisterView sx={{ mt: 2 }} />
     </HashRegisterProvider>
   );

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import CopyIcon from 'src/components/icons/copy-icon';
 import TitleItem from 'src/components/title-item';
 import { CssDivide } from 'src/components/utils';
+import { HARDCODE_PASSWORD } from 'src/configs/constance';
 import { useLocalStorageContext } from 'src/local-storage-connection/local-storage-context';
 import { convertStringToUint8, convertUint8ToString } from 'src/services';
 import { generatePoseidonHash } from 'src/services/circom-utils';
@@ -22,7 +23,7 @@ export default function BJJDashboard() {
       const _metadata = await indexedStorage.hashWalletMetadata.get('babyjub');
       if (_metadata) {
         const { mnemonic } = _metadata;
-        const realMnemonic = await decodeMnemonic(mnemonic, '1111');
+        const realMnemonic = await decodeMnemonic(mnemonic, HARDCODE_PASSWORD);
         const _privateKey = convertStringToUint8(realMnemonic);
         const eddsa = await buildEddsa();
         const babyJub = await buildBabyjub();
@@ -87,7 +88,7 @@ export default function BJJDashboard() {
           />
         }
       />
-      <CssDivide sx={{ mt: 2 }} />
+      <CssDivide sx={{ marginTop: 2, marginBottom: 2 }} />
       <BabyJubSignature babyJubAccount={jubAccount} />
     </>
   ) : (

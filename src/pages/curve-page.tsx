@@ -1,6 +1,8 @@
 import { Box, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import ReactSeo from 'src/components/ReactSeo';
+import { HARDCODE_PASSWORD } from 'src/configs/constance';
 import { SignatureScheme } from 'src/global';
 import useRecoverHashWallet from 'src/hooks/use-recover-hash-wallet';
 import CurveDashboard from 'src/pages-view/curve-page/curve-dashboard';
@@ -23,11 +25,12 @@ export default function CurvePage() {
   }
 
   useEffect(() => {
-    if (!keyring) recoverFn(schema, '1111');
+    if (!keyring) recoverFn(schema, HARDCODE_PASSWORD);
   }, [keyring, recoverFn, schema]);
 
   return (
     <>
+      <ReactSeo title="Curve" />
       <Button variant="outlined" onClick={onSchemaChange}>
         {schema}
       </Button>

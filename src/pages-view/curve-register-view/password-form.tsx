@@ -1,14 +1,16 @@
 import { Button, Typography } from '@mui/material';
 import { useState } from 'react';
 import BaseForm from 'src/components/form/base-form';
+import ReactSeo, { ReactSeoProps } from 'src/components/ReactSeo';
 import { TitleTextFieldItem } from 'src/components/title-item';
 import { useHashRegisterContext } from 'src/context/hash-register-context';
 
 interface Props {
   step?: number;
+  seoProps?: ReactSeoProps;
 }
 
-export default function PasswordForm({ step = 2 }: Props) {
+export default function PasswordForm({ step = 2, seoProps }: Props) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const { fn } = useHashRegisterContext();
@@ -27,6 +29,7 @@ export default function PasswordForm({ step = 2 }: Props) {
 
   return (
     <>
+      {seoProps && <ReactSeo {...seoProps} />}
       <Typography variant="subtitle1">{`Step ${step}: Create your Password`}</Typography>
       <BaseForm
         component={{

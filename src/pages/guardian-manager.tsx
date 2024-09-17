@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import ReactSeo from 'src/components/ReactSeo';
 import GuardianConfig from 'src/pages-view/guardian-manager/guardian-config';
 import GuardianDashboard from 'src/pages-view/guardian-manager/guardian-dashboard';
 import GuardianDeployment from 'src/pages-view/guardian-manager/guardian-deployment';
@@ -9,6 +10,7 @@ export default function GuardianManager() {
 
   return (
     <>
+      <ReactSeo title="Guardian Manager" />
       <Typography variant="subtitle1">Guardians Manager</Typography>
       {deployType == 'initial' && configType == 'initial' && (
         <Typography>

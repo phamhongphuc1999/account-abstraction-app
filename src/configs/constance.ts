@@ -2,6 +2,7 @@ import { ZeroAddress } from 'ethers';
 import BSC from 'src/assets/images/tokens/bnb.svg';
 import { GasOverheads, UserOperation } from 'src/user-operation-service/type';
 
+export const HARDCODE_PASSWORD = '1111';
 export const LS = {
   THEME: 'theme',
 };

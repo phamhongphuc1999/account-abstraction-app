@@ -3,6 +3,7 @@ import { randomBytes } from '@noble/hashes/utils';
 import { buildBabyjub, buildEddsa } from 'circomlibjs';
 import { useState } from 'react';
 import CopyIcon from 'src/components/icons/copy-icon';
+import ReactSeo from 'src/components/ReactSeo';
 import TitleItem from 'src/components/title-item';
 import { useHashRegisterSelector } from 'src/context/hash-register-context';
 import { useLocalStorageContext } from 'src/local-storage-connection/local-storage-context';
@@ -40,6 +41,7 @@ export default function RevealPrivateKey() {
 
   return (
     <>
+      <ReactSeo title="Guardian Key Register | Reveal Private Key" isShowDefault={false} />
       <Typography variant="subtitle1">Step 2: Reveal babyjubjub private key</Typography>
       <TitleItem
         sx={{ mt: 2 }}

@@ -20,7 +20,7 @@ export default function BJJSignature({ babyJubAccount }: Props) {
   }
 
   return (
-    <BaseForm events={{ onExecute: onSign }}>
+    <BaseForm metadata={{ executeTitle: 'Sign' }} events={{ onExecute: onSign }}>
       <TitleTextFieldItem
         titleWidth="80px"
         title="Message"

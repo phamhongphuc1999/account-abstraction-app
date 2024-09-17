@@ -26,6 +26,12 @@ bun typechain:build
 bun dev
 ```
 
+## Note
+
+- My app is just temporary version and personally i am having many thing must be handled. Below, i list some important note if you wish run my app
+
+- 1. While i are creating your guardian account, please ensure your password is 1111. Please don't be wonder, i just hardcode password be 1111.
+
 ## Reference
 
 - https://docs.google.com/document/d/1-W-X-rUGfvzDWIc6IzKMRQ5EBXeRBg5C2-S7Qhk1pLU/edit?usp=sharing
