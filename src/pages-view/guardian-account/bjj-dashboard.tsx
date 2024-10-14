@@ -60,7 +60,9 @@ export default function BJJDashboard() {
           <TextField
             fullWidth
             value={_privateKey}
-            InputProps={{ readOnly: true, endAdornment: <CopyIcon copyText={_privateKey} /> }}
+            slotProps={{
+              input: { readOnly: true, endAdornment: <CopyIcon copyText={_privateKey} /> },
+            }}
           />
         }
       />
@@ -72,7 +74,9 @@ export default function BJJDashboard() {
           <TextField
             fullWidth
             value={pacPubKey}
-            InputProps={{ readOnly: true, endAdornment: <CopyIcon copyText={pacPubKey} /> }}
+            slotProps={{
+              input: { readOnly: true, endAdornment: <CopyIcon copyText={pacPubKey} /> },
+            }}
           />
         }
       />
@@ -84,7 +88,9 @@ export default function BJJDashboard() {
           <TextField
             fullWidth
             value={poseidonPubKey}
-            InputProps={{ readOnly: true, endAdornment: <CopyIcon copyText={poseidonPubKey} /> }}
+            slotProps={{
+              input: { readOnly: true, endAdornment: <CopyIcon copyText={poseidonPubKey} /> },
+            }}
           />
         }
       />

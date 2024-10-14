@@ -79,12 +79,18 @@ export default function GuardianAddresses({ value, events, ...props }: Props) {
             value={addressValue}
             onChange={(event) => setAddressValue(event.target.value)}
             fullWidth
-            InputProps={{
-              endAdornment: (
-                <Typography color="primary.main" sx={{ cursor: 'pointer' }} onClick={() => onAdd()}>
-                  Add
-                </Typography>
-              ),
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <Typography
+                    color="primary.main"
+                    sx={{ cursor: 'pointer' }}
+                    onClick={() => onAdd()}
+                  >
+                    Add
+                  </Typography>
+                ),
+              },
             }}
           />
         }

@@ -48,9 +48,11 @@ export default function CurveSignature({ keyring, ...props }: Props) {
             title="Result"
             textFieldProps={{
               fullWidth: true,
-              InputProps: {
-                readOnly: true,
-                endAdornment: result.length > 0 ? <CopyIcon copyText={result} /> : <></>,
+              slotProps: {
+                input: {
+                  readOnly: true,
+                  endAdornment: result.length > 0 ? <CopyIcon copyText={result} /> : <></>,
+                },
               },
               value: result,
             }}

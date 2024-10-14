@@ -44,20 +44,22 @@ export default function RevealMnemonic() {
         <TextField
           fullWidth
           value={mnemonic}
-          InputProps={{
-            readOnly: true,
-            endAdornment:
-              mnemonic.length > 0 ? (
-                <CopyIcon copyText={mnemonic} />
-              ) : (
-                <Button
-                  disabled={mnemonic.length > 0}
-                  variant="outlined"
-                  onClick={onCreateMnemonic}
-                >
-                  Create mnemonic
-                </Button>
-              ),
+          slotProps={{
+            input: {
+              readOnly: true,
+              endAdornment:
+                mnemonic.length > 0 ? (
+                  <CopyIcon copyText={mnemonic} />
+                ) : (
+                  <Button
+                    disabled={mnemonic.length > 0}
+                    variant="outlined"
+                    onClick={onCreateMnemonic}
+                  >
+                    Create mnemonic
+                  </Button>
+                ),
+            },
           }}
           maxRows={4}
         />

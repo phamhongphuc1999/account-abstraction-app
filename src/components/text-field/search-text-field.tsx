@@ -5,7 +5,7 @@ export function SearchTextField(props: TextFieldProps) {
   return (
     <TextField
       {...props}
-      InputProps={{ startAdornment: <SearchOutlined sx={{ color: 'text.secondary' }} /> }}
+      slotProps={{ input: { startAdornment: <SearchOutlined sx={{ color: 'text.secondary' }} /> } }}
     />
   );
 }

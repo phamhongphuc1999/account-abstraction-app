@@ -83,7 +83,9 @@ export default function OwnerRecovery({ enoughConfirm, tempNewOwner, ...props }:
           <TitleItem
             titleWidth="100px"
             title="New Owner"
-            component={<TextField fullWidth value={tempNewOwner} InputProps={{ readOnly: true }} />}
+            component={
+              <TextField fullWidth value={tempNewOwner} slotProps={{ input: { readOnly: true } }} />
+            }
             sx={{ mt: 1 }}
           />
         </Box>

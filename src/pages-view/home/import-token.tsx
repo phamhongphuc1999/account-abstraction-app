@@ -93,13 +93,21 @@ export default function ImportToken(props: BoxProps) {
           <TitleTextFieldItem
             titleWidth="80px"
             title="Decimal"
-            textFieldProps={{ fullWidth: true, value: decimal, InputProps: { readOnly: true } }}
+            textFieldProps={{
+              fullWidth: true,
+              value: decimal,
+              slotProps: { input: { readOnly: true } },
+            }}
             sx={{ mt: 1 }}
           />
           <TitleTextFieldItem
             titleWidth="80px"
             title="Symbol"
-            textFieldProps={{ fullWidth: true, value: symbol, InputProps: { readOnly: true } }}
+            textFieldProps={{
+              fullWidth: true,
+              value: symbol,
+              slotProps: { input: { readOnly: true } },
+            }}
             sx={{ mt: 1 }}
           />
           <TitleTextFieldItem
@@ -108,7 +116,7 @@ export default function ImportToken(props: BoxProps) {
             textFieldProps={{
               fullWidth: true,
               value: ownerBalance,
-              InputProps: { readOnly: true },
+              slotProps: { input: { readOnly: true } },
             }}
             sx={{ mt: 1 }}
           />
@@ -118,7 +126,7 @@ export default function ImportToken(props: BoxProps) {
             textFieldProps={{
               fullWidth: true,
               value: accountBalance,
-              InputProps: { readOnly: true },
+              slotProps: { input: { readOnly: true } },
             }}
             sx={{ mt: 1 }}
           />

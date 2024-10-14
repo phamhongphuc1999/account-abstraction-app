@@ -1,4 +1,4 @@
-import { Box, Grid, TextField, Typography } from '@mui/material';
+import { Box, Grid2, TextField, Typography } from '@mui/material';
 import CopyIcon from 'src/components/icons/copy-icon';
 import TitleItem from 'src/components/title-item';
 import { useAppSelector } from 'src/redux-slices/store';
@@ -11,46 +11,48 @@ export default function Overview() {
   return (
     <Box>
       <Typography>Overview</Typography>
-      <Grid container>
-        <Grid item md={7} sm={12}>
+      <Grid2 container>
+        <Grid2 size={{ md: 7, sm: 12 }}>
           <TitleItem
             titleWidth="110px"
             title="Threshold"
-            component={<TextField value={threshold} InputProps={{ readOnly: true }} />}
+            component={<TextField value={threshold} slotProps={{ input: { readOnly: true } }} />}
             sx={{ mt: 1 }}
           />
           <TitleItem
             titleWidth="110px"
             title="Expire Period"
-            component={<TextField value={expirePeriod} InputProps={{ readOnly: true }} />}
+            component={<TextField value={expirePeriod} slotProps={{ input: { readOnly: true } }} />}
             sx={{ mt: 1 }}
           />
           <TitleItem
             titleWidth="110px"
             title="Delay"
-            component={<TextField value={delay} InputProps={{ readOnly: true }} />}
+            component={<TextField value={delay} slotProps={{ input: { readOnly: true } }} />}
             sx={{ mt: 1 }}
           />
           <TitleItem
             titleWidth="110px"
             title="Number of Guardians"
-            component={<TextField value={guardianCount} InputProps={{ readOnly: true }} />}
+            component={
+              <TextField value={guardianCount} slotProps={{ input: { readOnly: true } }} />
+            }
             sx={{ mt: 1 }}
           />
           <TitleItem
             titleWidth="110px"
             title="Max Guardians"
-            component={<TextField value={maxGuardians} InputProps={{ readOnly: true }} />}
+            component={<TextField value={maxGuardians} slotProps={{ input: { readOnly: true } }} />}
             sx={{ mt: 1 }}
           />
           <TitleItem
             titleWidth="110px"
             title="Current increment"
-            component={<TextField value={increment} InputProps={{ readOnly: true }} />}
+            component={<TextField value={increment} slotProps={{ input: { readOnly: true } }} />}
             sx={{ mt: 1 }}
           />
-        </Grid>
-        <Grid item md={5} sm={12}>
+        </Grid2>
+        <Grid2 size={{ md: 5, sm: 12 }}>
           {hashList.map((hash, index) => {
             return (
               <Box key={hash}>
@@ -68,8 +70,8 @@ export default function Overview() {
               </Box>
             );
           })}
-        </Grid>
-      </Grid>
+        </Grid2>
+      </Grid2>
     </Box>
   );
 }

@@ -51,15 +51,17 @@ export default function RevealPrivateKey() {
           <TextField
             value={privateKey ? Buffer.from(privateKey).toString('hex') : ''}
             fullWidth
-            InputProps={{
-              readOnly: true,
-              endAdornment: privateKey ? (
-                <CopyIcon copyText={Buffer.from(privateKey).toString('hex')} />
-              ) : (
-                <Button variant="contained" onClick={onCreatePrivateKey}>
-                  Create
-                </Button>
-              ),
+            slotProps={{
+              input: {
+                readOnly: true,
+                endAdornment: privateKey ? (
+                  <CopyIcon copyText={Buffer.from(privateKey).toString('hex')} />
+                ) : (
+                  <Button variant="contained" onClick={onCreatePrivateKey}>
+                    Create
+                  </Button>
+                ),
+              },
             }}
           />
         }

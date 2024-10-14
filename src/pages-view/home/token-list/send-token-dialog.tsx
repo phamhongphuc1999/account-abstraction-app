@@ -84,7 +84,7 @@ export default function SendTokenDialog({ open, type, token, onClose }: Props) {
           component={
             <TextField
               fullWidth
-              InputProps={{ readOnly: true }}
+              slotProps={{ input: { readOnly: true } }}
               value={isAddress(token.address) ? formatAddress(token.address, 6) : 'Native Token'}
             />
           }
@@ -98,12 +98,14 @@ export default function SendTokenDialog({ open, type, token, onClose }: Props) {
               type="float"
               value={amount}
               onChange={(event) => onAmountChange(event.target.value)}
-              InputProps={{
-                endAdornment: (
-                  <Typography color="primary.main" sx={{ cursor: 'pointer' }} onClick={onMax}>
-                    Max
-                  </Typography>
-                ),
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <Typography color="primary.main" sx={{ cursor: 'pointer' }} onClick={onMax}>
+                      Max
+                    </Typography>
+                  ),
+                },
               }}
             />
           }
