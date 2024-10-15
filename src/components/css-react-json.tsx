@@ -11,7 +11,7 @@ export default function CssReactJson({ jsonProps, ...props }: Props) {
   return (
     <Box
       {...props}
-      sx={mergeSx([
+      sx={mergeSx(
         {
           span: { color: '#ffffff !important' },
           '& .string-value': { color: '#1C8CF3 !important' },
@@ -21,8 +21,8 @@ export default function CssReactJson({ jsonProps, ...props }: Props) {
           '& .collapsed-icon': { svg: { color: '#1C8CF3 !important' } },
           '& .copy-icon': { svg: { color: '#1C8CF3 !important' } },
         },
-        props?.sx,
-      ])}
+        props?.sx
+      )}
     >
       <ReactJson {...jsonProps} />
     </Box>

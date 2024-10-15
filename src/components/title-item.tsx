@@ -24,10 +24,10 @@ export default function TitleItem({ title, titleWidth = '55px', component, ...pr
   return (
     <Box
       {...props}
-      sx={mergeSx([
+      sx={mergeSx(
         { display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
-        props?.sx,
-      ])}
+        props?.sx
+      )}
     >
       {title && (
         <Box sx={{ width: titleWidth }}>

@@ -74,10 +74,10 @@ export default function BaseSelector<T = unknown>(params: BaseCssSelectProps<T>)
     <>
       <Box
         {...props}
-        sx={mergeSx([cls.root, props?.sx])}
+        sx={mergeSx(cls.root, props?.sx)}
         onClick={(event) => setAnchorEl(event.currentTarget)}
       >
-        <Box {...selectedItemProps} sx={mergeSx([cls.show, selectedItemProps?.sx])}>
+        <Box {...selectedItemProps} sx={mergeSx(cls.show, selectedItemProps?.sx)}>
           {selectedItem ? (
             <>{fn.selectedItemFn(selectedItem)}</>
           ) : (

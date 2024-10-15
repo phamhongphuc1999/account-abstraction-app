@@ -35,7 +35,7 @@ export default function ExploreIcon({ hash, config, iconProps }: Props) {
       )}
       <Launch
         {...iconProps}
-        sx={mergeSx([{ fontSize: '14px', color: 'primary.main', ml: 0.5 }, iconProps?.sx])}
+        sx={mergeSx({ fontSize: '14px', color: 'primary.main', ml: 0.5 }, iconProps?.sx)}
       />
     </Link>
   );

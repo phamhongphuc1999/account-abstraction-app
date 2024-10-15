@@ -75,10 +75,10 @@ export default function NetworkButton(props: ButtonProps) {
         {...props}
         color="primary"
         variant="outlined"
-        sx={mergeSx([
+        sx={mergeSx(
           { minWidth: '150px', '&.Mui-disabled': { color: '#7994C1', borderColor: '#7994C1' } },
-          props?.sx,
-        ])}
+          props?.sx
+        )}
         onClick={() => onNetworkClick()}
         startIcon={loading ? <CircularProgress size="14px" /> : <></>}
         disabled={loading}

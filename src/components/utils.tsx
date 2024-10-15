@@ -12,7 +12,7 @@ export function CssDivide(props: BoxProps) {
   return (
     <Box
       {...props}
-      sx={mergeSx([{ width: '100%', height: '2px', background: theme.palette.background.primary }])}
+      sx={mergeSx({ width: '100%', height: '2px', background: theme.palette.background.primary })}
     />
   );
 }

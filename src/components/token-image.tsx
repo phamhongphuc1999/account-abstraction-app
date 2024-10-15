@@ -15,7 +15,7 @@ export function TokenImage(params: Props) {
   const { symbol, image, size = '20px', textProps, imageProps, ...props } = params;
 
   return (
-    <Box {...props} sx={mergeSx([{ display: 'flex', alignItems: 'center' }, props?.sx])}>
+    <Box {...props} sx={mergeSx({ display: 'flex', alignItems: 'center' }, props?.sx)}>
       {Array.isArray(image) ? (
         <Box
           sx={{
@@ -28,7 +28,7 @@ export function TokenImage(params: Props) {
         >
           <MuiImage
             src={image[1]}
-            sx={mergeSx([
+            sx={mergeSx(
               {
                 position: 'absolute',
                 marginRight: 0,
@@ -36,21 +36,21 @@ export function TokenImage(params: Props) {
                 right: 0,
                 width: `calc(${size} / 1.4142)`,
               },
-              imageProps?.sx,
-            ])}
+              imageProps?.sx
+            )}
           />
           <MuiImage
             src={image[0]}
-            sx={mergeSx([
+            sx={mergeSx(
               { position: 'absolute', marginRight: 0, top: 0, width: `calc(${size} / 1.4142)` },
-              imageProps?.sx,
-            ])}
+              imageProps?.sx
+            )}
           />
         </Box>
       ) : (
         <MuiImage
           src={image}
-          sx={mergeSx([{ width: size, marginRight: '0.25rem' }, imageProps?.sx])}
+          sx={mergeSx({ width: size, marginRight: '0.25rem' }, imageProps?.sx)}
         />
       )}
       {symbol && <Typography {...textProps}>{symbol}</Typography>}

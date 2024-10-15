@@ -22,7 +22,7 @@ export default function BaseActionForm(params: Props) {
     <Box {...props}>
       <Box
         {...boxIconProps}
-        sx={mergeSx([
+        sx={mergeSx(
           {
             display: 'flex',
             alignItems: 'center',
@@ -32,8 +32,8 @@ export default function BaseActionForm(params: Props) {
             padding: 1,
             cursor: 'pointer',
           },
-          boxIconProps?.sx,
-        ])}
+          boxIconProps?.sx
+        )}
       >
         <IconComponent sx={{ fontSize: '14px' }} />
         <Typography sx={{ fontSize: '16px', cursor: 'pointer' }}>{title}</Typography>

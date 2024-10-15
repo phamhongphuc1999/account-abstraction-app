@@ -29,7 +29,7 @@ export default function GuardianTransactionTypeIcon({ type, props }: Props) {
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Icon {...props} sx={mergeSx([{ mr: 1 }, props?.sx])} />
+      <Icon {...props} sx={mergeSx({ mr: 1 }, props?.sx)} />
       <Typography>{text}</Typography>
     </Box>
   );
@@ -46,7 +46,7 @@ export function GuardianTransactionExecutedType({ type, props }: Props) {
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Icon {...props} sx={mergeSx([{ mr: 1 }, props?.sx])} />
+      <Icon {...props} sx={mergeSx({ mr: 1 }, props?.sx)} />
       <Typography>{text}</Typography>
     </Box>
   );

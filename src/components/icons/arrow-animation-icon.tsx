@@ -16,12 +16,12 @@ export function ArrowAnimationIcon({ isTransform, icon, props }: ArrowAnimationI
   return (
     <Icon
       {...props}
-      sx={mergeSx([
+      sx={mergeSx(
         isTransform
           ? { transform: 'rotate(180deg)', transition: '0.5s' }
           : { transform: 'rotate(0deg)', transition: '0.5s' },
-        props?.sx,
-      ])}
+        props?.sx
+      )}
     />
   );
 }

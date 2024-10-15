@@ -71,7 +71,7 @@ export function InfoIcon({ title, iconProps, props }: InfoIconProps) {
   return (
     <Tooltip title={title} {...props}>
       <IconButton>
-        <InfoOutlined {...iconProps} sx={mergeSx([iconProps?.sx, { fontSize: '14px' }])} />
+        <InfoOutlined {...iconProps} sx={mergeSx(iconProps?.sx, { fontSize: '14px' })} />
       </IconButton>
     </Tooltip>
   );

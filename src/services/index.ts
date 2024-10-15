@@ -128,7 +128,7 @@ export function convertBabyJubSignature(signature: JubSignatureType) {
   return { raw: convertSign(raw), p: convertUint8ToString(p), u: convertSign(u) };
 }
 
-export function mergeSx(sxs: Array<boolean | SxProps<Theme> | undefined>): SxProps<Theme> {
+export function mergeSx(...sxs: Array<boolean | SxProps<Theme> | undefined>): SxProps<Theme> {
   let result: Array<
     boolean | SystemStyleObject<Theme> | ((theme: Theme) => SystemStyleObject<Theme>)
   > = [];

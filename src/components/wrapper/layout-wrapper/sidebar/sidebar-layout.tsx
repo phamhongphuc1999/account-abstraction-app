@@ -49,7 +49,7 @@ export default function SidebarLayout(props: BoxProps) {
   const location = useLocation();
 
   return (
-    <Box {...props} sx={mergeSx([cls.box, props?.sx])}>
+    <Box {...props} sx={mergeSx(cls.box, props?.sx)}>
       <List sx={{ padding: 0, width: '100%' }}>
         {config.map((item) => {
           const isMatch = item.exact
