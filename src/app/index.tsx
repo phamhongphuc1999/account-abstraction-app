@@ -5,6 +5,7 @@ import CurvePage from 'src/pages/curve-page';
 import CurveRegister from 'src/pages/curve-register';
 import GuardianAccount from 'src/pages/guardian-account';
 import GuardianManager from 'src/pages/guardian-manager';
+import Utils from 'src/pages/utils';
 import Home from '../pages/home';
 import ProviderApp from './provider-app';
 
@@ -44,6 +45,11 @@ export default function App() {
         { path: 'manager', element: <GuardianManager /> },
         { path: 'account', element: <GuardianAccount /> },
       ],
+    },
+    {
+      path: '/utils',
+      element: <ProviderApp mode="wallet" />,
+      children: [{ path: '', element: <Utils /> }],
     },
   ]);
 }

@@ -120,7 +120,7 @@ export default function ThemeWrapper({ children }: Props) {
           primary: getColor(themeMode, '#E5E5E5', '#132741'),
         },
         gradient: {
-          main: 'linear-gradient(180deg, #B2CEEB 0%, #e5e9ed00 100%)',
+          main: '#1C8CF3',
         },
         primary: {
           light: '#ffffff',
@@ -353,7 +353,6 @@ export default function ThemeWrapper({ children }: Props) {
             styleOverrides: {
               root: {
                 '&:hover': {
-                  // color: theme.palette.text.header,
                   '.MuiTableSortLabel-icon': {
                     opacity: 1,
                   },

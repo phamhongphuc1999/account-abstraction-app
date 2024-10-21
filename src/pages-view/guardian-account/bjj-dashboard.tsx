@@ -1,37 +1,18 @@
 import { TextField } from '@mui/material';
-import { buildBabyjub, buildEddsa } from 'circomlibjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import CopyIcon from 'src/components/icons/copy-icon';
 import TitleItem from 'src/components/title-item';
 import { CssDivide } from 'src/components/utils';
-import { HARDCODE_PASSWORD } from 'src/configs/constance';
-import { useLocalStorageContext } from 'src/local-storage-connection/local-storage-context';
-import { convertStringToUint8, convertUint8ToString } from 'src/services';
+import useRecoverBabyJubjubAccount from 'src/hooks/use-recover-baby-jubjub-account';
+import { convertUint8ToString } from 'src/services';
 import { generatePoseidonHash } from 'src/services/circom-utils';
-import { decodeMnemonic } from 'src/services/encrypt';
-import BJJAccount from 'src/wallet-connection/hash-system-wallet/hash-account/bjj-account';
 import { useBabyJub } from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
 import BabyJubSignature from './bjj-signature';
 
 export default function BJJDashboard() {
-  const { jubAccount, pacPubKey, fn } = useBabyJub();
-  const { indexedStorage } = useLocalStorageContext();
+  const { jubAccount, pacPubKey } = useBabyJub();
   const [poseidonPubKey, setPoseidonPubKey] = useState('');
-
-  const _recover = useCallback(async () => {
-    if (indexedStorage && !jubAccount) {
-      const _metadata = await indexedStorage.hashWalletMetadata.get('babyjub');
-      if (_metadata) {
-        const { mnemonic } = _metadata;
-        const realMnemonic = await decodeMnemonic(mnemonic, HARDCODE_PASSWORD);
-        const _privateKey = convertStringToUint8(realMnemonic);
-        const eddsa = await buildEddsa();
-        const babyJub = await buildBabyjub();
-        const _account = new BJJAccount(eddsa, babyJub, _privateKey);
-        fn.setBabyJubAccount(_account);
-      }
-    }
-  }, [indexedStorage, fn, jubAccount]);
+  useRecoverBabyJubjubAccount();
 
   const _getPoseidonKey = useCallback(async () => {
     setPoseidonPubKey(await generatePoseidonHash(pacPubKey, 'hex'));
@@ -41,10 +22,6 @@ export default function BJJDashboard() {
     if (jubAccount) return convertUint8ToString(jubAccount.privateKey);
     else return '';
   }, [jubAccount]);
-
-  useEffect(() => {
-    _recover();
-  }, [_recover]);
 
   useEffect(() => {
     _getPoseidonKey();

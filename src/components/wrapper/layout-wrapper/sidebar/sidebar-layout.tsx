@@ -41,6 +41,7 @@ const config: Array<{ name: string; path: string; exact: boolean }> = [
   { name: 'Recovery Manager', path: '/guardian/manager', exact: true },
   { name: 'Guardian Account', path: '/guardian/account', exact: true },
   { name: 'Curve', path: '/curve-page', exact: false },
+  { name: 'Utils', path: '/utils', exact: true },
 ];
 
 export default function SidebarLayout(props: BoxProps) {
