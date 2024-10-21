@@ -4,7 +4,7 @@ import CssReactJson from 'src/components/css-react-json';
 import DownloadBox from 'src/components/DownloadBox';
 import BaseForm from 'src/components/form/base-form';
 import TitleItem, { TitleTextFieldItem } from 'src/components/title-item';
-import { generateWitness } from 'src/services/circom-utils';
+import { extendNum, generateWitness } from 'src/services/circom-utils';
 import { useBabyJub } from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
 
 export default function GenerateWitness() {
@@ -16,7 +16,7 @@ export default function GenerateWitness() {
 
   async function _generate() {
     if (jubAccount && message.length > 0) {
-      const { A, R8, S, msg } = await generateWitness(message, jubAccount.privateKey);
+      const { A, R8, S, msg } = await generateWitness(extendNum(message), jubAccount.privateKey);
       setWitness({
         A: A.map((item) => item.toString()),
         R8: R8.map((item) => item.toString()),
