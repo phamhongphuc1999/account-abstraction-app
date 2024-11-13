@@ -6,6 +6,7 @@ export interface GuardianSliceType {
   guardianAddress: string;
   ownTransactions: { [data: string]: GuardianOwnTransactionType };
   config: {
+    _tempNewOwner: string;
     threshold: number;
     guardianCount: number;
     maxGuardians: number;
@@ -23,6 +24,7 @@ const initialState: GuardianSliceType = {
   guardianAddress: '',
   ownTransactions: {},
   config: {
+    _tempNewOwner: '',
     threshold: 0,
     guardianCount: 0,
     maxGuardians: 0,

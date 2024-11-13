@@ -1,5 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useCallback, useState } from 'react';
+import { toast } from 'react-toastify';
 import { Groth16Proof } from 'snarkjs';
 import CssReactJson from 'src/components/css-react-json';
 import CopyIcon from 'src/components/icons/copy-icon';
@@ -8,19 +9,18 @@ import { ProofCallDataType } from 'src/global';
 import { useAppSelector } from 'src/redux-slices/store';
 import { formatAddress } from 'src/services';
 import {
-  extendNum,
   generateCalldata,
   generatePoseidonHash,
   generateProof,
+  makeVerifiedInput,
   verifyProof,
 } from 'src/services/circom-utils';
 import { useBabyJub } from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
 import SubmitProof from './submit-proof';
-import { toast } from 'react-toastify';
 
 export default function ConfirmRecovery() {
   const { config } = useAppSelector((state) => state.guardian);
-  const { increment } = config;
+  const { increment, _tempNewOwner } = config;
   const [hash, setHash] = useState('');
   const [proof, setProof] = useState<Groth16Proof | null>(null);
   const [callDataProof, setCallDataProof] = useState<ProofCallDataType | null>(null);
@@ -31,7 +31,10 @@ export default function ConfirmRecovery() {
       try {
         const _hash = await generatePoseidonHash(pacPubKey, 'hex');
         setHash(_hash);
-        const _proof = await generateProof(extendNum(increment.toString()), jubAccount.privateKey);
+        const _proof = await generateProof(
+          makeVerifiedInput(_tempNewOwner, increment.toString()),
+          jubAccount.privateKey
+        );
         setProof(_proof.proof);
         const verify = await verifyProof(_proof.proof, _proof.publicSignals);
         if (verify) {
@@ -43,7 +46,7 @@ export default function ConfirmRecovery() {
         toast.error(String(error));
       }
     }
-  }, [jubAccount, increment, pacPubKey]);
+  }, [jubAccount, increment, pacPubKey, _tempNewOwner]);
 
   return (
     <Box>

@@ -4,6 +4,7 @@ import { BigNumberish, InterfaceAbi, JsonRpcProvider, JsonRpcSigner } from 'ethe
 
 export type StringListType<T = unknown> = { [key: string]: T };
 
+export type HexType = 'normal' | 'hex';
 export type ThemeMode = 'light' | 'dark';
 export type StoreName = 'tokens' | 'hashWalletMetadata';
 export type ContractType = 'reader' | 'signer';
@@ -93,11 +94,13 @@ export interface MultiCallParams {
   reader: JsonRpcProvider;
 }
 
+export type ProofPoint = [BigNumberish, BigNumberish];
+
 export interface ProofCallDataType {
-  pA: [BigNumberish, BigNumberish];
-  pB: [[BigNumberish, BigNumberish], [BigNumberish, BigNumberish]];
-  pC: [BigNumberish, BigNumberish];
-  pubSignals: [BigNumberish, BigNumberish];
+  pA: ProofPoint;
+  pB: [ProofPoint, ProofPoint];
+  pC: ProofPoint;
+  pubSignals: [BigNumberish, BigNumberish, BigNumberish];
 }
 
 /* hash system wallet types */

@@ -15,7 +15,7 @@ import {
 import cloneDeep from 'lodash.clonedeep';
 import { SIMPLE_EXTEND } from 'src/configs/constance';
 import { AccountFactoryAbi__factory } from 'src/contracts/typechain';
-import { JubSignatureType, ThemeMode } from 'src/global';
+import { HexType, JubSignatureType, ThemeMode } from 'src/global';
 
 export function formatAddress(address: string, fractionDigits = 3) {
   return address.slice(0, fractionDigits) + '...' + address.slice(-fractionDigits);
@@ -105,11 +105,7 @@ export function convertStringToUint8(_in: string) {
   return Uint8Array.from(Buffer.from(_in, 'hex'));
 }
 
-export function convertBigIntsToNumber(
-  _in: bigint[],
-  _len: number,
-  mode: 'normal' | 'hex' = 'normal'
-) {
+export function convertBigIntsToNumber(_in: bigint[], _len: number, mode: HexType = 'normal') {
   let result: bigint = BigInt('0');
   let e2 = BigInt('1');
   for (let i = 0; i < _len; i++) {

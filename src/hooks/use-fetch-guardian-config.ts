@@ -27,6 +27,7 @@ export default function useFetchGuardianConfig() {
       if (_threshold == 0)
         dispatch(updateGuardianConfig({ threshold: _threshold, configType: 'notConfig' }));
       else {
+        const _tempNewOwner = await guardianContract.fn._tempNewOwner();
         const guardianCount = await guardianContract.fn.guardianCount();
         const maxGuardians = await guardianContract.fn.maxGuardians();
         const _guardianCount = parseInt(guardianCount.toString());
@@ -43,6 +44,7 @@ export default function useFetchGuardianConfig() {
         }
         dispatch(
           updateGuardianConfig({
+            _tempNewOwner,
             threshold: _threshold,
             guardianCount: _guardianCount,
             maxGuardians: parseInt(maxGuardians.toString()),

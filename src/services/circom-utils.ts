@@ -1,13 +1,17 @@
 import { Point, buildBabyjub, buildEddsa, buildPoseidon } from 'circomlibjs';
+import { BigNumberish } from 'ethers';
 import { Groth16Proof, PublicSignals, groth16 } from 'snarkjs';
-import { JubProofType, ProofCallDataType } from 'src/global';
-import VerificationKey from './verification_key.json';
+import { HexType, JubProofType, ProofCallDataType, ProofPoint } from 'src/global';
 import { convertBigIntsToNumber } from '.';
+import VerificationKey from './verification_key.json';
 
-export function extendNum(num: string) {
-  let result = num;
-  while (result.length < 20) result = `0${result}`;
-  return result;
+export function makeVerifiedInput(recoveredAddress: string, increment: string) {
+  let excludedAddress = recoveredAddress.toLowerCase();
+  if (excludedAddress.slice(0, 2) == '0x') excludedAddress = excludedAddress.slice(2);
+  while (excludedAddress.length < 48) excludedAddress = `0${excludedAddress}`;
+  let sIncrement = parseInt(increment).toString(16);
+  while (sIncrement.length < 16) sIncrement = `0${sIncrement}`;
+  return `${sIncrement}${excludedAddress}`;
 }
 
 export function buffer2bits(buff: Uint8Array) {
@@ -23,7 +27,7 @@ export function buffer2bits(buff: Uint8Array) {
 
 export async function generatePoseidonHash(
   _address: string,
-  mode: 'normal' | 'hex' = 'normal'
+  mode: HexType = 'normal'
 ): Promise<string> {
   const poseidon = await buildPoseidon();
   const F = poseidon.F;
@@ -69,10 +73,7 @@ export function convertJubProof(proof: JubProofType) {
 export async function generateProof(
   message: string,
   privateKey: Uint8Array
-): Promise<{
-  proof: Groth16Proof;
-  publicSignals: PublicSignals;
-}> {
+): Promise<{ proof: Groth16Proof; publicSignals: PublicSignals }> {
   const { A, R8, S, msg } = await generateWitness(message, privateKey);
   const { proof, publicSignals } = await groth16.fullProve(
     { msg, A, R8, S },
@@ -96,10 +97,10 @@ export async function generateCalldata(
 ): Promise<ProofCallDataType> {
   const _call = await groth16.exportSolidityCallData(proof, publicSignals);
   const realCall = JSON.parse(`[${_call}]`) as [
-    ProofCallDataType['pA'],
-    ProofCallDataType['pB'],
-    ProofCallDataType['pC'],
-    ProofCallDataType['pubSignals']
+    ProofPoint,
+    [ProofPoint, ProofPoint],
+    ProofPoint,
+    [BigNumberish, BigNumberish, BigNumberish]
   ];
   return { pA: realCall[0], pB: realCall[1], pC: realCall[2], pubSignals: realCall[3] };
 }
