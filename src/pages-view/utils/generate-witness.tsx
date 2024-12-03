@@ -4,7 +4,7 @@ import CssReactJson from 'src/components/css-react-json';
 import DownloadBox from 'src/components/DownloadBox';
 import BaseForm from 'src/components/form/base-form';
 import TitleItem, { TitleTextFieldItem } from 'src/components/title-item';
-import { convertJubProof, generateWitness, makeVerifiedInput } from 'src/services/circom-utils';
+import { convertJubProof, generateWitness, makeVerifiedInput } from 'src/services/guardian-utils';
 import { useBabyJub } from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
 
 export default function GenerateWitness() {

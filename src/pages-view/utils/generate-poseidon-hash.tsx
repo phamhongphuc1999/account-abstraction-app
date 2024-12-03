@@ -4,7 +4,7 @@ import DownloadBox from 'src/components/DownloadBox';
 import BaseForm from 'src/components/form/base-form';
 import CopyIcon from 'src/components/icons/copy-icon';
 import TitleItem, { TitleTextFieldItem } from 'src/components/title-item';
-import { generatePoseidonHash } from 'src/services/circom-utils';
+import { generatePoseidonHash } from 'src/services/guardian-utils';
 
 export default function GeneratePoseidonHash() {
   const [message, setMessage] = useState('');

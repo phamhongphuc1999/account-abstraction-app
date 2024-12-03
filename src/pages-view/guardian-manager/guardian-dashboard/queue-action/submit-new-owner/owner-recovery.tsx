@@ -5,11 +5,13 @@ import { useCallback, useEffect, useState } from 'react';
 import BaseForm from 'src/components/form/base-form';
 import CopyIcon from 'src/components/icons/copy-icon';
 import TitleItem from 'src/components/title-item';
+import { SIMPLE_SALT } from 'src/configs/constance';
 import { AccountAbi__factory, ZKGuardianAbi__factory } from 'src/contracts/typechain';
 import { useZKGuardianContract } from 'src/contracts/zk-guardian-contract';
 import useSendUserOp from 'src/hooks/use-send-user-op';
 import { useAppSelector } from 'src/redux-slices/store';
 import { formatAddress } from 'src/services';
+import { useAddressesQuery } from 'src/services/static-query';
 
 interface Props extends BoxProps {
   enoughConfirm: boolean;
@@ -24,6 +26,7 @@ export default function OwnerRecovery({ enoughConfirm, tempNewOwner, ...props }:
   const [confirms, setConfirms] = useState<Array<{ hash: string; isConfirm: boolean }>>([]);
   const { sendEntryPoint } = useSendUserOp();
   const guardianContract = useZKGuardianContract();
+  const { ACCOUNT_FACTORY_ADDRESS } = useAddressesQuery();
 
   const _fetchConfirms = useCallback(async () => {
     if (guardianContract) {
@@ -44,7 +47,11 @@ export default function OwnerRecovery({ enoughConfirm, tempNewOwner, ...props }:
     if (isAddress(newOwner) && newOwner.toLowerCase() != ownerAddress) {
       const guardianInter = new Interface(ZKGuardianAbi__factory.abi);
       const accountInter = new Interface(AccountAbi__factory.abi);
-      let _callData = guardianInter.encodeFunctionData('submitNewOwner', [newOwner]);
+      let _callData = guardianInter.encodeFunctionData('submitNewOwner', [
+        newOwner,
+        ACCOUNT_FACTORY_ADDRESS,
+        SIMPLE_SALT,
+      ]);
       _callData = accountInter.encodeFunctionData('execute', [guardianAddress, 0, _callData]);
       await sendEntryPoint(_callData);
     }

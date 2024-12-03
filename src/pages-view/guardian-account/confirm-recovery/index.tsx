@@ -14,7 +14,7 @@ import {
   generateProof,
   makeVerifiedInput,
   verifyProof,
-} from 'src/services/circom-utils';
+} from 'src/services/guardian-utils';
 import { useBabyJub } from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
 import SubmitProof from './submit-proof';
 

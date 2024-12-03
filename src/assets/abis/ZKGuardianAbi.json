@@ -614,6 +614,16 @@
         "internalType": "address",
         "name": "_newOwner",
         "type": "address"
+      },
+      {
+        "internalType": "contract AccountFactory",
+        "name": "accountFactory",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "salt",
+        "type": "uint256"
       }
     ],
     "name": "submitNewOwner",

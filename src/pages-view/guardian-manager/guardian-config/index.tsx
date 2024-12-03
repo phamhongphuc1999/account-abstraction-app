@@ -7,7 +7,7 @@ import { AccountAbi__factory, ZKGuardianAbi__factory } from 'src/contracts/typec
 import { GuardianHashListType } from 'src/global';
 import useSendUserOp from 'src/hooks/use-send-user-op';
 import { useAppSelector } from 'src/redux-slices/store';
-import { generatePoseidonHash } from 'src/services/circom-utils';
+import { generatePoseidonHash } from 'src/services/guardian-utils';
 import GuardianAddresses from './guardian-addresses';
 
 export default function GuardianConfig(props: BoxProps) {

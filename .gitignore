@@ -26,4 +26,4 @@ dist-ssr
 typechain
 
 public/circom
-src/services/verification_key.json
+src/services/guardian_verification_key.json

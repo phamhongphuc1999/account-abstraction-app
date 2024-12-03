@@ -3,7 +3,7 @@ import { BigNumberish } from 'ethers';
 import { Groth16Proof, PublicSignals, groth16 } from 'snarkjs';
 import { HexType, JubProofType, ProofCallDataType, ProofPoint } from 'src/global';
 import { convertBigIntsToNumber } from '.';
-import VerificationKey from './verification_key.json';
+import VerificationKey from './guardian_verification_key.json';
 
 export function makeVerifiedInput(recoveredAddress: string, increment: string) {
   let excludedAddress = recoveredAddress.toLowerCase();
@@ -77,8 +77,8 @@ export async function generateProof(
   const { A, R8, S, msg } = await generateWitness(message, privateKey);
   const { proof, publicSignals } = await groth16.fullProve(
     { msg, A, R8, S },
-    '/public/circom/jubjub_js/jubjub.wasm',
-    '/public/circom/jubjub1.zkey'
+    '/public/circom/guardian_js/guardian.wasm',
+    '/public/circom/guardian1.zkey'
   );
   return { proof, publicSignals };
 }

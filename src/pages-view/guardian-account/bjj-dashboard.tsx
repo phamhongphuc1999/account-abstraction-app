@@ -5,7 +5,7 @@ import TitleItem from 'src/components/title-item';
 import { CssDivide } from 'src/components/utils';
 import useRecoverBabyJubjubAccount from 'src/hooks/use-recover-baby-jubjub-account';
 import { convertUint8ToString } from 'src/services';
-import { generatePoseidonHash } from 'src/services/circom-utils';
+import { generatePoseidonHash } from 'src/services/guardian-utils';
 import { useBabyJub } from 'src/wallet-connection/hash-system-wallet/hash-wallet-context';
 import BabyJubSignature from './bjj-signature';
 

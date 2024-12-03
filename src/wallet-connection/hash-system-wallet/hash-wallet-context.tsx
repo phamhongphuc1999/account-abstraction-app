@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react';
 import { HashWalletType, SignatureScheme } from 'src/global';
-import { getHexPublicKey } from 'src/services/circom-utils';
+import { getHexPublicKey } from 'src/services/guardian-utils';
 import BJJAccount from './hash-account/bjj-account';
 import BaseKeyring from './keyring/base-keyring';
 import Ed25519Keyring from './keyring/ed25519-keyring';

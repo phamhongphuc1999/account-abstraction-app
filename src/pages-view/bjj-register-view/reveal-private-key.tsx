@@ -2,6 +2,7 @@ import { Box, Button, TextField, Typography } from '@mui/material';
 import { randomBytes } from '@noble/hashes/utils';
 import { buildBabyjub, buildEddsa } from 'circomlibjs';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CopyIcon from 'src/components/icons/copy-icon';
 import ReactSeo from 'src/components/ReactSeo';
 import TitleItem from 'src/components/title-item';
@@ -14,6 +15,7 @@ import { useHashWalletContext } from 'src/wallet-connection/hash-system-wallet/h
 
 export default function RevealPrivateKey() {
   const { fn } = useHashWalletContext();
+  const navigate = useNavigate();
   const { indexedStorage } = useLocalStorageContext();
   const { password } = useHashRegisterSelector((state) => state.data);
   const [privateKey, setPrivateKey] = useState<Uint8Array | null>(null);
@@ -35,6 +37,7 @@ export default function RevealPrivateKey() {
           schema: 'babyjub',
         });
         fn.setBabyJubAccount(_account);
+        navigate('/guardian/account');
       }
     }
   }

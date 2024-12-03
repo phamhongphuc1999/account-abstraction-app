@@ -12,7 +12,7 @@ import { GuardianHashType } from 'src/global';
 import useSendUserOp from 'src/hooks/use-send-user-op';
 import { useAppSelector } from 'src/redux-slices/store';
 import { formatAddress, getEta } from 'src/services';
-import { generatePoseidonHash } from 'src/services/circom-utils';
+import { generatePoseidonHash } from 'src/services/guardian-utils';
 import { usRpcProviderContext } from 'src/wallet-connection/rpc-provider-context';
 
 export default function AddGuardian() {
