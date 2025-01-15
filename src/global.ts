@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { SvgIconComponent } from '@mui/icons-material';
 import { Signature } from 'circomlibjs';
 import { BigNumberish, InterfaceAbi, JsonRpcProvider, JsonRpcSigner } from 'ethers';
 
@@ -101,6 +102,14 @@ export interface ProofCallDataType {
   pB: [ProofPoint, ProofPoint];
   pC: ProofPoint;
   pubSignals: [BigNumberish, BigNumberish, BigNumberish];
+}
+
+export interface AppReferenceType {
+  id: string;
+  title: string;
+  link: string;
+  description: string;
+  icon: SvgIconComponent;
 }
 
 /* hash system wallet types */

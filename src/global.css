@@ -1,0 +1,23 @@
+.header-item-box {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
+}
+
+.menu-header-icon {
+  display: none !important;
+  @media screen and (max-width: 1000px) {
+    display: inline-block !important;
+  }
+}
+
+.network-button {
+  margin-right: 0.5rem !important;
+  display: block;
+  @media screen and (max-width: 1000px) {
+    display: none !important;
+  }
+}

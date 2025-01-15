@@ -1,11 +1,39 @@
+import {
+  AccountBalanceWalletOutlined,
+  AutoGraphOutlined,
+  BuildOutlined,
+  CottageOutlined,
+  HealthAndSafetyOutlined,
+} from '@mui/icons-material';
 import { ZeroAddress } from 'ethers';
 import BSC from 'src/assets/images/tokens/bnb.svg';
+import { AppReferenceType } from 'src/global';
 import { GasOverheads, UserOperation } from 'src/user-operation-service/type';
 
 export const HARDCODE_PASSWORD = '1111';
 export const LS = {
   THEME: 'theme',
 };
+
+export const LayoutConfig: Array<AppReferenceType> = [
+  { id: 'home', title: 'Home', link: '/', description: 'Home page', icon: CottageOutlined },
+  {
+    id: 'recovery-manager',
+    title: 'Recovery Manager',
+    link: '/guardian/manager',
+    description: '',
+    icon: HealthAndSafetyOutlined,
+  },
+  {
+    id: 'guardian-account',
+    title: 'Guardian Account',
+    link: '/guardian/account',
+    description: '',
+    icon: AccountBalanceWalletOutlined,
+  },
+  { id: 'curve', title: 'Curve', link: '/curve-page', description: '', icon: AutoGraphOutlined },
+  { id: 'utils', title: 'Utils', link: '/utils', description: '', icon: BuildOutlined },
+];
 
 export const ChainConfig = [
   { chainId: 56, image: BSC, name: 'BSC Mainnet' },

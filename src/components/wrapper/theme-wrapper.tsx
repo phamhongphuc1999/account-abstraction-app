@@ -323,16 +323,6 @@ export default function ThemeWrapper({ children }: Props) {
                 horizontal: 'left',
               },
             },
-            styleOverrides: {
-              root: {
-                '& .MuiPaper-root': {
-                  marginTop: '0.25rem',
-                },
-                '& .MuiBackdrop-root': {
-                  backdropFilter: 'none',
-                },
-              },
-            },
           },
           MuiTableCell: {
             styleOverrides: {

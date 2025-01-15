@@ -1,5 +1,5 @@
 import { CallMadeOutlined, DeleteOutlined } from '@mui/icons-material';
-import { Box, BoxProps, Grid, IconButton, Typography } from '@mui/material';
+import { Box, BoxProps, Grid2, IconButton, Typography } from '@mui/material';
 import { isAddress } from 'ethers';
 import { useMemo, useState } from 'react';
 import CopyIcon, { InfoIcon } from 'src/components/icons/copy-icon';
@@ -23,8 +23,8 @@ export default function TokenRow({ type, token, ...props }: Props) {
 
   return (
     <Box {...props}>
-      <Grid container spacing={2}>
-        <Grid item md={3} xs={4}>
+      <Grid2 container spacing={2}>
+        <Grid2 size={{ md: 3, xs: 4 }}>
           {isAddress(token.address) ? (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Typography>{token.symbol}</Typography>
@@ -34,14 +34,14 @@ export default function TokenRow({ type, token, ...props }: Props) {
           ) : (
             <Typography>{token.symbol}</Typography>
           )}
-        </Grid>
-        <Grid item md={3} xs={4}>
+        </Grid2>
+        <Grid2 size={{ md: 3, xs: 4 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography>{toFixed(token.balance, 6)}</Typography>
             <InfoIcon title={token.balance} />
           </Box>
-        </Grid>
-        <Grid item md={3} xs={4}>
+        </Grid2>
+        <Grid2 size={{ md: 3, xs: 4 }}>
           <IconButton onClick={() => setOpenSend(true)}>
             <CallMadeOutlined sx={{ fontSize: '16px' }} />
           </IconButton>
@@ -50,8 +50,8 @@ export default function TokenRow({ type, token, ...props }: Props) {
               <DeleteOutlined sx={{ fontSize: '16px' }} />
             </IconButton>
           )}
-        </Grid>
-      </Grid>
+        </Grid2>
+      </Grid2>
       <SendTokenDialog
         open={openSend}
         type={type}

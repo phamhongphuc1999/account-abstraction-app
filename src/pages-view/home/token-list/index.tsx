@@ -1,4 +1,4 @@
-import { Box, BoxProps, Grid, Typography, useTheme } from '@mui/material';
+import { Box, BoxProps, Grid2, Typography, useTheme } from '@mui/material';
 import { AccountType } from 'src/global';
 import { useAppSelector } from 'src/redux-slices/store';
 import { getTokenData } from 'src/redux-slices/token-slice';
@@ -18,17 +18,17 @@ function TokenAccountList({ type, ...props }: Props) {
         {type == 'accountAbstraction' ? 'Account Tokens' : 'Owner Tokens'}
       </Typography>
       <Box sx={{ mt: 2 }}>
-        <Grid container spacing={2}>
-          <Grid item md={3} xs={4}>
+        <Grid2 container spacing={2}>
+          <Grid2 size={{ md: 3, xs: 4 }}>
             <Typography>Token</Typography>
-          </Grid>
-          <Grid item md={3} xs={4}>
+          </Grid2>
+          <Grid2 size={{ md: 3, xs: 4 }}>
             <Typography>Balance</Typography>
-          </Grid>
-          <Grid item md={3} xs={4}>
+          </Grid2>
+          <Grid2 size={{ md: 3, xs: 4 }}>
             <Typography>Actions</Typography>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
         <NativeTokenRow type={type} props={{ sx: { mt: 1 } }} />
         {Object.values(tokens).map((token) => {
           return <TokenRow key={token.address} type={type} token={token} sx={{ mt: 1 }} />;
