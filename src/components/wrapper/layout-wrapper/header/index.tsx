@@ -26,13 +26,13 @@ function HeaderText({ title, ...props }: HeaderTextProps) {
         cursor: 'pointer',
         color: '#363C53',
         '&:hover': {
-          backgroundColor: '#F6F7FB',
+          backgroundColor: 'background.paper',
         },
       }}
     >
       <Typography
         sx={{ fontSize: '16px', fontWeight: 500, lineHeight: '18px' }}
-        color="primary.main"
+        color="primary.dark"
       >
         {title}
       </Typography>

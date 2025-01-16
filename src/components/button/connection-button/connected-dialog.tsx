@@ -9,10 +9,10 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { useMemo } from 'react';
 import CopyIcon from 'src/components/icons/copy-icon';
 import ExploreIcon from 'src/components/icons/explore-icon';
 import { CONNECTORS } from 'src/configs/network-config';
+import useDeployedText from 'src/hooks/use-deployed-text';
 import { useAppSelector } from 'src/redux-slices/store';
 import { formatAddress } from 'src/services';
 
@@ -25,15 +25,9 @@ interface Props {
 export default function ConnectedDialog({ open, disconnect, onClose }: Props) {
   const theme = useTheme();
   const { connector } = useAppSelector((state) => state.config);
-  const { ownerAddress, accountAddress, deployType } = useAppSelector((state) => state.user);
+  const { ownerAddress, accountAddress } = useAppSelector((state) => state.user);
   const { guardianAddress } = useAppSelector((state) => state.guardian);
-
-  const deployText = useMemo(() => {
-    // eslint-disable-next-line quotes
-    if (deployType == 'notDeploy') return "haven't deployed";
-    else if (deployType == 'deployed') return 'deployed';
-    else return '';
-  }, [deployType]);
+  const { deployText } = useDeployedText();
 
   function onDisconnect() {
     if (disconnect) disconnect();
@@ -64,7 +58,7 @@ export default function ConnectedDialog({ open, disconnect, onClose }: Props) {
         </Box>
         <ExploreIcon hash={ownerAddress} />
         <Typography sx={{ mt: 2 }} variant="subtitle1">
-          {`Account(${deployText})`}
+          {`Account (${deployText})`}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Typography>{formatAddress(accountAddress, 6)}</Typography>

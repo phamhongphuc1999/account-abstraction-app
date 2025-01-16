@@ -40,7 +40,7 @@ bun dev
 
   - private key: `9e748c64efaeada22d5884984e57e156ed89bf9aabdeead29ed1d4b9a769bea4`
   - public key: `0x1fcd271f0f46f55a2e9aa8f6aa6bc940811caefde356fca36155d05bd858c37a`
-  - public key: `0x7f2de775b5304deb2a93502ad7737adac830e14bb8a10c0bce11a9498a21695`
+  - poseidon hash: `0x7f2de775b5304deb2a93502ad7737adac830e14bb8a10c0bce11a9498a21695`
 
 - Key pair 2
 

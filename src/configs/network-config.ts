@@ -9,9 +9,14 @@ export const ETH: NativeToken = { name: 'Ethereum', symbol: 'ETH', decimals: 18 
 export const CHAIN_ALIASES = {
   BSC_MAINNET: 56,
   BSC_TESTNET: 97,
+  HARDHAT_LOCAL: 31337,
 };
 
-export const AllowedNetwork = [CHAIN_ALIASES.BSC_MAINNET, CHAIN_ALIASES.BSC_TESTNET];
+export const AllowedNetwork = [
+  CHAIN_ALIASES.BSC_MAINNET,
+  CHAIN_ALIASES.BSC_TESTNET,
+  CHAIN_ALIASES.HARDHAT_LOCAL,
+];
 
 export const CHAINS: ChainList = {
   [CHAIN_ALIASES.BSC_MAINNET]: {
@@ -27,7 +32,7 @@ export const CHAINS: ChainList = {
       'https://bsc-dataseed2.ninicoin.io/',
       'https://bsc-dataseed.binance.org/',
     ],
-    bundlers: ['http://localhost:3000'],
+    bundlers: ['http://localhost:3025'],
   },
   [CHAIN_ALIASES.BSC_TESTNET]: {
     image: BnbImg,
@@ -43,7 +48,16 @@ export const CHAINS: ChainList = {
       'https://data-seed-prebsc-1-s2.binance.org:8545/',
       'https://data-seed-prebsc-2-s3.binance.org:8545/',
     ],
-    bundlers: ['http://localhost:3000'],
+    bundlers: ['http://localhost:3025'],
+  },
+  [CHAIN_ALIASES.HARDHAT_LOCAL]: {
+    image: BnbImg,
+    chainId: CHAIN_ALIASES.HARDHAT_LOCAL,
+    explorers: ['https://testnet.bscscan.com'],
+    name: 'Hardhat network',
+    nativeCurrency: ETH,
+    urls: ['http://127.0.0.1:8545/'],
+    bundlers: ['http://localhost:3025'],
   },
 };
 

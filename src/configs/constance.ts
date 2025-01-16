@@ -35,9 +35,10 @@ export const LayoutConfig: Array<AppReferenceType> = [
   { id: 'utils', title: 'Utils', link: '/utils', description: '', icon: BuildOutlined },
 ];
 
-export const ChainConfig = [
+export const ChainConfig: Array<{ chainId: number; image: string; name: string }> = [
   { chainId: 56, image: BSC, name: 'BSC Mainnet' },
   { chainId: 97, image: BSC, name: 'BSC Testnet' },
+  { chainId: 31337, image: BSC, name: 'Hardhat network' },
 ];
 export const OwnerExecutedType = {
   Queue: 0,

@@ -2,9 +2,23 @@ import { createConfig, http, injected } from '@wagmi/core';
 import { useCallback } from 'react';
 import { AllowedNetwork } from 'src/configs/network-config';
 import { ConnectorType } from 'src/global';
+import { defineChain } from 'viem';
 import { CreateConnectorFn, useAccount, useConnect, useDisconnect, useSwitchChain } from 'wagmi';
 import { bsc, bscTestnet } from 'wagmi/chains';
 import { coinbaseWallet } from 'wagmi/connectors';
+
+const localhost = /*#__PURE__*/ defineChain({
+  id: 31337,
+  name: 'Localhost',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Ether',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    default: { http: ['http://127.0.0.1:8545'] },
+  },
+});
 
 export const connectorFns: { [id in ConnectorType]: CreateConnectorFn } = {
   metamask: injected({ target: 'metaMask' }),
@@ -12,9 +26,9 @@ export const connectorFns: { [id in ConnectorType]: CreateConnectorFn } = {
 };
 
 export const wagmiConfig = createConfig({
-  chains: [bsc, bscTestnet],
+  chains: [bsc, bscTestnet, localhost],
   connectors: [connectorFns.metamask, connectorFns.coinbase],
-  transports: { [bsc.id]: http(), [bscTestnet.id]: http() },
+  transports: { [bsc.id]: http(), [bscTestnet.id]: http(), [localhost.id]: http() },
 });
 
 export function useWalletAction() {

@@ -15,7 +15,14 @@ const BscTestnetAddresses: AddressesType = {
   ACCOUNT_FACTORY_ADDRESS: '0x6320A83b3Ad58a58AfDC898320914EB282100AD6',
 };
 
+const HardhatLocalAddresses: AddressesType = {
+  MULTI_CALL_ADDRESS: '',
+  ENTRY_POINT_ADDRESS: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0',
+  ACCOUNT_FACTORY_ADDRESS: '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9',
+};
+
 export const AddressesConfig: AddressesListType = {
   [CHAIN_ALIASES.BSC_MAINNET]: BscMainnetAddresses,
   [CHAIN_ALIASES.BSC_TESTNET]: BscTestnetAddresses,
+  [CHAIN_ALIASES.HARDHAT_LOCAL]: HardhatLocalAddresses,
 };
