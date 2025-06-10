@@ -12,7 +12,7 @@ const BscTestnetAddresses: AddressesType = {
 
   /* using standard entry point */
   ENTRY_POINT_ADDRESS: '0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789',
-  ACCOUNT_FACTORY_ADDRESS: '0x6320A83b3Ad58a58AfDC898320914EB282100AD6',
+  ACCOUNT_FACTORY_ADDRESS: '0x62E4FC10a6E5b101b634693b5F9A915fe2aeBD90',
 };
 
 const HardhatLocalAddresses: AddressesType = {
