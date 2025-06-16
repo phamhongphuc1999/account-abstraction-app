@@ -2,6 +2,7 @@ import { TextField, Typography } from '@mui/material';
 import BigNumber from 'bignumber.js';
 import { Interface, ethers, isAddress } from 'ethers';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import BaseDialog from 'src/components/BaseDialog';
 import BaseForm from 'src/components/form/base-form';
 import TitleItem from 'src/components/title-item';
@@ -43,30 +44,38 @@ export default function SendTokenDialog({ open, type, token, onClose }: Props) {
   }
 
   async function nativeSubmit() {
-    if (type == 'accountAbstraction') {
-      const accountInter = new Interface(AccountAbi__factory.abi);
-      const callData = accountInter.encodeFunctionData('execute', [
-        to,
-        ethers.parseEther(amount),
-        '0x00',
-      ]);
-      await sendEntryPoint(callData);
-    } else if (signer) {
-      signer.sendTransaction({ to, value: ethers.parseEther(amount) });
+    try {
+      if (type == 'accountAbstraction') {
+        const accountInter = new Interface(AccountAbi__factory.abi);
+        const callData = accountInter.encodeFunctionData('execute', [
+          to,
+          ethers.parseEther(amount),
+          '0x00',
+        ]);
+        await sendEntryPoint(callData);
+      } else if (signer) {
+        signer.sendTransaction({ to, value: ethers.parseEther(amount) });
+      }
+    } catch (error) {
+      toast.error(String(error));
     }
   }
 
   async function normalSubmit() {
-    if (type == 'accountAbstraction') {
-      const accountInter = new Interface(AccountAbi__factory.abi);
-      const bep20Inter = new Interface(BEP20Abi__factory.abi);
-      let callData = bep20Inter.encodeFunctionData('transfer', [to, ethers.parseEther(amount)]);
-      callData = accountInter.encodeFunctionData('execute', [token.address, 0, callData]);
-      await sendEntryPoint(callData);
-    } else if (signer) {
-      const bep20Contract = new Bep20Contract(signer, token.address);
-      const tx = await bep20Contract.fn.transfer(to, ethers.parseEther(amount));
-      await tx.wait();
+    try {
+      if (type == 'accountAbstraction') {
+        const accountInter = new Interface(AccountAbi__factory.abi);
+        const bep20Inter = new Interface(BEP20Abi__factory.abi);
+        let callData = bep20Inter.encodeFunctionData('transfer', [to, ethers.parseEther(amount)]);
+        callData = accountInter.encodeFunctionData('execute', [token.address, 0, callData]);
+        await sendEntryPoint(callData);
+      } else if (signer) {
+        const bep20Contract = new Bep20Contract(signer, token.address);
+        const tx = await bep20Contract.fn.transfer(to, ethers.parseEther(amount));
+        await tx.wait();
+      }
+    } catch (error) {
+      toast.error(String(error));
     }
   }
 

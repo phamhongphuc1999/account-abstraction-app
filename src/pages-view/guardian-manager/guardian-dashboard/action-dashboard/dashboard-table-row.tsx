@@ -1,6 +1,7 @@
 import { Box, Button, TableCell, TableRow, Typography } from '@mui/material';
 import { Interface } from 'ethers';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import BlockCountdown from 'src/components/block-countdown';
 import CopyIcon from 'src/components/icons/copy-icon';
 import GuardianTransactionTypeIcon, {
@@ -30,22 +31,28 @@ export default function DashboardTableRow({ transaction }: Props) {
   }
 
   async function onExecute() {
-    if (reader) {
+    try {
+      if (!reader) throw Error('reader is not defined');
       const guardianInter = new Interface(ZKGuardianAbi__factory.abi);
       const accountInter = new Interface(AccountAbi__factory.abi);
       let _callData = guardianInter.encodeFunctionData('execute', [transaction.index]);
       _callData = accountInter.encodeFunctionData('execute', [guardianAddress, 0, _callData]);
       await sendEntryPoint(_callData);
+    } catch (error) {
+      toast.error(String(error));
     }
   }
 
   async function onCancel() {
-    if (reader) {
+    try {
+      if (!reader) throw Error('reader is not defined');
       const guardianInter = new Interface(ZKGuardianAbi__factory.abi);
       const accountInter = new Interface(AccountAbi__factory.abi);
       let _callData = guardianInter.encodeFunctionData('cancel', [transaction.index]);
       _callData = accountInter.encodeFunctionData('execute', [guardianAddress, 0, _callData]);
       await sendEntryPoint(_callData);
+    } catch (error) {
+      toast.error(String(error));
     }
   }
 

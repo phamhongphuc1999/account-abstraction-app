@@ -2,6 +2,7 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { Interface } from 'ethers';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import BaseDialog from 'src/components/BaseDialog';
 import BaseForm from 'src/components/form/base-form';
 import CopyIcon from 'src/components/icons/copy-icon';
@@ -25,12 +26,18 @@ export default function AddGuardian() {
   const { hashList } = config;
 
   async function onNewGuardianChange(address: string) {
-    const _hash = await generatePoseidonHash(address, 'hex');
-    setNewGuardian({ address, hash: _hash });
+    try {
+      const _hash = await generatePoseidonHash(address, 'hex');
+      setNewGuardian({ address, hash: _hash });
+    } catch (error) {
+      toast.error(String(error));
+    }
   }
 
   async function onAddGuardian() {
-    if (reader && !hashList.includes(newGuardian.hash)) {
+    try {
+      if (!reader) throw Error('reader is not defined');
+      if (hashList.includes(newGuardian.hash)) throw Error('address is already exist');
       const guardianInter = new Interface(ZKGuardianAbi__factory.abi);
       const accountInter = new Interface(AccountAbi__factory.abi);
       const _eta = await getEta(reader, extend);
@@ -45,7 +52,14 @@ export default function AddGuardian() {
         _callData = accountInter.encodeFunctionData('execute', [guardianAddress, 0, _callData]);
         await sendEntryPoint(_callData);
       }
+    } catch (error) {
+      toast.error(String(error));
     }
+  }
+
+  function onClose() {
+    setNewGuardian({ address: '', hash: '' });
+    setOpen(false);
   }
 
   return (
@@ -57,7 +71,7 @@ export default function AddGuardian() {
       >
         Add Guardian
       </Button>
-      <BaseDialog title="Add Guardian" open={open} onClose={() => setOpen(false)}>
+      <BaseDialog title="Add Guardian" open={open} onClose={onClose}>
         <BaseForm events={{ onExecute: onAddGuardian }}>
           {newGuardian.hash.length > 0 && (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>

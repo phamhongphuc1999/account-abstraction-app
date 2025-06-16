@@ -9,6 +9,7 @@ import useSendUserOp from 'src/hooks/use-send-user-op';
 import { useAppSelector } from 'src/redux-slices/store';
 import { generatePoseidonHash } from 'src/services/guardian-utils';
 import GuardianAddresses from './guardian-addresses';
+import { toast } from 'react-toastify';
 
 export default function GuardianConfig(props: BoxProps) {
   const { sendEntryPoint } = useSendUserOp();
@@ -34,16 +35,20 @@ export default function GuardianConfig(props: BoxProps) {
   }
 
   async function onConfigGuardian() {
-    const guardianInter = new Interface(ZKGuardianAbi__factory.abi);
-    const accountInter = new Interface(AccountAbi__factory.abi);
-    let callData = guardianInter.encodeFunctionData('setupGuardians', [
-      Object.values(addresses).map((item) => item.hash),
-      threshold,
-      expirePeriod,
-      delay,
-    ]);
-    callData = accountInter.encodeFunctionData('execute', [guardianAddress, 0, callData]);
-    await sendEntryPoint(callData);
+    try {
+      const guardianInter = new Interface(ZKGuardianAbi__factory.abi);
+      const accountInter = new Interface(AccountAbi__factory.abi);
+      let callData = guardianInter.encodeFunctionData('setupGuardians', [
+        Object.values(addresses).map((item) => item.hash),
+        threshold,
+        expirePeriod,
+        delay,
+      ]);
+      callData = accountInter.encodeFunctionData('execute', [guardianAddress, 0, callData]);
+      await sendEntryPoint(callData);
+    } catch (error) {
+      toast.error(String(error));
+    }
   }
 
   return (

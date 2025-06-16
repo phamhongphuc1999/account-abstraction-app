@@ -2,6 +2,7 @@ import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOut
 import { Button, TextField } from '@mui/material';
 import { Interface } from 'ethers';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import BaseDialog from 'src/components/BaseDialog';
 import BaseForm from 'src/components/form/base-form';
 import HashSelect from 'src/components/selector/hash-selector';
@@ -27,7 +28,8 @@ export default function RemoveGuardian() {
   }
 
   async function onRemoveGuardian() {
-    if (reader) {
+    try {
+      if (!reader) throw Error('reader is not defined');
       const guardianInter = new Interface(ZKGuardianAbi__factory.abi);
       const accountInter = new Interface(AccountAbi__factory.abi);
       const _eta = await getEta(reader, extend);
@@ -42,6 +44,8 @@ export default function RemoveGuardian() {
         _callData = accountInter.encodeFunctionData('execute', [guardianAddress, 0, _callData]);
         await sendEntryPoint(_callData);
       }
+    } catch (error) {
+      toast.error(String(error));
     }
   }
 

@@ -2,6 +2,7 @@
 import { Box, BoxProps, TextField, Typography } from '@mui/material';
 import { Interface, ZeroAddress, isAddress } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import BaseForm from 'src/components/form/base-form';
 import CopyIcon from 'src/components/icons/copy-icon';
 import TitleItem from 'src/components/title-item';
@@ -44,7 +45,9 @@ export default function OwnerRecovery({ enoughConfirm, tempNewOwner, ...props }:
   }, [_fetchConfirms]);
 
   async function submitNewOwner() {
-    if (isAddress(newOwner) && newOwner.toLowerCase() != ownerAddress) {
+    try {
+      if (!isAddress(newOwner)) throw Error('newOwner is invalid');
+      if (newOwner.toLowerCase() == ownerAddress) throw Error('newOwner is same as ownerAddress');
       const guardianInter = new Interface(ZKGuardianAbi__factory.abi);
       const accountInter = new Interface(AccountAbi__factory.abi);
       let _callData = guardianInter.encodeFunctionData('submitNewOwner', [
@@ -54,6 +57,8 @@ export default function OwnerRecovery({ enoughConfirm, tempNewOwner, ...props }:
       ]);
       _callData = accountInter.encodeFunctionData('execute', [guardianAddress, 0, _callData]);
       await sendEntryPoint(_callData);
+    } catch (error) {
+      toast.error(String(error));
     }
   }
 

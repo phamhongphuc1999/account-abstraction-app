@@ -23,7 +23,9 @@ export default function ChangeThreshold() {
   const { sendEntryPoint } = useSendUserOp();
 
   async function onChangeThreshold() {
-    if (configThreshold != parseInt(threshold) && reader) {
+    try {
+      if (configThreshold == parseInt(threshold)) throw Error('threshold is not changed');
+      if (!reader) throw Error('reader is not defined');
       const guardianInter = new Interface(ZKGuardianAbi__factory.abi);
       const accountInter = new Interface(AccountAbi__factory.abi);
       const _eta = await getEta(reader, extend);
@@ -38,7 +40,9 @@ export default function ChangeThreshold() {
         callData = accountInter.encodeFunctionData('execute', [guardianAddress, 0, callData]);
         await sendEntryPoint(callData);
       }
-    } else toast.info('Nothing change or Reader is undefined');
+    } catch (error) {
+      toast.error(String(Error));
+    }
   }
 
   return (
