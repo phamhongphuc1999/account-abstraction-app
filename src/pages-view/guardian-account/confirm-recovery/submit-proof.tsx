@@ -34,6 +34,7 @@ export default function SubmitProof({ calldata }: Props) {
         const tx = await guardianContract.fn.confirmChangeOwner(pA, pB, pC, pubSignals);
         await handleEmit(tx, id);
       } catch (error) {
+        console.error('error', error);
         const sError = analyticError(error);
         toast.error(sError);
         detectEmitError(id, sError);
