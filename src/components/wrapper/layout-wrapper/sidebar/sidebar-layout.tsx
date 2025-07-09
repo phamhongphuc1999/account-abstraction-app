@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Box, BoxProps, List, ListItem, Theme, Typography, useTheme } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { MuiNavLink } from 'src/components/utils';

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Box, BoxProps, Typography, TypographyProps } from '@mui/material';
 import { mergeSx } from 'src/services';
 import { MuiImage } from './utils';

@@ -1,5 +1,4 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { Box, BoxProps, SvgIconTypeMap, Typography, useTheme } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { ReactNode } from 'react';

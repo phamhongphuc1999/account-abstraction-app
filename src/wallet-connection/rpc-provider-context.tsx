@@ -53,7 +53,6 @@ export default function RpcProviderProvider({ children }: Props) {
 
   const contextData = useMemo<RpcProviderContextProps>(() => {
     return { rpc, reader, signer, bundler, setReaderAndBundler, setSigner };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rpc, reader, signer, bundler]);
 
   return <RpcProviderContext.Provider value={contextData}>{children}</RpcProviderContext.Provider>;

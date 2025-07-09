@@ -1,5 +1,0 @@
-/out/**
-/resources/**
-!.eslintrc.js
-!.eslintrc-staged.js
-/coverage

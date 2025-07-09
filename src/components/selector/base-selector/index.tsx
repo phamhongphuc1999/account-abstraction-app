@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Box, BoxProps, Typography, useTheme } from '@mui/material';
 import { Theme } from '@mui/system';
 import { ReactNode, useEffect, useState } from 'react';

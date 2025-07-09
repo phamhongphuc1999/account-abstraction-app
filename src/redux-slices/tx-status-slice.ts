@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import { PayloadAction, createDraftSafeSelector, createSlice, nanoid } from '@reduxjs/toolkit';
 import { FStatus } from 'src/global';
 import { AppDispatch, RootState } from './store';

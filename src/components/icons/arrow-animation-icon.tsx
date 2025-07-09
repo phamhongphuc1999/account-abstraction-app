@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { SvgIconProps } from '@mui/material';
 import { mergeSx } from 'src/services';

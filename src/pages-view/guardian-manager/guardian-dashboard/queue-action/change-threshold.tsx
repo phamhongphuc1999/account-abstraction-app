@@ -41,7 +41,7 @@ export default function ChangeThreshold() {
         await sendEntryPoint(callData);
       }
     } catch (error) {
-      toast.error(String(Error));
+      toast.error(String(error));
     }
   }
 
