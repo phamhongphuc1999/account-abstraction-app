@@ -83,7 +83,7 @@ export async function decodeMnemonic(encodeData: string, password: string) {
   const _data: { cipherText: string; iv: string } = JSON.parse(encodeData);
   const data = await Encrypt.decrypt(
     {
-      cipherText: stringToArrayBuffer(_data.cipherText),
+      cipherText: stringToArrayBuffer(_data.cipherText).buffer,
       iv: stringToUintArray(_data.iv),
     },
     password
