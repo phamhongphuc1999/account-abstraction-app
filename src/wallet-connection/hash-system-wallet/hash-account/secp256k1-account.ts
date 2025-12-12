@@ -1,7 +1,7 @@
 import { bufferToHex, publicToAddress } from '@ethereumjs/util';
 import { mod } from '@noble/curves/abstract/modular';
-import { bytesToNumberBE } from '@noble/curves/abstract/utils';
-import { schnorr, secp256k1 } from '@noble/curves/secp256k1';
+import { secp256k1 } from '@noble/curves/secp256k1';
+import { bytesToNumberBE } from '@noble/curves/utils.js';
 import { keccak_256 } from '@noble/hashes/sha3';
 import { AccountSignature, PrivateKey } from 'src/global';
 import { decodeUTF8 } from 'tweetnacl-util';
@@ -21,7 +21,7 @@ export default class Secp256k1Account extends BaseHashAccount {
     const messageBytes = decodeUTF8(message);
     const msgHash = Buffer.from(keccak_256(messageBytes));
     const sig = secp256k1.sign(msgHash, this.normalizedPrivKey);
-    const buf = sig.toCompactRawBytes();
+    const buf = sig.toBytes();
     const r = Buffer.from(buf.slice(0, 32));
     const s = Buffer.from(buf.slice(32, 64));
     const v = BigInt((sig.recovery || 0) + 27);
@@ -30,12 +30,10 @@ export default class Secp256k1Account extends BaseHashAccount {
 
   verify(signature: AccountSignature, message: string): boolean {
     const messageBytes = decodeUTF8(message);
-    const sig = {
-      r: schnorr.utils.bytesToNumberBE(signature.r),
-      s: schnorr.utils.bytesToNumberBE(signature.s),
-      recovery: signature.v ? Number(signature.v) - 27 : 0,
-    };
     const msgHash = Buffer.from(keccak_256(messageBytes));
-    return secp256k1.verify(sig, msgHash, this.publicKey);
+
+    const sigBytes = new Uint8Array([...signature.r, ...signature.s]);
+    const publicKey = secp256k1.getPublicKey(this.publicKey);
+    return secp256k1.verify(sigBytes, msgHash, publicKey);
   }
 }
